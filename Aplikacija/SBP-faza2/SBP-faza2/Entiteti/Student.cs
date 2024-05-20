@@ -14,4 +14,9 @@ public class Student
     public virtual required string ImeRoditelja { get; set; }
     public virtual required string Prezime { get; set; }
     public virtual required string Smer { get; set; }
+    public virtual IList<Izvestaj> Izvestaji { get; set; }
+    public Student()
+    {
+        Izvestaji = new List<Izvestaj>();
+    }
 }

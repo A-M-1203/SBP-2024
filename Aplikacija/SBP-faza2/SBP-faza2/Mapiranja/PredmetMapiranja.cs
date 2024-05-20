@@ -20,5 +20,8 @@ public class PredmetMapiranja : ClassMap<Predmet>
         Map(x => x.Naziv, "NAZIV_PREDMETA");
         Map(x => x.Katedra, "KATEDRA");
         Map(x => x.Semestar, "SEMESTAR");
+
+        HasMany(x => x.Projekti).Inverse().Cascade.All();//ovo nisam bas siguran da li treba
+
     }
 }
