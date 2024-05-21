@@ -18,7 +18,11 @@ public class KnjigaMapiranja : ClassMap<Knjiga>
             Map(x => x.GodinaIzdanja, "GODINA_IZDANJA");
             Map(x => x.ISBN, "ISBN");
             Map(x => x.Izdavac, "IZDAVAC");
-        }
+            HasManyToMany(x => x.Projekti);
+            References(x => x.Autor);
+
+
+    }
 }
 
    

@@ -15,12 +15,12 @@ public class Grupa
     public virtual DateTime? DatumZavrsetka { get; set; }
     public virtual required DateTime RokZaZavrsetak { get; set; }
     public virtual IList<Izvestaj> Izvestaji { get; set; }
-    //public virtual IList<Student> Studenti { get; set; }
+    public virtual IList<Student> Studenti { get; set; }
 
     public Grupa()
     {
         Izvestaji = new List<Izvestaj>();
-        //Studenti = new List<Student>();
+        Studenti = new List<Student>();
     }
 
 }

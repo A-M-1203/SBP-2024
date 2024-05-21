@@ -19,5 +19,7 @@ public class Predmet
     {
         Projekti = new List<Projekat>();
     }
+    public virtual required Nastavnik Nastavnik { get; set; }
+
 
 }

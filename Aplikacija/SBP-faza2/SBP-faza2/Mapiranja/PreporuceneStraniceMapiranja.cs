@@ -7,14 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SBP_faza2.Mapiranja;
-
-public class StudentGrupaMapiranja : ClassMap<StudentGrupa>
+public class PreporuceneStraniceMapiranja : ClassMap<PreporuceneStranice>
 {
-    public StudentGrupaMapiranja()
+    public PreporuceneStraniceMapiranja()
     {
-        Table("STUDENT_GRUPA");
+        Table("PREPORUCENE_STRANICE");
         Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
-        References(x => x.IdGrupe);
-        References(x => x.IdStudenta);
+        References(x => x.IdProjekta);
+        Map(x => x.Stranice, "PREPORUCENE_STRANICE");
+
+
     }
 }

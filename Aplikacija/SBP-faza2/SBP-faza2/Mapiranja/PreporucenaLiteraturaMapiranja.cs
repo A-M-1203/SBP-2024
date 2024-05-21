@@ -8,13 +8,20 @@ using System.Threading.Tasks;
 
 namespace SBP_faza2.Mapiranja;
 
-public class StudentGrupaMapiranja : ClassMap<StudentGrupa>
+public class PreporucenaLiteraturaMapiranja : ClassMap<PreporucenaLiteratura>
 {
-    public StudentGrupaMapiranja()
+    public PreporucenaLiteraturaMapiranja()
     {
-        Table("STUDENT_GRUPA");
+        Table("PREPORUCENA_LITERATURA");
         Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
-        References(x => x.IdGrupe);
-        References(x => x.IdStudenta);
+        References(x => x.IdStudentProjekat);
+        Map(x => x.Literatura, "PREPORUCENA_LITERATURA");
+
+
+
+
+
+
+
     }
 }

@@ -14,4 +14,11 @@ public class Clanak
     public virtual required string NazivCasopisa { get; set; }
     public virtual required int BrojCasopisa { get; set; }
     public virtual required string ISSN { get; set; }
+    public virtual IList<Projekat> Projekti { get; set; }
+    public Clanak()
+    {
+        Projekti = new List<Projekat>();
+    }
+    public virtual Autor Autor { get; set; }
+
 }

@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using NHibernate.Cfg.MappingSchema;
 using SBP_faza2.Entiteti;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,18 @@ using System.Threading.Tasks;
 
 namespace SBP_faza2.Mapiranja;
 
-public class StudentGrupaMapiranja : ClassMap<StudentGrupa>
+public class FormatMapiranja : ClassMap<Format>
 {
-    public StudentGrupaMapiranja()
+    public FormatMapiranja()
     {
-        Table("STUDENT_GRUPA");
+        Table("FORMAT");
+
         Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
-        References(x => x.IdGrupe);
-        References(x => x.IdStudenta);
+
+        Map(x => x.NazivFormata, "FORMAT");
+        References(x => x.IdRada);
+
+
+
     }
 }

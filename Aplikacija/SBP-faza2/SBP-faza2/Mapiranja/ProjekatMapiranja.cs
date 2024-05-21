@@ -26,6 +26,13 @@ public class ProjekaMapiranja : ClassMap<Projekat>
         References(x => x.IdPredmeta);
         HasMany(x => x.Izvestaji).Inverse().Cascade.All();
         HasMany(x => x.Grupe).Inverse().Cascade.All();
+        HasManyToMany(x => x.Studenti);
+        HasManyToMany(x => x.Knjige);
+        HasManyToMany(x => x.Radovi);
+        HasManyToMany(x => x.Clanci);
+        HasMany(x => x.Stranice).Inverse().Cascade.All();
+
+
 
 
 

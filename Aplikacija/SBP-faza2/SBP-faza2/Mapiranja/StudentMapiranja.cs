@@ -22,6 +22,10 @@ public class StudentMapiranja : ClassMap<Student>
         Map(x => x.Prezime, "PREZIME");
         Map(x => x.Smer, "SMER");
         HasMany(x => x.Izvestaji).Inverse().Cascade.All();
+        HasManyToMany(x => x.Grupe);
+        HasManyToMany(x => x.Projekti);
+
+
 
     }
 }

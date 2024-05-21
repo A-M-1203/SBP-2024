@@ -7,19 +7,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SBP_faza2.Mapiranja;
-public class GrupaMapiranja : ClassMap<Grupa>
+
+public class StudentProjekatMapiranja : ClassMap<StudentProjekat>
 {
-    public GrupaMapiranja()
+    public StudentProjekatMapiranja()
     {
-        Table("GRUPA");
+        Table("STUDENT_PROJEKAT");
+
         Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
+        References(x => x.IdStudenta);
         References(x => x.IdProjekta);
-        HasMany(x => x.Izvestaji);
-        Map(x => x.NazivGrupe, "NAZIV_GRUPE");
+        Map(x => x.ProgramskiJezik, "PROGRAMSKI_JEZIK");
+        HasMany(x => x.IdPreporuceneLiterature).Inverse().Cascade.All();
         Map(x => x.DatumPocetka, "DATUM_POCETKA");
         Map(x => x.DatumZavrsetka, "DATUM_ZAVRSETKA");
-        Map(x => x.RokZaZavrsetak, "ROK_ZA_ZAVRSETAK");
-        HasManyToMany(x => x.Studenti);
+
+
+
+
 
 
     }

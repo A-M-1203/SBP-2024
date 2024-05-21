@@ -9,6 +9,6 @@ namespace SBP_faza2.Entiteti;
 public class StudentGrupa
 {
     public virtual int Id { get; protected set; }
-    public virtual required int IdStudenta { get; set; }
-    public virtual required int IdGrupe { get; set; }
+    public virtual required Student IdStudenta { get; set; }
+    public virtual required Grupa IdGrupe { get; set; }
 }

@@ -13,4 +13,15 @@ public class Rad
     public virtual required int GodinaIzdanja { get; set; }
     public virtual string? NazivKonferencije { get; set; }
     public virtual string? URL { get; set; }
+    public virtual IList<Projekat> Projekti { get; set; }
+    public virtual IList<Format> Formati { get; set; }
+
+    public Rad()
+    {
+        Projekti = new List<Projekat>();
+        Formati = new List<Format>();
+    }
+    public virtual Autor Autor { get; set; }
+
+
 }

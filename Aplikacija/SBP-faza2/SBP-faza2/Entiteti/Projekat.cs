@@ -21,10 +21,23 @@ public class Projekat
     public virtual required string TipProjekta { get; set; }
     public virtual IList<Izvestaj> Izvestaji { get; set; }
     public virtual IList<Grupa> Grupe { get; set; }
+    public virtual IList<Student> Studenti { get; set; }
+    public virtual IList<Knjiga> Knjige { get; set; }
+    public virtual IList<Clanak> Clanci { get; set; }
+    public virtual IList<Rad> Radovi { get; set; }
+    public virtual IList<PreporuceneStranice> Stranice { get; set; }
+
+
+
 
     public Projekat()
     {
         Izvestaji = new List<Izvestaj>();
         Grupe = new List<Grupa>();
+        Studenti = new List<Student>();
+        Knjige = new List<Knjiga>();
+        Clanci = new List<Clanak>();
+        Radovi = new List<Rad>();
+        Stranice = new List<PreporuceneStranice>();
     }
 }

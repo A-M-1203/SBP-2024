@@ -9,8 +9,9 @@ namespace SBP_faza2.Entiteti;
 public class ProjekatLiteratura
 {
     public virtual int Id { get; protected set; }
-    public virtual required int IdProjekta { get; set; }
-    public virtual int? IdKnjige { get; set; }
-    public virtual int? IdClanka { get; set; }
-    public virtual int? IdRada { get; set; }
+    public virtual required Projekat IdProjekta { get; set; }
+    public virtual required Projekat IdKnjige { get; set; }
+    public virtual required Projekat IdClanka { get; set; }
+    public virtual required Projekat IdRada { get; set; }
+
 }

@@ -18,5 +18,9 @@ public class ClanakMapiranja : ClassMap<Clanak>
         Map(x => x.NazivCasopisa, "NAZIV_CASOPISA");
         Map(x => x.BrojCasopisa, "BROJ_CASOPISA");
         Map(x => x.ISSN, "ISSN");
+        HasManyToMany(x => x.Projekti);
+        References(x => x.Autor);
+
+
     }
 }

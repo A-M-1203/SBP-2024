@@ -18,5 +18,10 @@ public class RadMapiranja : ClassMap<Rad>
         Map(x => x.GodinaIzdanja, "GODINA_IZDANJA");
         Map(x => x.NazivKonferencije, "NAZIV_KONFERENCIJE");
         Map(x => x.URL, "URL");
+        HasManyToMany(x => x.Projekti);
+        References(x => x.Autor);
+        HasMany(x => x.Formati).Inverse().Cascade.All();
+
+
     }
 }

@@ -9,6 +9,8 @@ namespace SBP_faza2.Entiteti;
 public class PreporuceneStranice
 {
     public virtual int Id { get; protected set; }
-    public virtual required int IdProjekta { get; set; }
+    public virtual Projekat IdProjekta { get; set; }
+
+    //public virtual required int IdProjekta { get; set; }
     public virtual required string Stranice { get; set; }
 }
