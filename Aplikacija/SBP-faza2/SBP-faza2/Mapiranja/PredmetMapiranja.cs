@@ -1,10 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
 using SBP_faza2.Entiteti;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SBP_faza2.Mapiranja;
 
@@ -21,9 +16,7 @@ public class PredmetMapiranja : ClassMap<Predmet>
         Map(x => x.Katedra, "KATEDRA");
         Map(x => x.Semestar, "SEMESTAR");
 
-        HasMany(x => x.Projekti).Inverse().Cascade.All();//ovo nisam bas siguran da li treba
-        References(x => x.Nastavnik);
-
-
+        HasMany(x => x.Projekti).KeyColumn("ID_PREDMETA").LazyLoad().Cascade.All().Inverse();
+        HasMany(x => x.Nastavnici).KeyColumn("ID_PREDMETA").LazyLoad().Cascade.All().Inverse();
     }
 }

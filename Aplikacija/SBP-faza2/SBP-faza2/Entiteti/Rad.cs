@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SBP_faza2.Entiteti;
+﻿namespace SBP_faza2.Entiteti;
 
 public class Rad
 {
@@ -13,15 +7,13 @@ public class Rad
     public virtual required int GodinaIzdanja { get; set; }
     public virtual string? NazivKonferencije { get; set; }
     public virtual string? URL { get; set; }
-    public virtual IList<Projekat> Projekti { get; set; }
+    public virtual IList<ProjekatLiteratura> LiteratureProjekti { get; set; }
     public virtual IList<Format> Formati { get; set; }
-
+    public virtual IList<Autor> Autori { get; set; }
     public Rad()
     {
-        Projekti = new List<Projekat>();
+        LiteratureProjekti = new List<ProjekatLiteratura>();
         Formati = new List<Format>();
+        Autori = new List<Autor>();
     }
-    public virtual Autor Autor { get; set; }
-
-
 }

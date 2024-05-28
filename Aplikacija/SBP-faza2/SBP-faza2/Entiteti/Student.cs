@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SBP_faza2.Entiteti;
+﻿namespace SBP_faza2.Entiteti;
 
 public class Student
 {
@@ -15,14 +9,14 @@ public class Student
     public virtual required string Prezime { get; set; }
     public virtual required string Smer { get; set; }
     public virtual IList<Izvestaj> Izvestaji { get; set; }
-    public virtual IList<Grupa> Grupe { get; set; }
-    public virtual IList<Projekat> Projekti { get; set; }
+    public virtual IList<StudentGrupa> StudentiGrupe { get; set; }
+    public virtual IList<StudentProjekat> StudentiProjekti { get; set; }
 
 
     public Student()
     {
         Izvestaji = new List<Izvestaj>();
-        Grupe = new List<Grupa>();
-        Projekti = new List<Projekat>();
+        StudentiGrupe = new List<StudentGrupa>();
+        StudentiProjekti = new List<StudentProjekat>();
     }
 }

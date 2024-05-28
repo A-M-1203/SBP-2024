@@ -1,10 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
 using SBP_faza2.Entiteti;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SBP_faza2.Mapiranja;
 
@@ -15,10 +10,10 @@ public class ProjekatLiteraturaMapiranja : ClassMap<ProjekatLiteratura>
         Table("PROJEKAT_LITERATURA");
 
         Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
-        References(x => x.IdProjekta);
-        References(x => x.IdKnjige);
-        References(x => x.IdClanka);
-        References(x => x.IdRada);
 
+        References(x => x.Projekat).Column("ID_PROJEKTA").LazyLoad();
+        References(x => x.Knjiga).Column("ID_KNJIGE").LazyLoad();
+        References(x => x.Clanak).Column("ID_CLANKA").LazyLoad();
+        References(x => x.Rad).Column("ID_RADA").LazyLoad();
     }
 }

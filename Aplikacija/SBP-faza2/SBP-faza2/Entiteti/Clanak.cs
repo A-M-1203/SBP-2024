@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SBP_faza2.Entiteti;
+﻿namespace SBP_faza2.Entiteti;
 
 public class Clanak
 {
@@ -14,11 +8,11 @@ public class Clanak
     public virtual required string NazivCasopisa { get; set; }
     public virtual required int BrojCasopisa { get; set; }
     public virtual required string ISSN { get; set; }
-    public virtual IList<Projekat> Projekti { get; set; }
+    public virtual IList<ProjekatLiteratura> LiteratureProjekti { get; set; }
+    public virtual IList<Autor> Autori { get; set; }
     public Clanak()
     {
-        Projekti = new List<Projekat>();
+        LiteratureProjekti = new List<ProjekatLiteratura>();
+        Autori = new List<Autor>();
     }
-    public virtual Autor Autor { get; set; }
-
 }

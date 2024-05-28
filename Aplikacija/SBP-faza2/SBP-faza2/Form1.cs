@@ -1,6 +1,7 @@
 using NHibernate;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
+using SBP_faza2.Forme;
 
 namespace SBP_faza2
 {
@@ -27,6 +28,24 @@ namespace SBP_faza2
             {
                 MessageBox.Show(ec.Message);
             }
+        }
+
+        private void buttonStudenti_Click(object sender, EventArgs e)
+        {
+            StudentiForm studentiForma = new StudentiForm();
+            studentiForma.ShowDialog(this);
+        }
+
+        private void buttonTeorijskiProjekti_Click(object sender, EventArgs e)
+        {
+            TeorijskiProjektiForm teorijskiProjektiForma = new TeorijskiProjektiForm();
+            teorijskiProjektiForma.ShowDialog(this);
+        }
+
+        private void buttonPrakticniProjekti_Click(object sender, EventArgs e)
+        {
+            PrakticniProjektiForm prakticniProjektiForma = new PrakticniProjektiForm();
+            prakticniProjektiForma.ShowDialog(this);
         }
     }
 }
