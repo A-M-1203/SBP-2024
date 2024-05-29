@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             groupBoxProjekatPodaci = new GroupBox();
-            dateTimePicker1 = new DateTimePicker();
+            listBoxPredmet = new ListBox();
+            dateTimePickerDatumZavrsetka = new DateTimePicker();
             labelDatumZavrsetka = new Label();
-            textBox2 = new TextBox();
+            textBoxKratakOpis = new TextBox();
             numericUpDownBrojIzvestaja = new NumericUpDown();
             labelBrojIzvestaja = new Label();
             labelKratakOpis = new Label();
-            textBox1 = new TextBox();
+            textBoxPreporuceniProgJezik = new TextBox();
             labelPreporuceniProgJezik = new Label();
-            comboBox3 = new ComboBox();
+            comboBoxGrupni = new ComboBox();
             labelPredmet = new Label();
             dateTimePickerRokZaZavrsetak = new DateTimePicker();
             dateTimePickerDatumPocetka = new DateTimePicker();
@@ -45,11 +46,10 @@
             labelDatumPocetka = new Label();
             labelGrupni = new Label();
             labelSkolskaGodina = new Label();
-            textBoxImeRoditelja = new TextBox();
+            textBoxSkolskaGodina = new TextBox();
             labelNazivProjekta = new Label();
-            textBoxImeStudenta = new TextBox();
+            textBoxNazivProjekta = new TextBox();
             buttonAzurirajPrakticniProjekat = new Button();
-            listBoxPredmet = new ListBox();
             groupBoxProjekatPodaci.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownBrojIzvestaja).BeginInit();
             SuspendLayout();
@@ -57,15 +57,15 @@
             // groupBoxProjekatPodaci
             // 
             groupBoxProjekatPodaci.Controls.Add(listBoxPredmet);
-            groupBoxProjekatPodaci.Controls.Add(dateTimePicker1);
+            groupBoxProjekatPodaci.Controls.Add(dateTimePickerDatumZavrsetka);
             groupBoxProjekatPodaci.Controls.Add(labelDatumZavrsetka);
-            groupBoxProjekatPodaci.Controls.Add(textBox2);
+            groupBoxProjekatPodaci.Controls.Add(textBoxKratakOpis);
             groupBoxProjekatPodaci.Controls.Add(numericUpDownBrojIzvestaja);
             groupBoxProjekatPodaci.Controls.Add(labelBrojIzvestaja);
             groupBoxProjekatPodaci.Controls.Add(labelKratakOpis);
-            groupBoxProjekatPodaci.Controls.Add(textBox1);
+            groupBoxProjekatPodaci.Controls.Add(textBoxPreporuceniProgJezik);
             groupBoxProjekatPodaci.Controls.Add(labelPreporuceniProgJezik);
-            groupBoxProjekatPodaci.Controls.Add(comboBox3);
+            groupBoxProjekatPodaci.Controls.Add(comboBoxGrupni);
             groupBoxProjekatPodaci.Controls.Add(labelPredmet);
             groupBoxProjekatPodaci.Controls.Add(dateTimePickerRokZaZavrsetak);
             groupBoxProjekatPodaci.Controls.Add(dateTimePickerDatumPocetka);
@@ -73,9 +73,9 @@
             groupBoxProjekatPodaci.Controls.Add(labelDatumPocetka);
             groupBoxProjekatPodaci.Controls.Add(labelGrupni);
             groupBoxProjekatPodaci.Controls.Add(labelSkolskaGodina);
-            groupBoxProjekatPodaci.Controls.Add(textBoxImeRoditelja);
+            groupBoxProjekatPodaci.Controls.Add(textBoxSkolskaGodina);
             groupBoxProjekatPodaci.Controls.Add(labelNazivProjekta);
-            groupBoxProjekatPodaci.Controls.Add(textBoxImeStudenta);
+            groupBoxProjekatPodaci.Controls.Add(textBoxNazivProjekta);
             groupBoxProjekatPodaci.Location = new Point(12, 12);
             groupBoxProjekatPodaci.Name = "groupBoxProjekatPodaci";
             groupBoxProjekatPodaci.Size = new Size(976, 405);
@@ -83,14 +83,24 @@
             groupBoxProjekatPodaci.TabStop = false;
             groupBoxProjekatPodaci.Text = "Podaci o projektu";
             // 
-            // dateTimePicker1
+            // listBoxPredmet
             // 
-            dateTimePicker1.CalendarMonthBackground = SystemColors.ButtonFace;
-            dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(757, 250);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(213, 32);
-            dateTimePicker1.TabIndex = 25;
+            listBoxPredmet.FormattingEnabled = true;
+            listBoxPredmet.ItemHeight = 24;
+            listBoxPredmet.Location = new Point(757, 42);
+            listBoxPredmet.Name = "listBoxPredmet";
+            listBoxPredmet.Size = new Size(213, 100);
+            listBoxPredmet.TabIndex = 26;
+            listBoxPredmet.SelectedIndexChanged += listBoxPredmet_SelectedIndexChanged;
+            // 
+            // dateTimePickerDatumZavrsetka
+            // 
+            dateTimePickerDatumZavrsetka.CalendarMonthBackground = SystemColors.ButtonFace;
+            dateTimePickerDatumZavrsetka.Format = DateTimePickerFormat.Short;
+            dateTimePickerDatumZavrsetka.Location = new Point(757, 250);
+            dateTimePickerDatumZavrsetka.Name = "dateTimePickerDatumZavrsetka";
+            dateTimePickerDatumZavrsetka.Size = new Size(213, 32);
+            dateTimePickerDatumZavrsetka.TabIndex = 25;
             // 
             // labelDatumZavrsetka
             // 
@@ -101,15 +111,15 @@
             labelDatumZavrsetka.TabIndex = 24;
             labelDatumZavrsetka.Text = "Datum završetka";
             // 
-            // textBox2
+            // textBoxKratakOpis
             // 
-            textBox2.BackColor = SystemColors.ButtonFace;
-            textBox2.Location = new Point(158, 305);
-            textBox2.MaxLength = 300;
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(812, 84);
-            textBox2.TabIndex = 23;
+            textBoxKratakOpis.BackColor = SystemColors.ButtonFace;
+            textBoxKratakOpis.Location = new Point(158, 305);
+            textBoxKratakOpis.MaxLength = 300;
+            textBoxKratakOpis.Multiline = true;
+            textBoxKratakOpis.Name = "textBoxKratakOpis";
+            textBoxKratakOpis.Size = new Size(812, 84);
+            textBoxKratakOpis.TabIndex = 23;
             // 
             // numericUpDownBrojIzvestaja
             // 
@@ -137,14 +147,14 @@
             labelKratakOpis.TabIndex = 20;
             labelKratakOpis.Text = "Kratak opis";
             // 
-            // textBox1
+            // textBoxPreporuceniProgJezik
             // 
-            textBox1.BackColor = SystemColors.ButtonFace;
-            textBox1.Location = new Point(757, 154);
-            textBox1.MaxLength = 30;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(213, 32);
-            textBox1.TabIndex = 19;
+            textBoxPreporuceniProgJezik.BackColor = SystemColors.ButtonFace;
+            textBoxPreporuceniProgJezik.Location = new Point(757, 154);
+            textBoxPreporuceniProgJezik.MaxLength = 30;
+            textBoxPreporuceniProgJezik.Name = "textBoxPreporuceniProgJezik";
+            textBoxPreporuceniProgJezik.Size = new Size(213, 32);
+            textBoxPreporuceniProgJezik.TabIndex = 19;
             // 
             // labelPreporuceniProgJezik
             // 
@@ -155,15 +165,16 @@
             labelPreporuceniProgJezik.TabIndex = 18;
             labelPreporuceniProgJezik.Text = "Preporučeni programski jezik";
             // 
-            // comboBox3
+            // comboBoxGrupni
             // 
-            comboBox3.BackColor = SystemColors.ButtonFace;
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Items.AddRange(new object[] { "Da", "Ne" });
-            comboBox3.Location = new Point(158, 151);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(321, 32);
-            comboBox3.TabIndex = 17;
+            comboBoxGrupni.BackColor = SystemColors.ButtonFace;
+            comboBoxGrupni.FormattingEnabled = true;
+            comboBoxGrupni.Items.AddRange(new object[] { "Da", "Ne" });
+            comboBoxGrupni.Location = new Point(158, 151);
+            comboBoxGrupni.Name = "comboBoxGrupni";
+            comboBoxGrupni.Size = new Size(321, 32);
+            comboBoxGrupni.TabIndex = 17;
+            comboBoxGrupni.SelectedIndexChanged += comboBoxGrupni_SelectedIndexChanged;
             // 
             // labelPredmet
             // 
@@ -182,6 +193,7 @@
             dateTimePickerRokZaZavrsetak.Name = "dateTimePickerRokZaZavrsetak";
             dateTimePickerRokZaZavrsetak.Size = new Size(321, 32);
             dateTimePickerRokZaZavrsetak.TabIndex = 12;
+            dateTimePickerRokZaZavrsetak.ValueChanged += dateTimePickerRokZaZavrsetak_ValueChanged;
             // 
             // dateTimePickerDatumPocetka
             // 
@@ -191,6 +203,7 @@
             dateTimePickerDatumPocetka.Name = "dateTimePickerDatumPocetka";
             dateTimePickerDatumPocetka.Size = new Size(321, 32);
             dateTimePickerDatumPocetka.TabIndex = 11;
+            dateTimePickerDatumPocetka.ValueChanged += dateTimePickerDatumPocetka_ValueChanged;
             // 
             // labelRokZaZavrsetak
             // 
@@ -228,14 +241,16 @@
             labelSkolskaGodina.TabIndex = 3;
             labelSkolskaGodina.Text = "Školska godina";
             // 
-            // textBoxImeRoditelja
+            // textBoxSkolskaGodina
             // 
-            textBoxImeRoditelja.BackColor = SystemColors.ButtonFace;
-            textBoxImeRoditelja.Location = new Point(158, 95);
-            textBoxImeRoditelja.MaxLength = 9;
-            textBoxImeRoditelja.Name = "textBoxImeRoditelja";
-            textBoxImeRoditelja.Size = new Size(321, 32);
-            textBoxImeRoditelja.TabIndex = 2;
+            textBoxSkolskaGodina.BackColor = SystemColors.ButtonFace;
+            textBoxSkolskaGodina.Location = new Point(158, 95);
+            textBoxSkolskaGodina.MaxLength = 9;
+            textBoxSkolskaGodina.Name = "textBoxSkolskaGodina";
+            textBoxSkolskaGodina.Size = new Size(321, 32);
+            textBoxSkolskaGodina.TabIndex = 2;
+            textBoxSkolskaGodina.TextChanged += textBoxSkolskaGodina_TextChanged;
+            textBoxSkolskaGodina.KeyPress += textBoxSkolskaGodina_KeyPress;
             // 
             // labelNazivProjekta
             // 
@@ -246,14 +261,15 @@
             labelNazivProjekta.TabIndex = 1;
             labelNazivProjekta.Text = "Naziv";
             // 
-            // textBoxImeStudenta
+            // textBoxNazivProjekta
             // 
-            textBoxImeStudenta.BackColor = SystemColors.ButtonFace;
-            textBoxImeStudenta.Location = new Point(158, 42);
-            textBoxImeStudenta.MaxLength = 50;
-            textBoxImeStudenta.Name = "textBoxImeStudenta";
-            textBoxImeStudenta.Size = new Size(321, 32);
-            textBoxImeStudenta.TabIndex = 0;
+            textBoxNazivProjekta.BackColor = SystemColors.ButtonFace;
+            textBoxNazivProjekta.Location = new Point(158, 42);
+            textBoxNazivProjekta.MaxLength = 50;
+            textBoxNazivProjekta.Name = "textBoxNazivProjekta";
+            textBoxNazivProjekta.Size = new Size(321, 32);
+            textBoxNazivProjekta.TabIndex = 0;
+            textBoxNazivProjekta.TextChanged += textBoxNazivProjekta_TextChanged;
             // 
             // buttonAzurirajPrakticniProjekat
             // 
@@ -263,15 +279,6 @@
             buttonAzurirajPrakticniProjekat.TabIndex = 20;
             buttonAzurirajPrakticniProjekat.Text = "Ažuriraj praktični projekat";
             buttonAzurirajPrakticniProjekat.UseVisualStyleBackColor = true;
-            // 
-            // listBoxPredmet
-            // 
-            listBoxPredmet.FormattingEnabled = true;
-            listBoxPredmet.ItemHeight = 24;
-            listBoxPredmet.Location = new Point(757, 42);
-            listBoxPredmet.Name = "listBoxPredmet";
-            listBoxPredmet.Size = new Size(213, 100);
-            listBoxPredmet.TabIndex = 26;
             // 
             // AzurirajPrakticniProjekatForm
             // 
@@ -296,13 +303,13 @@
         #endregion
 
         private GroupBox groupBoxProjekatPodaci;
-        private TextBox textBox2;
+        private TextBox textBoxKratakOpis;
         private NumericUpDown numericUpDownBrojIzvestaja;
         private Label labelBrojIzvestaja;
         private Label labelKratakOpis;
-        private TextBox textBox1;
+        private TextBox textBoxPreporuceniProgJezik;
         private Label labelPreporuceniProgJezik;
-        private ComboBox comboBox3;
+        private ComboBox comboBoxGrupni;
         private Label labelPredmet;
         private DateTimePicker dateTimePickerRokZaZavrsetak;
         private DateTimePicker dateTimePickerDatumPocetka;
@@ -310,10 +317,10 @@
         private Label labelDatumPocetka;
         private Label labelGrupni;
         private Label labelSkolskaGodina;
-        private TextBox textBoxImeRoditelja;
+        private TextBox textBoxSkolskaGodina;
         private Label labelNazivProjekta;
-        private TextBox textBoxImeStudenta;
-        private DateTimePicker dateTimePicker1;
+        private TextBox textBoxNazivProjekta;
+        private DateTimePicker dateTimePickerDatumZavrsetka;
         private Label labelDatumZavrsetka;
         private Button buttonAzurirajPrakticniProjekat;
         private ListBox listBoxPredmet;

@@ -73,12 +73,14 @@
             // 
             // comboBoxSmer
             // 
+            comboBoxSmer.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxSmer.FormattingEnabled = true;
             comboBoxSmer.Items.AddRange(new object[] { "EEN", "RII", "ELK", "EKM", "US", "KIT" });
             comboBoxSmer.Location = new Point(139, 253);
             comboBoxSmer.Name = "comboBoxSmer";
             comboBoxSmer.Size = new Size(151, 32);
             comboBoxSmer.TabIndex = 9;
+            comboBoxSmer.SelectedIndexChanged += comboBoxSmer_SelectedIndexChanged;
             // 
             // label3
             // 
@@ -96,6 +98,8 @@
             textBoxBrojIndeksa.Name = "textBoxBrojIndeksa";
             textBoxBrojIndeksa.Size = new Size(151, 32);
             textBoxBrojIndeksa.TabIndex = 6;
+            textBoxBrojIndeksa.TextChanged += textBoxBrojIndeksa_TextChanged;
+            textBoxBrojIndeksa.KeyPress += textBoxBrojIndeksa_KeyPress;
             // 
             // textBoxPrezimeStudenta
             // 
@@ -104,6 +108,8 @@
             textBoxPrezimeStudenta.Name = "textBoxPrezimeStudenta";
             textBoxPrezimeStudenta.Size = new Size(151, 32);
             textBoxPrezimeStudenta.TabIndex = 5;
+            textBoxPrezimeStudenta.TextChanged += textBoxPrezimeStudenta_TextChanged;
+            textBoxPrezimeStudenta.KeyPress += textBoxPrezimeStudenta_KeyPress;
             // 
             // label2
             // 
@@ -130,6 +136,8 @@
             textBoxImeRoditelja.Name = "textBoxImeRoditelja";
             textBoxImeRoditelja.Size = new Size(151, 32);
             textBoxImeRoditelja.TabIndex = 2;
+            textBoxImeRoditelja.TextChanged += textBoxImeRoditelja_TextChanged;
+            textBoxImeRoditelja.KeyPress += textBoxImeRoditelja_KeyPress;
             // 
             // labelImeStudenta
             // 
@@ -147,15 +155,19 @@
             textBoxImeStudenta.Name = "textBoxImeStudenta";
             textBoxImeStudenta.Size = new Size(151, 32);
             textBoxImeStudenta.TabIndex = 0;
+            textBoxImeStudenta.TextChanged += textBoxImeStudenta_TextChanged;
+            textBoxImeStudenta.KeyPress += textBoxImeStudenta_KeyPress;
             // 
             // buttonDodajStudenta
             // 
+            buttonDodajStudenta.Enabled = false;
             buttonDodajStudenta.Location = new Point(59, 343);
             buttonDodajStudenta.Name = "buttonDodajStudenta";
             buttonDodajStudenta.Size = new Size(221, 48);
             buttonDodajStudenta.TabIndex = 1;
             buttonDodajStudenta.Text = "Dodaj studenta";
             buttonDodajStudenta.UseVisualStyleBackColor = true;
+            buttonDodajStudenta.Click += buttonDodajStudenta_Click;
             // 
             // DodajStudentaForm
             // 
