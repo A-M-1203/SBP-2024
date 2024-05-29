@@ -2,6 +2,7 @@ using NHibernate;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using SBP_faza2.Forme;
+using SBP_faza2.Forme.PredmetiForme;
 
 namespace SBP_faza2
 {
@@ -46,6 +47,12 @@ namespace SBP_faza2
         {
             PrakticniProjektiForm prakticniProjektiForma = new PrakticniProjektiForm();
             prakticniProjektiForma.ShowDialog(this);
+        }
+
+        private void buttonPredmeti_Click(object sender, EventArgs e)
+        {
+            PredmetiForm predmetiForma = new PredmetiForm();
+            predmetiForma.ShowDialog(this);
         }
     }
 }

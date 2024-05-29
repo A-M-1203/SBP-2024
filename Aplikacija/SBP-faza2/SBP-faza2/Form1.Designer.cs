@@ -87,6 +87,7 @@
             buttonPredmeti.TabIndex = 3;
             buttonPredmeti.Text = "Predmeti";
             buttonPredmeti.UseVisualStyleBackColor = false;
+            buttonPredmeti.Click += buttonPredmeti_Click;
             // 
             // pictureBox1
             // 

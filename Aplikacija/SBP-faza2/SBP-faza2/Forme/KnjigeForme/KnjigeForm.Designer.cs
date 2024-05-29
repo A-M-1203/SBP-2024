@@ -35,7 +35,7 @@
             buttonAzuriraj = new Button();
             buttonDodaj = new Button();
             groupBoxAutori = new GroupBox();
-            button1 = new Button();
+            buttonAutori = new Button();
             groupBoxListaKnjiga.SuspendLayout();
             groupBoxKnjiga.SuspendLayout();
             groupBoxAutori.SuspendLayout();
@@ -114,7 +114,7 @@
             // 
             // groupBoxAutori
             // 
-            groupBoxAutori.Controls.Add(button1);
+            groupBoxAutori.Controls.Add(buttonAutori);
             groupBoxAutori.Location = new Point(747, 226);
             groupBoxAutori.Name = "groupBoxAutori";
             groupBoxAutori.Size = new Size(236, 94);
@@ -122,15 +122,16 @@
             groupBoxAutori.TabStop = false;
             groupBoxAutori.Text = "Autori";
             // 
-            // button1
+            // buttonAutori
             // 
-            button1.BackColor = SystemColors.ButtonFace;
-            button1.Location = new Point(9, 28);
-            button1.Name = "button1";
-            button1.Size = new Size(221, 48);
-            button1.TabIndex = 1;
-            button1.Text = "Autori";
-            button1.UseVisualStyleBackColor = false;
+            buttonAutori.BackColor = SystemColors.ButtonFace;
+            buttonAutori.Location = new Point(9, 28);
+            buttonAutori.Name = "buttonAutori";
+            buttonAutori.Size = new Size(221, 48);
+            buttonAutori.TabIndex = 1;
+            buttonAutori.Text = "Autori";
+            buttonAutori.UseVisualStyleBackColor = false;
+            buttonAutori.Click += buttonAutori_Click;
             // 
             // KnjigeForm
             // 
@@ -162,6 +163,6 @@
         private Button buttonAzuriraj;
         private Button buttonDodaj;
         private GroupBox groupBoxAutori;
-        private Button button1;
+        private Button buttonAutori;
     }
 }

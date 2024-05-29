@@ -130,6 +130,7 @@
             buttonRadovi.TabIndex = 3;
             buttonRadovi.Text = "Radovi";
             buttonRadovi.UseVisualStyleBackColor = false;
+            buttonRadovi.Click += buttonRadovi_Click;
             // 
             // buttonCasopisi
             // 

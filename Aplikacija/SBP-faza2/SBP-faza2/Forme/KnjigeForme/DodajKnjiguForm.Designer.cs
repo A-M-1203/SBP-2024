@@ -37,7 +37,7 @@
             textBoxIzdavac = new TextBox();
             labelIzdavac = new Label();
             labelGodinaIzdanja = new Label();
-            textBoxImeRoditelja = new TextBox();
+            textBoxGodinaIzdanja = new TextBox();
             labelNaslovKnjige = new Label();
             textBoxNaslovKnjige = new TextBox();
             groupBoxKnjigaPodaci.SuspendLayout();
@@ -61,7 +61,7 @@
             groupBoxKnjigaPodaci.Controls.Add(textBoxIzdavac);
             groupBoxKnjigaPodaci.Controls.Add(labelIzdavac);
             groupBoxKnjigaPodaci.Controls.Add(labelGodinaIzdanja);
-            groupBoxKnjigaPodaci.Controls.Add(textBoxImeRoditelja);
+            groupBoxKnjigaPodaci.Controls.Add(textBoxGodinaIzdanja);
             groupBoxKnjigaPodaci.Controls.Add(labelNaslovKnjige);
             groupBoxKnjigaPodaci.Controls.Add(textBoxNaslovKnjige);
             groupBoxKnjigaPodaci.Location = new Point(13, 12);
@@ -135,14 +135,14 @@
             labelGodinaIzdanja.TabIndex = 3;
             labelGodinaIzdanja.Text = "Godina izdanja";
             // 
-            // textBoxImeRoditelja
+            // textBoxGodinaIzdanja
             // 
-            textBoxImeRoditelja.BackColor = SystemColors.ButtonFace;
-            textBoxImeRoditelja.Location = new Point(158, 95);
-            textBoxImeRoditelja.MaxLength = 4;
-            textBoxImeRoditelja.Name = "textBoxImeRoditelja";
-            textBoxImeRoditelja.Size = new Size(321, 32);
-            textBoxImeRoditelja.TabIndex = 2;
+            textBoxGodinaIzdanja.BackColor = SystemColors.ButtonFace;
+            textBoxGodinaIzdanja.Location = new Point(158, 95);
+            textBoxGodinaIzdanja.MaxLength = 4;
+            textBoxGodinaIzdanja.Name = "textBoxGodinaIzdanja";
+            textBoxGodinaIzdanja.Size = new Size(321, 32);
+            textBoxGodinaIzdanja.TabIndex = 2;
             // 
             // labelNaslovKnjige
             // 
@@ -196,7 +196,7 @@
         private TextBox textBoxIzdavac;
         private Label labelIzdavac;
         private Label labelGodinaIzdanja;
-        private TextBox textBoxImeRoditelja;
+        private TextBox textBoxGodinaIzdanja;
         private Label labelNaslovKnjige;
         private TextBox textBoxNaslovKnjige;
     }

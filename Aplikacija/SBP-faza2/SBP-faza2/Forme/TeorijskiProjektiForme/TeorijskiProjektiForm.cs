@@ -1,4 +1,6 @@
-﻿using SBP_faza2.Forme.ClanciForme;
+﻿using NHibernate.Linq.Functions;
+using SBP_faza2.Forme.ClanciForme;
+using SBP_faza2.Forme.RadoviForme;
 using SBP_faza2.Forme.TeorijskiProjektiForme;
 using System;
 using System.Collections.Generic;
@@ -41,6 +43,12 @@ namespace SBP_faza2.Forme
         {
             ClanciForm clanciForm = new ClanciForm();
             clanciForm.ShowDialog(this);
+        }
+
+        private void buttonRadovi_Click(object sender, EventArgs e)
+        {
+            RadoviForm radoviForma = new RadoviForm();
+            radoviForma.ShowDialog(this);
         }
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBoxKnjigaPodaci = new GroupBox();
+            groupBoxClanakPodaci = new GroupBox();
             listBoxAutori = new ListBox();
             labelAutor = new Label();
             textBoxBrojCasopisa = new TextBox();
@@ -42,29 +42,29 @@
             labelNaslovKnjige = new Label();
             textBoxNaslovKnjige = new TextBox();
             buttonAzurirajClanak = new Button();
-            groupBoxKnjigaPodaci.SuspendLayout();
+            groupBoxClanakPodaci.SuspendLayout();
             SuspendLayout();
             // 
-            // groupBoxKnjigaPodaci
+            // groupBoxClanakPodaci
             // 
-            groupBoxKnjigaPodaci.Controls.Add(listBoxAutori);
-            groupBoxKnjigaPodaci.Controls.Add(labelAutor);
-            groupBoxKnjigaPodaci.Controls.Add(textBoxBrojCasopisa);
-            groupBoxKnjigaPodaci.Controls.Add(textBoxNazivCasopisa);
-            groupBoxKnjigaPodaci.Controls.Add(labelNazivCasopisa);
-            groupBoxKnjigaPodaci.Controls.Add(labelBrojCasopisa);
-            groupBoxKnjigaPodaci.Controls.Add(textBoxIssn);
-            groupBoxKnjigaPodaci.Controls.Add(labelIssn);
-            groupBoxKnjigaPodaci.Controls.Add(labelGodinaIzdanja);
-            groupBoxKnjigaPodaci.Controls.Add(textBoxImeRoditelja);
-            groupBoxKnjigaPodaci.Controls.Add(labelNaslovKnjige);
-            groupBoxKnjigaPodaci.Controls.Add(textBoxNaslovKnjige);
-            groupBoxKnjigaPodaci.Location = new Point(12, 12);
-            groupBoxKnjigaPodaci.Name = "groupBoxKnjigaPodaci";
-            groupBoxKnjigaPodaci.Size = new Size(493, 448);
-            groupBoxKnjigaPodaci.TabIndex = 5;
-            groupBoxKnjigaPodaci.TabStop = false;
-            groupBoxKnjigaPodaci.Text = "Podaci o članku";
+            groupBoxClanakPodaci.Controls.Add(listBoxAutori);
+            groupBoxClanakPodaci.Controls.Add(labelAutor);
+            groupBoxClanakPodaci.Controls.Add(textBoxBrojCasopisa);
+            groupBoxClanakPodaci.Controls.Add(textBoxNazivCasopisa);
+            groupBoxClanakPodaci.Controls.Add(labelNazivCasopisa);
+            groupBoxClanakPodaci.Controls.Add(labelBrojCasopisa);
+            groupBoxClanakPodaci.Controls.Add(textBoxIssn);
+            groupBoxClanakPodaci.Controls.Add(labelIssn);
+            groupBoxClanakPodaci.Controls.Add(labelGodinaIzdanja);
+            groupBoxClanakPodaci.Controls.Add(textBoxImeRoditelja);
+            groupBoxClanakPodaci.Controls.Add(labelNaslovKnjige);
+            groupBoxClanakPodaci.Controls.Add(textBoxNaslovKnjige);
+            groupBoxClanakPodaci.Location = new Point(12, 12);
+            groupBoxClanakPodaci.Name = "groupBoxClanakPodaci";
+            groupBoxClanakPodaci.Size = new Size(493, 448);
+            groupBoxClanakPodaci.TabIndex = 5;
+            groupBoxClanakPodaci.TabStop = false;
+            groupBoxClanakPodaci.Text = "Podaci o članku";
             // 
             // listBoxAutori
             // 
@@ -191,21 +191,21 @@
             BackColor = Color.DarkSlateGray;
             ClientSize = new Size(518, 557);
             Controls.Add(buttonAzurirajClanak);
-            Controls.Add(groupBoxKnjigaPodaci);
+            Controls.Add(groupBoxClanakPodaci);
             Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AzurirajClankeForm";
             Text = "Azuriraj članke";
-            groupBoxKnjigaPodaci.ResumeLayout(false);
-            groupBoxKnjigaPodaci.PerformLayout();
+            groupBoxClanakPodaci.ResumeLayout(false);
+            groupBoxClanakPodaci.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private GroupBox groupBoxKnjigaPodaci;
+        private GroupBox groupBoxClanakPodaci;
         private ListBox listBoxAutori;
         private Label labelAutor;
         private TextBox textBoxBrojCasopisa;

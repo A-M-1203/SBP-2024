@@ -1,4 +1,5 @@
-﻿using SBP_faza2.Forme.KnjigeForme;
+﻿using SBP_faza2.Forme.AutoriForme;
+using SBP_faza2.Forme.KnjigeForme;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,6 +29,12 @@ namespace SBP_faza2.Forme
         {
             AzurirajKnjiguForm azurirajKnjiguForma = new AzurirajKnjiguForm();
             azurirajKnjiguForma.ShowDialog(this);
+        }
+
+        private void buttonAutori_Click(object sender, EventArgs e)
+        {
+            AutoriForm autoriForma = new AutoriForm();
+            autoriForma.ShowDialog(this);
         }
     }
 }

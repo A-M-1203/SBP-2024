@@ -9,25 +9,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SBP_faza2.Forme.ClanciForme
+namespace SBP_faza2.Forme.RadoviForme
 {
-    public partial class ClanciForm : Form
+    public partial class RadoviForm : Form
     {
-        public ClanciForm()
+        public RadoviForm()
         {
             InitializeComponent();
         }
 
         private void buttonDodaj_Click(object sender, EventArgs e)
         {
-            DodajClankeForm dodajClankeForma = new DodajClankeForm();
-            dodajClankeForma.ShowDialog(this);
+            DodajRadForm dodajRadForma = new DodajRadForm();
+            dodajRadForma.ShowDialog(this);
         }
 
         private void buttonAzuriraj_Click(object sender, EventArgs e)
         {
-            AzurirajClankeForm azurirajClankeForma = new AzurirajClankeForm();
-            azurirajClankeForma.ShowDialog(this);
+            AzurirajRadForm azurirajRadForma = new AzurirajRadForm();
+            azurirajRadForma.ShowDialog(this);
         }
 
         private void button1_Click(object sender, EventArgs e)

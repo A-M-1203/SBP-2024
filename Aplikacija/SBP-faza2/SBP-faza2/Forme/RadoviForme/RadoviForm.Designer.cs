@@ -1,6 +1,6 @@
-﻿namespace SBP_faza2.Forme.ClanciForme
+﻿namespace SBP_faza2.Forme.RadoviForme
 {
-    partial class ClanciForm
+    partial class RadoviForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,30 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBoxListaClanaka = new GroupBox();
+            groupBoxListaRadova = new GroupBox();
             listViewStudenti = new ListView();
-            groupBoxKnjiga = new GroupBox();
+            groupBoxRad = new GroupBox();
             buttonObrisiStudenta = new Button();
             buttonAzuriraj = new Button();
             buttonDodaj = new Button();
             groupBoxAutori = new GroupBox();
             button1 = new Button();
-            groupBoxListaClanaka.SuspendLayout();
-            groupBoxKnjiga.SuspendLayout();
+            groupBoxListaRadova.SuspendLayout();
+            groupBoxRad.SuspendLayout();
             groupBoxAutori.SuspendLayout();
             SuspendLayout();
             // 
-            // groupBoxListaClanaka
+            // groupBoxListaRadova
             // 
-            groupBoxListaClanaka.Controls.Add(listViewStudenti);
-            groupBoxListaClanaka.Location = new Point(13, 13);
-            groupBoxListaClanaka.Margin = new Padding(4);
-            groupBoxListaClanaka.Name = "groupBoxListaClanaka";
-            groupBoxListaClanaka.Padding = new Padding(4);
-            groupBoxListaClanaka.Size = new Size(726, 581);
-            groupBoxListaClanaka.TabIndex = 4;
-            groupBoxListaClanaka.TabStop = false;
-            groupBoxListaClanaka.Text = "Pregled članaka";
+            groupBoxListaRadova.Controls.Add(listViewStudenti);
+            groupBoxListaRadova.Location = new Point(13, 10);
+            groupBoxListaRadova.Margin = new Padding(4);
+            groupBoxListaRadova.Name = "groupBoxListaRadova";
+            groupBoxListaRadova.Padding = new Padding(4);
+            groupBoxListaRadova.Size = new Size(726, 581);
+            groupBoxListaRadova.TabIndex = 4;
+            groupBoxListaRadova.TabStop = false;
+            groupBoxListaRadova.Text = "Pregled radova";
             // 
             // listViewStudenti
             // 
@@ -62,20 +62,20 @@
             listViewStudenti.TabIndex = 0;
             listViewStudenti.UseCompatibleStateImageBehavior = false;
             // 
-            // groupBoxKnjiga
+            // groupBoxRad
             // 
-            groupBoxKnjiga.Controls.Add(buttonObrisiStudenta);
-            groupBoxKnjiga.Controls.Add(buttonAzuriraj);
-            groupBoxKnjiga.Controls.Add(buttonDodaj);
-            groupBoxKnjiga.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBoxKnjiga.Location = new Point(751, 13);
-            groupBoxKnjiga.Margin = new Padding(4);
-            groupBoxKnjiga.Name = "groupBoxKnjiga";
-            groupBoxKnjiga.Padding = new Padding(4);
-            groupBoxKnjiga.Size = new Size(236, 198);
-            groupBoxKnjiga.TabIndex = 5;
-            groupBoxKnjiga.TabStop = false;
-            groupBoxKnjiga.Text = "Članak";
+            groupBoxRad.Controls.Add(buttonObrisiStudenta);
+            groupBoxRad.Controls.Add(buttonAzuriraj);
+            groupBoxRad.Controls.Add(buttonDodaj);
+            groupBoxRad.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBoxRad.Location = new Point(747, 10);
+            groupBoxRad.Margin = new Padding(4);
+            groupBoxRad.Name = "groupBoxRad";
+            groupBoxRad.Padding = new Padding(4);
+            groupBoxRad.Size = new Size(236, 198);
+            groupBoxRad.TabIndex = 5;
+            groupBoxRad.TabStop = false;
+            groupBoxRad.Text = "Rad";
             // 
             // buttonObrisiStudenta
             // 
@@ -115,7 +115,7 @@
             // groupBoxAutori
             // 
             groupBoxAutori.Controls.Add(button1);
-            groupBoxAutori.Location = new Point(751, 232);
+            groupBoxAutori.Location = new Point(747, 227);
             groupBoxAutori.Name = "groupBoxAutori";
             groupBoxAutori.Size = new Size(236, 94);
             groupBoxAutori.TabIndex = 11;
@@ -133,32 +133,32 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // ClanciForm
+            // RadoviForm
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateGray;
-            ClientSize = new Size(1000, 606);
+            ClientSize = new Size(992, 604);
             Controls.Add(groupBoxAutori);
-            Controls.Add(groupBoxKnjiga);
-            Controls.Add(groupBoxListaClanaka);
+            Controls.Add(groupBoxRad);
+            Controls.Add(groupBoxListaRadova);
             Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "ClanciForm";
-            Text = "Članci";
-            groupBoxListaClanaka.ResumeLayout(false);
-            groupBoxKnjiga.ResumeLayout(false);
+            Name = "RadoviForm";
+            Text = "RadoviForm";
+            groupBoxListaRadova.ResumeLayout(false);
+            groupBoxRad.ResumeLayout(false);
             groupBoxAutori.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private GroupBox groupBoxListaClanaka;
+        private GroupBox groupBoxListaRadova;
         private ListView listViewStudenti;
-        private GroupBox groupBoxKnjiga;
+        private GroupBox groupBoxRad;
         private Button buttonObrisiStudenta;
         private Button buttonAzuriraj;
         private Button buttonDodaj;
