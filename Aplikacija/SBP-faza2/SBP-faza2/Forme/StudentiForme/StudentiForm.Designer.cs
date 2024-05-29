@@ -177,6 +177,7 @@
             buttonGrupe.TabIndex = 0;
             buttonGrupe.Text = "Grupe";
             buttonGrupe.UseVisualStyleBackColor = false;
+            buttonGrupe.Click += buttonGrupe_Click;
             // 
             // StudentiForm
             // 

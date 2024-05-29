@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SBP_faza2.Forme.GrupeForme;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -39,6 +40,12 @@ namespace SBP_faza2.Forme
         {
             TeorijskiProjektiForm teorijskiProjektiForm = new TeorijskiProjektiForm();
             teorijskiProjektiForm.ShowDialog(this);
+        }
+
+        private void buttonGrupe_Click(object sender, EventArgs e)
+        {
+            GrupeForm grupeForma = new GrupeForm();
+            grupeForma.ShowDialog();
         }
     }
 }

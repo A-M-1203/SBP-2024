@@ -82,6 +82,7 @@
             buttonIzvestaji.TabIndex = 1;
             buttonIzvestaji.Text = "Izveštaji za projekat";
             buttonIzvestaji.UseVisualStyleBackColor = false;
+            buttonIzvestaji.Click += buttonIzvestaji_Click;
             // 
             // groupBoxPreporuceneStranice
             // 

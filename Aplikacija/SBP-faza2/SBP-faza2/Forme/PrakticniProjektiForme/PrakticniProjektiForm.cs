@@ -1,4 +1,5 @@
-﻿using SBP_faza2.Forme.PrakticniProjektiForme;
+﻿using SBP_faza2.Forme.IzvestajiForme;
+using SBP_faza2.Forme.PrakticniProjektiForme;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,6 +29,12 @@ namespace SBP_faza2.Forme
         {
             AzurirajPrakticniProjekatForm azurirajPrakticniProjekatForma = new AzurirajPrakticniProjekatForm();
             azurirajPrakticniProjekatForma.ShowDialog(this);
+        }
+
+        private void buttonIzvestaji_Click(object sender, EventArgs e)
+        {
+            IzvestajiForm izvestajiForma = new IzvestajiForm();
+            izvestajiForma.ShowDialog();
         }
     }
 }
