@@ -89,6 +89,7 @@
             comboBoxSemestar.Name = "comboBoxSemestar";
             comboBoxSemestar.Size = new Size(286, 32);
             comboBoxSemestar.TabIndex = 7;
+            comboBoxSemestar.SelectedIndexChanged += comboBoxSemestar_SelectedIndexChanged;
             // 
             // comboBoxKatedra
             // 
@@ -99,6 +100,7 @@
             comboBoxKatedra.Name = "comboBoxKatedra";
             comboBoxKatedra.Size = new Size(286, 32);
             comboBoxKatedra.TabIndex = 6;
+            comboBoxKatedra.SelectedIndexChanged += comboBoxKatedra_SelectedIndexChanged;
             // 
             // textBoxSifraPredmeta
             // 
@@ -107,6 +109,8 @@
             textBoxSifraPredmeta.Name = "textBoxSifraPredmeta";
             textBoxSifraPredmeta.Size = new Size(286, 32);
             textBoxSifraPredmeta.TabIndex = 5;
+            textBoxSifraPredmeta.TextChanged += textBoxSifraPredmeta_TextChanged;
+            textBoxSifraPredmeta.KeyPress += textBoxSifraPredmeta_KeyPress;
             // 
             // textBoxNazivPredmeta
             // 
@@ -115,6 +119,8 @@
             textBoxNazivPredmeta.Name = "textBoxNazivPredmeta";
             textBoxNazivPredmeta.Size = new Size(286, 32);
             textBoxNazivPredmeta.TabIndex = 4;
+            textBoxNazivPredmeta.TextChanged += textBoxNazivPredmeta_TextChanged;
+            textBoxNazivPredmeta.KeyPress += textBoxNazivPredmeta_KeyPress;
             // 
             // labelSemestar
             // 
@@ -154,14 +160,16 @@
             // 
             // buttonAzurirajPredmet
             // 
+            buttonAzurirajPredmet.Enabled = false;
             buttonAzurirajPredmet.Location = new Point(119, 421);
             buttonAzurirajPredmet.Name = "buttonAzurirajPredmet";
             buttonAzurirajPredmet.Size = new Size(221, 48);
             buttonAzurirajPredmet.TabIndex = 26;
             buttonAzurirajPredmet.Text = "Ažuriraj predmet";
             buttonAzurirajPredmet.UseVisualStyleBackColor = true;
+            buttonAzurirajPredmet.Click += buttonAzurirajPredmet_Click;
             // 
-            // AzurirajPredmet
+            // AzurirajPredmetForm
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -170,11 +178,12 @@
             Controls.Add(buttonAzurirajPredmet);
             Controls.Add(groupBoxPredmetPodaci);
             Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "AzurirajPredmet";
+            Name = "AzurirajPredmetForm";
             Text = "Azuriraj predmet";
+            Load += AzurirajPredmetForm_Load;
             groupBoxPredmetPodaci.ResumeLayout(false);
             groupBoxPredmetPodaci.PerformLayout();
             ResumeLayout(false);

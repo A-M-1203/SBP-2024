@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using FluentNHibernate.Conventions;
+using NHibernate;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using SBP_faza2.Forme.GrupeForme;
@@ -56,23 +57,28 @@ namespace SBP_faza2.Forme
         {
             try
             {
-                ISession? session = DataLayer.GetSession();
-                if (session != null)
+                using (ISession? session = DataLayer.GetSession())
                 {
-                    IQuery query = session.CreateQuery("select s.Id, s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer from Student as s");
-                    IEnumerable<object[]> studenti = query.Enumerable<object[]>();
-
-                    foreach (object[] s in studenti)
+                    if (session != null)
                     {
-                        ListViewItem listViewItem = new ListViewItem(new string[] { s[0].ToString()!, (string)s[1], (string)s[2], (string)s[3], (string)s[4], (string)s[5] });
-                        listViewStudenti.Items.Add(listViewItem);
-                    }
+                        IQuery query = session.CreateQuery("select s.Id, s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer from Student as s");
+                        IList<object[]> studenti = query.List<object[]>();
 
-                    listViewStudenti.Refresh();
-                }
-                else
-                {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                        if (studenti.Any())
+                        {
+                            foreach (object[] s in studenti)
+                            {
+                                ListViewItem listViewItem = new ListViewItem(new string[] { s[0].ToString()!, (string)s[1], (string)s[2], (string)s[3], (string)s[4], (string)s[5] });
+                                listViewStudenti.Items.Add(listViewItem);
+                            }
+
+                            listViewStudenti.Refresh();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    }
                 }
             }
             catch (Exception ec)
@@ -87,6 +93,9 @@ namespace SBP_faza2.Forme
             {
                 buttonAzuriraj.Enabled = true;
                 buttonObrisiStudenta.Enabled = true;
+                buttonPrakticniProjekti.Enabled = true;
+                buttonTeorijskiProjekti.Enabled = true;
+                buttonGrupe.Enabled = true;
             }
         }
 
@@ -97,8 +106,8 @@ namespace SBP_faza2.Forme
                 ISession? session = DataLayer.GetSession();
                 if (session != null)
                 {
-                    int indeks = int.Parse(listViewStudenti.SelectedItems[0].SubItems[0].Text);
-                    Student student = session.Load<Student>(indeks);
+                    int id = int.Parse(listViewStudenti.SelectedItems[0].SubItems[0].Text);
+                    Student student = session.Load<Student>(id);
 
                     session.Delete(student);
                     session.Flush();
@@ -122,27 +131,35 @@ namespace SBP_faza2.Forme
         {
             buttonAzuriraj.Enabled = false;
             buttonObrisiStudenta.Enabled = false;
+            buttonPrakticniProjekti.Enabled = false;
+            buttonTeorijskiProjekti.Enabled = false;
+            buttonGrupe.Enabled = false;
+
             try
             {
-                ISession? session = DataLayer.GetSession();
-                if (session != null)
+                using (ISession? session = DataLayer.GetSession())
                 {
-                    IQuery query = session.CreateQuery("select s.Id, s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer from Student as s");
-                    IEnumerable<object[]> studenti = query.Enumerable<object[]>();
-
-                    listViewStudenti.Items.Clear();
-
-                    foreach (object[] s in studenti)
+                    if (session != null)
                     {
-                        ListViewItem listViewItem = new ListViewItem(new string[] { s[0].ToString()!, (string)s[1], (string)s[2], (string)s[3], (string)s[4], (string)s[5] });
-                        listViewStudenti.Items.Add(listViewItem);
-                    }
+                        IQuery query = session.CreateQuery("select s.Id, s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer from Student as s");
+                        IList<object[]> studenti = query.List<object[]>();
 
-                    listViewStudenti.Refresh();
-                }
-                else
-                {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                        if (studenti.Any())
+                        {
+                            listViewStudenti.Items.Clear();
+                            foreach (object[] s in studenti)
+                            {
+                                ListViewItem listViewItem = new ListViewItem(new string[] { s[0].ToString()!, (string)s[1], (string)s[2], (string)s[3], (string)s[4], (string)s[5] });
+                                listViewStudenti.Items.Add(listViewItem);
+                            }
+
+                            listViewStudenti.Refresh();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    }
                 }
             }
             catch (Exception ec)

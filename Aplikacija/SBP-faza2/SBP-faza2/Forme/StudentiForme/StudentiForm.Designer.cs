@@ -178,6 +178,7 @@
             // buttonTeorijskiProjekti
             // 
             buttonTeorijskiProjekti.BackColor = SystemColors.ButtonFace;
+            buttonTeorijskiProjekti.Enabled = false;
             buttonTeorijskiProjekti.Location = new Point(9, 104);
             buttonTeorijskiProjekti.Margin = new Padding(4);
             buttonTeorijskiProjekti.Name = "buttonTeorijskiProjekti";
@@ -190,6 +191,7 @@
             // buttonPrakticniProjekti
             // 
             buttonPrakticniProjekti.BackColor = SystemColors.ButtonFace;
+            buttonPrakticniProjekti.Enabled = false;
             buttonPrakticniProjekti.Location = new Point(9, 33);
             buttonPrakticniProjekti.Margin = new Padding(4);
             buttonPrakticniProjekti.Name = "buttonPrakticniProjekti";
@@ -215,6 +217,7 @@
             // buttonGrupe
             // 
             buttonGrupe.BackColor = SystemColors.ButtonFace;
+            buttonGrupe.Enabled = false;
             buttonGrupe.Location = new Point(8, 31);
             buttonGrupe.Margin = new Padding(4);
             buttonGrupe.Name = "buttonGrupe";

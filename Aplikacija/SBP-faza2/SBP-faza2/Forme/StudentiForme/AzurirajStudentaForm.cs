@@ -19,17 +19,17 @@ namespace SBP_faza2.Forme
         {
             InitializeComponent();
             _student = null;
-            _indeks = null;
+            _id = null;
         }
 
         private readonly ListViewItem? _student;
-        private readonly int? _indeks;
+        private readonly int? _id;
 
         public AzurirajStudentaForm(ListViewItem student)
         {
             InitializeComponent();
             _student = student;
-            _indeks = int.Parse(_student.SubItems[0].Text);
+            _id = int.Parse(_student.SubItems[0].Text);
         }
 
         private void textBoxImeStudenta_KeyPress(object sender, KeyPressEventArgs e)
@@ -72,7 +72,7 @@ namespace SBP_faza2.Forme
 
                 if (session != null)
                 {
-                    Student student = session.Load<Student>(_indeks);
+                    Student student = session.Load<Student>(_id);
                     student.LicnoIme = textBoxImeStudenta.Text;
                     student.ImeRoditelja = textBoxImeRoditelja.Text;
                     student.Prezime = textBoxPrezimeStudenta.Text;

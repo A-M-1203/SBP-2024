@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             groupBoxPredmeta = new GroupBox();
-            listView1 = new ListView();
+            listViewPredmeti = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
+            columnHeader5 = new ColumnHeader();
             groupBoxPredmet = new GroupBox();
             buttonObrisi = new Button();
             buttonAzuriraj = new Button();
@@ -44,7 +49,7 @@
             // 
             // groupBoxPredmeta
             // 
-            groupBoxPredmeta.Controls.Add(listView1);
+            groupBoxPredmeta.Controls.Add(listViewPredmeti);
             groupBoxPredmeta.Location = new Point(12, 12);
             groupBoxPredmeta.Name = "groupBoxPredmeta";
             groupBoxPredmeta.Size = new Size(726, 580);
@@ -52,14 +57,44 @@
             groupBoxPredmeta.TabStop = false;
             groupBoxPredmeta.Text = "Lista predmeta";
             // 
-            // listView1
+            // listViewPredmeti
             // 
-            listView1.BackColor = SystemColors.ButtonFace;
-            listView1.Location = new Point(8, 31);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(712, 543);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
+            listViewPredmeti.BackColor = SystemColors.ButtonFace;
+            listViewPredmeti.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+            listViewPredmeti.FullRowSelect = true;
+            listViewPredmeti.GridLines = true;
+            listViewPredmeti.Location = new Point(8, 31);
+            listViewPredmeti.Name = "listViewPredmeti";
+            listViewPredmeti.Size = new Size(712, 543);
+            listViewPredmeti.TabIndex = 0;
+            listViewPredmeti.UseCompatibleStateImageBehavior = false;
+            listViewPredmeti.View = View.Details;
+            listViewPredmeti.SelectedIndexChanged += listViewPredmeti_SelectedIndexChanged;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Id";
+            columnHeader1.Width = 90;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Naziv";
+            columnHeader2.Width = 200;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Šifra";
+            columnHeader3.Width = 100;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Semestar";
+            columnHeader4.Width = 100;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Katedra";
+            columnHeader5.Width = 200;
             // 
             // groupBoxPredmet
             // 
@@ -76,6 +111,7 @@
             // buttonObrisi
             // 
             buttonObrisi.BackColor = SystemColors.ButtonFace;
+            buttonObrisi.Enabled = false;
             buttonObrisi.Location = new Point(8, 143);
             buttonObrisi.Margin = new Padding(4);
             buttonObrisi.Name = "buttonObrisi";
@@ -83,10 +119,12 @@
             buttonObrisi.TabIndex = 3;
             buttonObrisi.Text = "Obriši";
             buttonObrisi.UseVisualStyleBackColor = false;
+            buttonObrisi.Click += buttonObrisi_Click;
             // 
             // buttonAzuriraj
             // 
             buttonAzuriraj.BackColor = SystemColors.ButtonFace;
+            buttonAzuriraj.Enabled = false;
             buttonAzuriraj.Location = new Point(8, 89);
             buttonAzuriraj.Margin = new Padding(4);
             buttonAzuriraj.Name = "buttonAzuriraj";
@@ -122,6 +160,7 @@
             // buttonTeorijskiProjekti
             // 
             buttonTeorijskiProjekti.BackColor = SystemColors.ButtonFace;
+            buttonTeorijskiProjekti.Enabled = false;
             buttonTeorijskiProjekti.Location = new Point(7, 88);
             buttonTeorijskiProjekti.Margin = new Padding(4);
             buttonTeorijskiProjekti.Name = "buttonTeorijskiProjekti";
@@ -134,6 +173,7 @@
             // buttonPrakticniProjekti
             // 
             buttonPrakticniProjekti.BackColor = SystemColors.ButtonFace;
+            buttonPrakticniProjekti.Enabled = false;
             buttonPrakticniProjekti.Location = new Point(7, 32);
             buttonPrakticniProjekti.Margin = new Padding(4);
             buttonPrakticniProjekti.Name = "buttonPrakticniProjekti";
@@ -158,6 +198,8 @@
             MinimizeBox = false;
             Name = "PredmetiForm";
             Text = "Predmeti";
+            Activated += PredmetiForm_Activated;
+            Load += PredmetiForm_Load;
             groupBoxPredmeta.ResumeLayout(false);
             groupBoxPredmet.ResumeLayout(false);
             groupBoxProjekti.ResumeLayout(false);
@@ -167,7 +209,7 @@
         #endregion
 
         private GroupBox groupBoxPredmeta;
-        private ListView listView1;
+        private ListView listViewPredmeti;
         private GroupBox groupBoxPredmet;
         private Button buttonObrisi;
         private Button buttonAzuriraj;
@@ -175,5 +217,10 @@
         private GroupBox groupBoxProjekti;
         private Button buttonTeorijskiProjekti;
         private Button buttonPrakticniProjekti;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader columnHeader5;
     }
 }

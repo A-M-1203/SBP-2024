@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             groupBoxPredmetPodaci = new GroupBox();
-            labelNazivPredmeta = new Label();
-            labelSifraPredmeta = new Label();
-            labelKatedra = new Label();
-            labelSemestar = new Label();
-            textBoxNazivPredmeta = new TextBox();
-            textBoxSifraPredmeta = new TextBox();
-            comboBoxKatedra = new ComboBox();
-            comboBoxSemestar = new ComboBox();
-            labelProjekti = new Label();
             listBoxProjekti = new ListBox();
+            labelProjekti = new Label();
+            comboBoxSemestar = new ComboBox();
+            comboBoxKatedra = new ComboBox();
+            textBoxSifraPredmeta = new TextBox();
+            textBoxNazivPredmeta = new TextBox();
+            labelSemestar = new Label();
+            labelKatedra = new Label();
+            labelSifraPredmeta = new Label();
+            labelNazivPredmeta = new Label();
             buttonDodajPredmet = new Button();
             groupBoxPredmetPodaci.SuspendLayout();
             SuspendLayout();
@@ -62,86 +62,6 @@
             groupBoxPredmetPodaci.TabStop = false;
             groupBoxPredmetPodaci.Text = "Podaci o predmetu";
             // 
-            // labelNazivPredmeta
-            // 
-            labelNazivPredmeta.AutoSize = true;
-            labelNazivPredmeta.Location = new Point(15, 48);
-            labelNazivPredmeta.Name = "labelNazivPredmeta";
-            labelNazivPredmeta.Size = new Size(55, 24);
-            labelNazivPredmeta.TabIndex = 0;
-            labelNazivPredmeta.Text = "Naziv";
-            // 
-            // labelSifraPredmeta
-            // 
-            labelSifraPredmeta.AutoSize = true;
-            labelSifraPredmeta.Location = new Point(15, 107);
-            labelSifraPredmeta.Name = "labelSifraPredmeta";
-            labelSifraPredmeta.Size = new Size(47, 24);
-            labelSifraPredmeta.TabIndex = 1;
-            labelSifraPredmeta.Text = "Šifra";
-            // 
-            // labelKatedra
-            // 
-            labelKatedra.AutoSize = true;
-            labelKatedra.Location = new Point(15, 161);
-            labelKatedra.Name = "labelKatedra";
-            labelKatedra.Size = new Size(75, 24);
-            labelKatedra.TabIndex = 2;
-            labelKatedra.Text = "Katedra";
-            // 
-            // labelSemestar
-            // 
-            labelSemestar.AutoSize = true;
-            labelSemestar.Location = new Point(15, 218);
-            labelSemestar.Name = "labelSemestar";
-            labelSemestar.Size = new Size(87, 24);
-            labelSemestar.TabIndex = 3;
-            labelSemestar.Text = "Semestar";
-            // 
-            // textBoxNazivPredmeta
-            // 
-            textBoxNazivPredmeta.Location = new Point(126, 45);
-            textBoxNazivPredmeta.MaxLength = 50;
-            textBoxNazivPredmeta.Name = "textBoxNazivPredmeta";
-            textBoxNazivPredmeta.Size = new Size(286, 32);
-            textBoxNazivPredmeta.TabIndex = 4;
-            // 
-            // textBoxSifraPredmeta
-            // 
-            textBoxSifraPredmeta.Location = new Point(126, 104);
-            textBoxSifraPredmeta.MaxLength = 8;
-            textBoxSifraPredmeta.Name = "textBoxSifraPredmeta";
-            textBoxSifraPredmeta.Size = new Size(286, 32);
-            textBoxSifraPredmeta.TabIndex = 5;
-            // 
-            // comboBoxKatedra
-            // 
-            comboBoxKatedra.FormattingEnabled = true;
-            comboBoxKatedra.Items.AddRange(new object[] { "Automatika", "Elektronika", "Energetika", "Matematika", "Merenja", "Mikroelektronika", "Računarstvo", "Telekomunikacije", "Teorijska elektrotehnika", "Opšte obrazovni predmeti" });
-            comboBoxKatedra.Location = new Point(126, 158);
-            comboBoxKatedra.MaxDropDownItems = 10;
-            comboBoxKatedra.Name = "comboBoxKatedra";
-            comboBoxKatedra.Size = new Size(286, 32);
-            comboBoxKatedra.TabIndex = 6;
-            // 
-            // comboBoxSemestar
-            // 
-            comboBoxSemestar.FormattingEnabled = true;
-            comboBoxSemestar.Items.AddRange(new object[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" });
-            comboBoxSemestar.Location = new Point(126, 215);
-            comboBoxSemestar.Name = "comboBoxSemestar";
-            comboBoxSemestar.Size = new Size(286, 32);
-            comboBoxSemestar.TabIndex = 7;
-            // 
-            // labelProjekti
-            // 
-            labelProjekti.AutoSize = true;
-            labelProjekti.Location = new Point(15, 276);
-            labelProjekti.Name = "labelProjekti";
-            labelProjekti.Size = new Size(73, 24);
-            labelProjekti.TabIndex = 8;
-            labelProjekti.Text = "Projekti";
-            // 
             // listBoxProjekti
             // 
             listBoxProjekti.FormattingEnabled = true;
@@ -152,16 +72,106 @@
             listBoxProjekti.Size = new Size(286, 100);
             listBoxProjekti.TabIndex = 9;
             // 
+            // labelProjekti
+            // 
+            labelProjekti.AutoSize = true;
+            labelProjekti.Location = new Point(15, 276);
+            labelProjekti.Name = "labelProjekti";
+            labelProjekti.Size = new Size(73, 24);
+            labelProjekti.TabIndex = 8;
+            labelProjekti.Text = "Projekti";
+            // 
+            // comboBoxSemestar
+            // 
+            comboBoxSemestar.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxSemestar.FormattingEnabled = true;
+            comboBoxSemestar.Items.AddRange(new object[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" });
+            comboBoxSemestar.Location = new Point(126, 215);
+            comboBoxSemestar.Name = "comboBoxSemestar";
+            comboBoxSemestar.Size = new Size(286, 32);
+            comboBoxSemestar.TabIndex = 7;
+            comboBoxSemestar.SelectedIndexChanged += comboBoxSemestar_SelectedIndexChanged;
+            // 
+            // comboBoxKatedra
+            // 
+            comboBoxKatedra.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxKatedra.FormattingEnabled = true;
+            comboBoxKatedra.Items.AddRange(new object[] { "Automatika", "Elektronika", "Energetika", "Matematika", "Merenja", "Mikroelektronika", "Računarstvo", "Telekomunikacije", "Teorijska elektrotehnika", "Opšte obrazovni predmeti" });
+            comboBoxKatedra.Location = new Point(126, 158);
+            comboBoxKatedra.MaxDropDownItems = 10;
+            comboBoxKatedra.Name = "comboBoxKatedra";
+            comboBoxKatedra.Size = new Size(286, 32);
+            comboBoxKatedra.TabIndex = 6;
+            comboBoxKatedra.SelectedIndexChanged += comboBoxKatedra_SelectedIndexChanged;
+            // 
+            // textBoxSifraPredmeta
+            // 
+            textBoxSifraPredmeta.Location = new Point(126, 104);
+            textBoxSifraPredmeta.MaxLength = 8;
+            textBoxSifraPredmeta.Name = "textBoxSifraPredmeta";
+            textBoxSifraPredmeta.Size = new Size(286, 32);
+            textBoxSifraPredmeta.TabIndex = 5;
+            textBoxSifraPredmeta.TextChanged += textBoxSifraPredmeta_TextChanged;
+            textBoxSifraPredmeta.KeyPress += textBoxSifraPredmeta_KeyPress;
+            // 
+            // textBoxNazivPredmeta
+            // 
+            textBoxNazivPredmeta.Location = new Point(126, 45);
+            textBoxNazivPredmeta.MaxLength = 50;
+            textBoxNazivPredmeta.Name = "textBoxNazivPredmeta";
+            textBoxNazivPredmeta.Size = new Size(286, 32);
+            textBoxNazivPredmeta.TabIndex = 4;
+            textBoxNazivPredmeta.TextChanged += textBoxNazivPredmeta_TextChanged;
+            textBoxNazivPredmeta.KeyPress += textBoxNazivPredmeta_KeyPress;
+            // 
+            // labelSemestar
+            // 
+            labelSemestar.AutoSize = true;
+            labelSemestar.Location = new Point(15, 218);
+            labelSemestar.Name = "labelSemestar";
+            labelSemestar.Size = new Size(87, 24);
+            labelSemestar.TabIndex = 3;
+            labelSemestar.Text = "Semestar";
+            // 
+            // labelKatedra
+            // 
+            labelKatedra.AutoSize = true;
+            labelKatedra.Location = new Point(15, 161);
+            labelKatedra.Name = "labelKatedra";
+            labelKatedra.Size = new Size(75, 24);
+            labelKatedra.TabIndex = 2;
+            labelKatedra.Text = "Katedra";
+            // 
+            // labelSifraPredmeta
+            // 
+            labelSifraPredmeta.AutoSize = true;
+            labelSifraPredmeta.Location = new Point(15, 107);
+            labelSifraPredmeta.Name = "labelSifraPredmeta";
+            labelSifraPredmeta.Size = new Size(47, 24);
+            labelSifraPredmeta.TabIndex = 1;
+            labelSifraPredmeta.Text = "Šifra";
+            // 
+            // labelNazivPredmeta
+            // 
+            labelNazivPredmeta.AutoSize = true;
+            labelNazivPredmeta.Location = new Point(15, 48);
+            labelNazivPredmeta.Name = "labelNazivPredmeta";
+            labelNazivPredmeta.Size = new Size(55, 24);
+            labelNazivPredmeta.TabIndex = 0;
+            labelNazivPredmeta.Text = "Naziv";
+            // 
             // buttonDodajPredmet
             // 
+            buttonDodajPredmet.Enabled = false;
             buttonDodajPredmet.Location = new Point(119, 421);
             buttonDodajPredmet.Name = "buttonDodajPredmet";
             buttonDodajPredmet.Size = new Size(221, 48);
             buttonDodajPredmet.TabIndex = 25;
             buttonDodajPredmet.Text = "Dodaj predmet";
             buttonDodajPredmet.UseVisualStyleBackColor = true;
+            buttonDodajPredmet.Click += buttonDodajPredmet_Click;
             // 
-            // DodajPredmet
+            // DodajPredmetForm
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -170,10 +180,10 @@
             Controls.Add(buttonDodajPredmet);
             Controls.Add(groupBoxPredmetPodaci);
             Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "DodajPredmet";
+            Name = "DodajPredmetForm";
             Text = "Dodaj predmet";
             groupBoxPredmetPodaci.ResumeLayout(false);
             groupBoxPredmetPodaci.PerformLayout();
