@@ -34,12 +34,6 @@
             buttonDodaj = new Button();
             groupBoxListaStudenata = new GroupBox();
             listViewStudenti = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader3 = new ColumnHeader();
-            columnHeader4 = new ColumnHeader();
-            columnHeader5 = new ColumnHeader();
-            columnHeader6 = new ColumnHeader();
             groupBoxProjekti = new GroupBox();
             buttonTeorijskiProjekti = new Button();
             buttonPrakticniProjekti = new Button();
@@ -119,7 +113,6 @@
             // listViewStudenti
             // 
             listViewStudenti.BackColor = SystemColors.ButtonFace;
-            listViewStudenti.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5, columnHeader6 });
             listViewStudenti.FullRowSelect = true;
             listViewStudenti.GridLines = true;
             listViewStudenti.Location = new Point(7, 31);
@@ -130,36 +123,6 @@
             listViewStudenti.UseCompatibleStateImageBehavior = false;
             listViewStudenti.View = View.Details;
             listViewStudenti.SelectedIndexChanged += listViewStudenti_SelectedIndexChanged;
-            // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "Id";
-            columnHeader1.Width = 50;
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Ime";
-            columnHeader2.Width = 130;
-            // 
-            // columnHeader3
-            // 
-            columnHeader3.Text = "Ime roditelja";
-            columnHeader3.Width = 130;
-            // 
-            // columnHeader4
-            // 
-            columnHeader4.Text = "Prezime";
-            columnHeader4.Width = 130;
-            // 
-            // columnHeader5
-            // 
-            columnHeader5.Text = "Broj indeksa";
-            columnHeader5.Width = 130;
-            // 
-            // columnHeader6
-            // 
-            columnHeader6.Text = "Smer";
-            columnHeader6.Width = 130;
             // 
             // groupBoxProjekti
             // 
@@ -264,11 +227,5 @@
         private Button buttonTeorijskiProjekti;
         private Button buttonGrupe;
         private ListView listViewStudenti;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
-        private ColumnHeader columnHeader4;
-        private ColumnHeader columnHeader5;
-        private ColumnHeader columnHeader6;
     }
 }

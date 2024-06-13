@@ -28,5 +28,10 @@ namespace SBP_faza2.Forme.AutoriForme
             AzurirajAutoraForm azurirajAutoraForma = new AzurirajAutoraForm();
             azurirajAutoraForma.ShowDialog(this);
         }
+
+        private void AutoriForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

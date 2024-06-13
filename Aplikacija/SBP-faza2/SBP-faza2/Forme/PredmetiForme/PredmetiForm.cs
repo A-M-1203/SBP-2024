@@ -1,168 +1,147 @@
-﻿using FluentNHibernate.Conventions;
-using NHibernate;
+﻿using NHibernate;
+using NHibernate.Criterion;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace SBP_faza2.Forme.PredmetiForme
+namespace SBP_faza2.Forme.PredmetiForme;
+
+public partial class PredmetiForm : Form
 {
-    public partial class PredmetiForm : Form
+    public PredmetiForm()
     {
-        public PredmetiForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void buttonDodaj_Click(object sender, EventArgs e)
-        {
-            DodajPredmetForm dodajPredmetForma = new DodajPredmetForm();
-            dodajPredmetForma.ShowDialog(this);
-        }
+    private void buttonDodaj_Click(object sender, EventArgs e)
+    {
+        DodajPredmetForm dodajPredmetForma = new DodajPredmetForm();
+        dodajPredmetForma.ShowDialog(this);
+    }
 
-        private void buttonAzuriraj_Click(object sender, EventArgs e)
-        {
-            AzurirajPredmetForm azurirajPredmetForma = new AzurirajPredmetForm(listViewPredmeti.SelectedItems[0]);
-            azurirajPredmetForma.ShowDialog(this);
-        }
+    private void buttonAzuriraj_Click(object sender, EventArgs e)
+    {
+        AzurirajPredmetForm azurirajPredmetForma = new AzurirajPredmetForm(int.Parse(listViewPredmeti.SelectedItems[0].SubItems[0].Text));
+        azurirajPredmetForma.ShowDialog(this);
+    }
 
-        private void buttonPrakticniProjekti_Click(object sender, EventArgs e)
-        {
-            PrakticniProjektiForm prakticniProjektiForma = new PrakticniProjektiForm();
-            prakticniProjektiForma.ShowDialog(this);
-        }
+    private void buttonPrakticniProjekti_Click(object sender, EventArgs e)
+    {
+        PrakticniProjektiForm prakticniProjektiForma = new PrakticniProjektiForm();
+        prakticniProjektiForma.ShowDialog(this);
+    }
 
-        private void buttonTeorijskiProjekti_Click(object sender, EventArgs e)
-        {
-            TeorijskiProjektiForm teorijskiProjektiForma = new TeorijskiProjektiForm();
-            teorijskiProjektiForma.ShowDialog(this);
-        }
+    private void buttonTeorijskiProjekti_Click(object sender, EventArgs e)
+    {
+        TeorijskiProjektiForm teorijskiProjektiForma = new TeorijskiProjektiForm();
+        teorijskiProjektiForma.ShowDialog(this);
+    }
 
-        private void PredmetiForm_Load(object sender, EventArgs e)
+    private void PredmetiForm_Load(object sender, EventArgs e)
+    {
+        listViewPredmeti.View = View.Details;
+        listViewPredmeti.Columns.Add("Id", 30, HorizontalAlignment.Left);
+        listViewPredmeti.Columns.Add("Sifra", 120, HorizontalAlignment.Left);
+        listViewPredmeti.Columns.Add("Naziv", 200, HorizontalAlignment.Left);
+        listViewPredmeti.Columns.Add("Katedra", 120, HorizontalAlignment.Left);
+        listViewPredmeti.Columns.Add("Semestar", 90, HorizontalAlignment.Left);
+    }
+
+    private void listViewPredmeti_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (listViewPredmeti.SelectedIndices.Count == 1)
         {
-            try
+            buttonAzuriraj.Enabled = true;
+            buttonObrisi.Enabled = true;
+            buttonPrakticniProjekti.Enabled = true;
+            buttonTeorijskiProjekti.Enabled = true;
+        }
+        else
+        {
+            buttonAzuriraj.Enabled = false;
+            buttonObrisi.Enabled = false;
+            buttonPrakticniProjekti.Enabled = false;
+            buttonTeorijskiProjekti.Enabled = false;
+        }
+    }
+
+    private void buttonObrisi_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
             {
-                using (ISession? session = DataLayer.GetSession())
-                {
-                    if (session != null)
-                    {
-                        IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.Sifra, p.Semestar, p.Katedra from Predmet as p");
-                        IList<object[]> predmeti = query.List<object[]>();
+                int id = int.Parse(listViewPredmeti.SelectedItems[0].SubItems[0].Text);
+                Predmet predmet = session.Load<Predmet>(id);
 
-                        if (predmeti.Any())
-                        {
-                            foreach (object[] p in predmeti)
-                            {
-                                ListViewItem listViewItem = new ListViewItem(new string[] { p[0].ToString()!, (string)p[1], (string)p[2], (string)p[3], (string)p[4] });
-                                listViewPredmeti.Items.Add(listViewItem);
-                            }
+                session.Delete(predmet);
+                session.Flush();
 
-                            listViewPredmeti.Refresh();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Greška prilikom otvaranja konekcije");
-                    }
-                }
-            }
-            catch (Exception ec)
-            {
-                MessageBox.Show(ec.Message);
-            }
-        }
+                session.Close();
 
-        private void listViewPredmeti_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listViewPredmeti.SelectedIndices.Count == 1)
-            {
-                buttonAzuriraj.Enabled = true;
-                buttonObrisi.Enabled = true;
-                buttonPrakticniProjekti.Enabled = true;
-                buttonTeorijskiProjekti.Enabled = true;
+                MessageBox.Show("Predmet uspešno obrisan");
             }
             else
             {
-                buttonAzuriraj.Enabled = false;
-                buttonObrisi.Enabled = false;
-                buttonPrakticniProjekti.Enabled = false;
-                buttonTeorijskiProjekti.Enabled = false;
+                MessageBox.Show("Greška prilikom otvaranja konekcije");
             }
         }
-
-        private void buttonObrisi_Click(object sender, EventArgs e)
+        catch (Exception ec)
         {
-            try
+            MessageBox.Show(ec.Message);
+        }
+    }
+
+    private void PredmetiForm_Activated(object sender, EventArgs e)
+    {
+        buttonAzuriraj.Enabled = false;
+        buttonObrisi.Enabled = false;
+        buttonPrakticniProjekti.Enabled = false;
+        buttonTeorijskiProjekti.Enabled = false;
+
+        try
+        {
+            using (ISession? session = DataLayer.GetSession())
             {
-                ISession? session = DataLayer.GetSession();
                 if (session != null)
                 {
-                    int id = int.Parse(listViewPredmeti.SelectedItems[0].SubItems[0].Text);
-                    Predmet predmet = session.Load<Predmet>(id);
+                    IList<PredmetList> predmeti = session.QueryOver<Predmet>()
+                        .Select(
+                            Projections.Property("Id"),
+                            Projections.Property("Sifra"),
+                            Projections.Property("Naziv"),
+                            Projections.Property("Katedra"),
+                            Projections.Property("Semestar")
+                        ).List<object[]>()
+                        .Select(row => new PredmetList
+                        {
+                            Id = (int)row[0],
+                            Sifra = (string)row[1],
+                            Naziv = (string)row[2],
+                            Katedra = (string)row[3],
+                            Semestar = (string)row[4]
+                        }).ToList();
 
-                    session.Delete(predmet);
-                    session.Flush();
+                    listViewPredmeti.Items.Clear();
 
-                    session.Close();
+                    foreach (var p in predmeti)
+                    {
+                        var listItem = new ListViewItem(new string[]
+                        { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
+                        listViewPredmeti.Items.Add(listItem);
+                    }
 
-                    MessageBox.Show("Predmet uspešno obrisan");
+                    listViewPredmeti.Refresh();
                 }
                 else
                 {
                     MessageBox.Show("Greška prilikom otvaranja konekcije");
                 }
             }
-            catch (Exception ec)
-            {
-                MessageBox.Show(ec.Message);
-            }
         }
-
-        private void PredmetiForm_Activated(object sender, EventArgs e)
+        catch (Exception ec)
         {
-            buttonAzuriraj.Enabled = false;
-            buttonObrisi.Enabled = false;
-            buttonPrakticniProjekti.Enabled = false;
-            buttonTeorijskiProjekti.Enabled = false;
-
-            try
-            {
-                using (ISession? session = DataLayer.GetSession())
-                {
-                    if (session != null)
-                    {
-                        IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.Sifra, p.Semestar, p.Katedra from Predmet as p");
-                        IList<object[]> predmeti = query.List<object[]>();
-
-                        if (predmeti.Any())
-                        {
-                            listViewPredmeti.Items.Clear();
-                            foreach (object[] p in predmeti)
-                            {
-                                ListViewItem listViewItem = new ListViewItem(new string[] { p[0].ToString()!, (string)p[1], (string)p[2], (string)p[3], (string)p[4] });
-                                listViewPredmeti.Items.Add(listViewItem);
-                            }
-
-                            listViewPredmeti.Refresh();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Greška prilikom otvaranja konekcije");
-                    }
-                }
-            }
-            catch (Exception ec)
-            {
-                MessageBox.Show(ec.Message);
-            }
+            MessageBox.Show(ec.Message);
         }
     }
 }

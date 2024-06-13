@@ -30,11 +30,6 @@
         {
             groupBoxPredmeta = new GroupBox();
             listViewPredmeti = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader3 = new ColumnHeader();
-            columnHeader4 = new ColumnHeader();
-            columnHeader5 = new ColumnHeader();
             groupBoxPredmet = new GroupBox();
             buttonObrisi = new Button();
             buttonAzuriraj = new Button();
@@ -60,7 +55,6 @@
             // listViewPredmeti
             // 
             listViewPredmeti.BackColor = SystemColors.ButtonFace;
-            listViewPredmeti.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
             listViewPredmeti.FullRowSelect = true;
             listViewPredmeti.GridLines = true;
             listViewPredmeti.Location = new Point(8, 31);
@@ -70,31 +64,6 @@
             listViewPredmeti.UseCompatibleStateImageBehavior = false;
             listViewPredmeti.View = View.Details;
             listViewPredmeti.SelectedIndexChanged += listViewPredmeti_SelectedIndexChanged;
-            // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "Id";
-            columnHeader1.Width = 90;
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Naziv";
-            columnHeader2.Width = 200;
-            // 
-            // columnHeader3
-            // 
-            columnHeader3.Text = "Šifra";
-            columnHeader3.Width = 100;
-            // 
-            // columnHeader4
-            // 
-            columnHeader4.Text = "Semestar";
-            columnHeader4.Width = 100;
-            // 
-            // columnHeader5
-            // 
-            columnHeader5.Text = "Katedra";
-            columnHeader5.Width = 200;
             // 
             // groupBoxPredmet
             // 
@@ -217,10 +186,5 @@
         private GroupBox groupBoxProjekti;
         private Button buttonTeorijskiProjekti;
         private Button buttonPrakticniProjekti;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
-        private ColumnHeader columnHeader4;
-        private ColumnHeader columnHeader5;
     }
 }

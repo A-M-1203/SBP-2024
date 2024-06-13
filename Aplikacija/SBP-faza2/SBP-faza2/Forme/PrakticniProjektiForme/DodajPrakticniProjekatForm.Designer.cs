@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             groupBoxProjekatPodaci = new GroupBox();
-            listBoxPredmet = new ListBox();
+            listViewPredmeti = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
             textBoxKratakOpis = new TextBox();
             numericUpDownBrojIzvestaja = new NumericUpDown();
             labelBrojIzvestaja = new Label();
@@ -54,7 +56,7 @@
             // 
             // groupBoxProjekatPodaci
             // 
-            groupBoxProjekatPodaci.Controls.Add(listBoxPredmet);
+            groupBoxProjekatPodaci.Controls.Add(listViewPredmeti);
             groupBoxProjekatPodaci.Controls.Add(textBoxKratakOpis);
             groupBoxProjekatPodaci.Controls.Add(numericUpDownBrojIzvestaja);
             groupBoxProjekatPodaci.Controls.Add(labelBrojIzvestaja);
@@ -79,15 +81,29 @@
             groupBoxProjekatPodaci.TabStop = false;
             groupBoxProjekatPodaci.Text = "Podaci o projektu";
             // 
-            // listBoxPredmet
+            // listViewPredmeti
             // 
-            listBoxPredmet.FormattingEnabled = true;
-            listBoxPredmet.ItemHeight = 24;
-            listBoxPredmet.Location = new Point(757, 42);
-            listBoxPredmet.Name = "listBoxPredmet";
-            listBoxPredmet.Size = new Size(213, 100);
-            listBoxPredmet.TabIndex = 25;
-            listBoxPredmet.SelectedIndexChanged += listBoxPredmet_SelectedIndexChanged;
+            listViewPredmeti.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
+            listViewPredmeti.FullRowSelect = true;
+            listViewPredmeti.GridLines = true;
+            listViewPredmeti.Location = new Point(585, 42);
+            listViewPredmeti.MultiSelect = false;
+            listViewPredmeti.Name = "listViewPredmeti";
+            listViewPredmeti.Size = new Size(385, 141);
+            listViewPredmeti.TabIndex = 24;
+            listViewPredmeti.UseCompatibleStateImageBehavior = false;
+            listViewPredmeti.View = View.Details;
+            listViewPredmeti.SelectedIndexChanged += listViewPredmeti_SelectedIndexChanged;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Id";
+            columnHeader1.Width = 80;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Naziv";
+            columnHeader2.Width = 300;
             // 
             // textBoxKratakOpis
             // 
@@ -102,7 +118,7 @@
             // numericUpDownBrojIzvestaja
             // 
             numericUpDownBrojIzvestaja.BackColor = SystemColors.ButtonFace;
-            numericUpDownBrojIzvestaja.Location = new Point(757, 206);
+            numericUpDownBrojIzvestaja.Location = new Point(757, 254);
             numericUpDownBrojIzvestaja.Name = "numericUpDownBrojIzvestaja";
             numericUpDownBrojIzvestaja.Size = new Size(213, 32);
             numericUpDownBrojIzvestaja.TabIndex = 22;
@@ -110,7 +126,7 @@
             // labelBrojIzvestaja
             // 
             labelBrojIzvestaja.AutoSize = true;
-            labelBrojIzvestaja.Location = new Point(498, 210);
+            labelBrojIzvestaja.Location = new Point(498, 256);
             labelBrojIzvestaja.Name = "labelBrojIzvestaja";
             labelBrojIzvestaja.Size = new Size(121, 24);
             labelBrojIzvestaja.TabIndex = 21;
@@ -128,16 +144,16 @@
             // textBoxPreporuceniProgJezik
             // 
             textBoxPreporuceniProgJezik.BackColor = SystemColors.ButtonFace;
-            textBoxPreporuceniProgJezik.Location = new Point(757, 151);
+            textBoxPreporuceniProgJezik.Location = new Point(755, 205);
             textBoxPreporuceniProgJezik.MaxLength = 30;
             textBoxPreporuceniProgJezik.Name = "textBoxPreporuceniProgJezik";
-            textBoxPreporuceniProgJezik.Size = new Size(213, 32);
+            textBoxPreporuceniProgJezik.Size = new Size(215, 32);
             textBoxPreporuceniProgJezik.TabIndex = 19;
             // 
             // labelPreporuceniProgJezik
             // 
             labelPreporuceniProgJezik.AutoSize = true;
-            labelPreporuceniProgJezik.Location = new Point(498, 154);
+            labelPreporuceniProgJezik.Location = new Point(498, 208);
             labelPreporuceniProgJezik.Name = "labelPreporuceniProgJezik";
             labelPreporuceniProgJezik.Size = new Size(251, 24);
             labelPreporuceniProgJezik.TabIndex = 18;
@@ -259,6 +275,7 @@
             buttonDodajPrakticniProjekat.TabIndex = 24;
             buttonDodajPrakticniProjekat.Text = "Dodaj praktični projekat";
             buttonDodajPrakticniProjekat.UseVisualStyleBackColor = true;
+            buttonDodajPrakticniProjekat.Click += buttonDodajPrakticniProjekat_Click;
             // 
             // DodajPrakticniProjekatForm
             // 
@@ -274,6 +291,7 @@
             MinimizeBox = false;
             Name = "DodajPrakticniProjekatForm";
             Text = "Dodaj praktični projekat";
+            Load += DodajPrakticniProjekatForm_Load;
             groupBoxProjekatPodaci.ResumeLayout(false);
             groupBoxProjekatPodaci.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownBrojIzvestaja).EndInit();
@@ -301,6 +319,8 @@
         private Label labelBrojIzvestaja;
         private Label labelKratakOpis;
         private Button buttonDodajPrakticniProjekat;
-        private ListBox listBoxPredmet;
+        private ListView listViewPredmeti;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
     }
 }

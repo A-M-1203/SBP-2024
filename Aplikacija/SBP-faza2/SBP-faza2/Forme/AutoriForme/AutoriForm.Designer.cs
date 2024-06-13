@@ -34,6 +34,8 @@
             buttonObrisiStudenta = new Button();
             buttonAzuriraj = new Button();
             buttonDodaj = new Button();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
             groupBoxListaAutora.SuspendLayout();
             groupBoxAutor.SuspendLayout();
             SuspendLayout();
@@ -53,11 +55,13 @@
             // listViewStudenti
             // 
             listViewStudenti.BackColor = SystemColors.ButtonFace;
+            listViewStudenti.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
             listViewStudenti.Location = new Point(7, 31);
             listViewStudenti.Name = "listViewStudenti";
             listViewStudenti.Size = new Size(712, 543);
             listViewStudenti.TabIndex = 0;
             listViewStudenti.UseCompatibleStateImageBehavior = false;
+            listViewStudenti.View = View.Details;
             // 
             // groupBoxAutor
             // 
@@ -109,6 +113,16 @@
             buttonDodaj.UseVisualStyleBackColor = false;
             buttonDodaj.Click += buttonDodaj_Click;
             // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Id";
+            columnHeader1.Width = 200;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Ime";
+            columnHeader2.Width = 200;
+            // 
             // AutoriForm
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
@@ -123,6 +137,7 @@
             MinimizeBox = false;
             Name = "AutoriForm";
             Text = "Autori";
+            Load += AutoriForm_Load;
             groupBoxListaAutora.ResumeLayout(false);
             groupBoxAutor.ResumeLayout(false);
             ResumeLayout(false);
@@ -136,5 +151,7 @@
         private Button buttonObrisiStudenta;
         private Button buttonAzuriraj;
         private Button buttonDodaj;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
     }
 }

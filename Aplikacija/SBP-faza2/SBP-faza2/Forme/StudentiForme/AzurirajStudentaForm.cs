@@ -15,21 +15,17 @@ namespace SBP_faza2.Forme
 {
     public partial class AzurirajStudentaForm : Form
     {
+        private readonly int _studentId;
+
         public AzurirajStudentaForm()
         {
             InitializeComponent();
-            _student = null;
-            _id = null;
         }
 
-        private readonly ListViewItem? _student;
-        private readonly int? _id;
-
-        public AzurirajStudentaForm(ListViewItem student)
+        public AzurirajStudentaForm(int studentId)
         {
             InitializeComponent();
-            _student = student;
-            _id = int.Parse(_student.SubItems[0].Text);
+            _studentId = studentId;
         }
 
         private void textBoxImeStudenta_KeyPress(object sender, KeyPressEventArgs e)
@@ -72,7 +68,7 @@ namespace SBP_faza2.Forme
 
                 if (session != null)
                 {
-                    Student student = session.Load<Student>(_id);
+                    Student student = session.Load<Student>(_studentId);
                     student.LicnoIme = textBoxImeStudenta.Text;
                     student.ImeRoditelja = textBoxImeRoditelja.Text;
                     student.Prezime = textBoxPrezimeStudenta.Text;
@@ -99,11 +95,25 @@ namespace SBP_faza2.Forme
 
         private void AzurirajStudentaForm_Load(object sender, EventArgs e)
         {
-            textBoxImeStudenta.Text = _student!.SubItems[1].Text;
-            textBoxImeRoditelja.Text = _student.SubItems[2].Text;
-            textBoxPrezimeStudenta.Text = _student.SubItems[3].Text;
-            textBoxBrojIndeksa.Text = _student.SubItems[4].Text;
-            comboBoxSmer.SelectedItem = _student.SubItems[5].Text;
+            try
+            {
+                ISession? session = DataLayer.GetSession();
+                if (session != null)
+                {
+                    Student s = session.Load<Student>(_studentId);
+                    textBoxImeStudenta.Text = s.LicnoIme;
+                    textBoxImeRoditelja.Text = s.ImeRoditelja;
+                    textBoxPrezimeStudenta.Text = s.Prezime;
+                    textBoxBrojIndeksa.Text = s.BrojIndeksa;
+                    comboBoxSmer.SelectedItem = s.Smer;
+                }
+
+                
+            }
+            catch(Exception ec)
+            {
+                Console.WriteLine(ec.Message);
+            }
         }
 
         private void textBoxImeStudenta_TextChanged(object sender, EventArgs e)

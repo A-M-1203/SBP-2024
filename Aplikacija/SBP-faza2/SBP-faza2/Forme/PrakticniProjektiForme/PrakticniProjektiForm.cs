@@ -42,31 +42,63 @@ namespace SBP_faza2.Forme
 
         private void PrakticniProjektiForm_Load(object sender, EventArgs e)
         {
+            //try
+            //{
+            //    ISession? session = DataLayer.GetSession();
+            //    if (session != null)
+            //    {
+            //        IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.SkolskaGodina, p.Grupni, p.DatumPocetka, p.DatumZavrsetka, p.RokZaZavrsetak, p.PreporuceniProgramskiJezik, p.KratakOpis, p.BrojIzvestaja from Projekat as p");
+            //        IEnumerable<object[]> prakticniProjekti = query.Enumerable<object[]>();
+            //        if (prakticniProjekti.IsNotEmpty())
+            //        {
+            //            string?[] stringArray = prakticniProjekti.Select(x => x == null ? "null" : x.ToString()).ToArray();
+
+            //            foreach (object[] s in prakticniProjekti)
+            //            {
+            //                ListViewItem listViewItem = new ListViewItem(new string[] { stringArray[0]!, stringArray[1]!, stringArray[2]!, stringArray[3]!, stringArray[4]!, stringArray[5]!, stringArray[6]!, stringArray[7]!, stringArray[8]!, stringArray[9]! });
+            //                listViewPrakticniProjekti.Items.Add(listViewItem);
+            //            }
+
+            //            listViewPrakticniProjekti.Refresh();
+            //        }
+
+            //        session.Close();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Greška prilikom otvaranja konekcije");
+            //    }
+            //}
+            //catch (Exception ec)
+            //{
+            //    MessageBox.Show(ec.Message);
+            //}
             try
             {
-                ISession? session = DataLayer.GetSession();
-                if (session != null)
+                using (ISession? session = DataLayer.GetSession())
                 {
-                    IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.SkolskaGodina, p.Grupni, p.DatumPocetka, p.DatumZavrsetka, p.RokZaZavrsetak, p.PreporuceniProgramskiJezik, p.KratakOpis, p.BrojIzvestaja from Projekat as p");
-                    IEnumerable<object[]> prakticniProjekti = query.Enumerable<object[]>();
-                    if (prakticniProjekti.IsNotEmpty())
+                    if (session != null)
                     {
-                        string?[] stringArray = prakticniProjekti.Select(x => x == null ? "null" : x.ToString()).ToArray();
+                        IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.SkolskaGodina, p.Grupni, p.DatumPocetka, p.DatumZavrsetka, p.RokZaZavrsetak, p.PreporuceniProgramskiJezik, p.KratakOpis, p.BrojIzvestaja from Projekat as p");
+                        IList<object[]> prakticniProjekti = query.List<object[]>();
 
-                        foreach (object[] s in prakticniProjekti)
+                        if (prakticniProjekti.Any())
                         {
-                            ListViewItem listViewItem = new ListViewItem(new string[] { stringArray[0]!, stringArray[1]!, stringArray[2]!, stringArray[3]!, stringArray[4]!, stringArray[5]!, stringArray[6]!, stringArray[7]!, stringArray[8]!, stringArray[9]! });
-                            listViewPrakticniProjekti.Items.Add(listViewItem);
+                            string?[] stringArray = prakticniProjekti.Select(x => x == null ? "" : x.ToString()).ToArray();
+
+                            foreach (object[] p in prakticniProjekti)
+                            {
+                                ListViewItem listViewItem = new ListViewItem(new string[] { stringArray[0]!, stringArray[1]!, stringArray[2]!, stringArray[3]!, stringArray[4]!, stringArray[5]!, stringArray[6]!, stringArray[7]!, stringArray[8]!, stringArray[9]! });
+                                listViewPrakticniProjekti.Items.Add(listViewItem);
+                            }
+
+                            listViewPrakticniProjekti.Refresh();
                         }
-
-                        listViewPrakticniProjekti.Refresh();
                     }
-
-                    session.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    }
                 }
             }
             catch (Exception ec)
@@ -79,31 +111,57 @@ namespace SBP_faza2.Forme
         {
             try
             {
-                ISession? session = DataLayer.GetSession();
-                if (session != null)
+                //ISession? session = DataLayer.GetSession();
+                //if (session != null)
+                //{
+                //    IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.SkolskaGodina, p.Grupni, p.DatumPocetka, p.DatumZavrsetka, p.RokZaZavrsetak, p.PreporuceniProgramskiJezik, p.KratakOpis, p.BrojIzvestaja from Projekat as p");
+                //    IEnumerable<object[]> prakticniProjekti = query.Enumerable<object[]>();
+                //    if (prakticniProjekti.IsNotEmpty())
+                //    {
+                //        string?[] stringArray = prakticniProjekti.Select(x => x == null ? "null" : x.ToString()).ToArray();
+
+                //        listViewPrakticniProjekti.Clear();
+
+                //        foreach (object[] s in prakticniProjekti)
+                //        {
+                //            ListViewItem listViewItem = new ListViewItem(new string[] { stringArray[0]!, stringArray[1]!, stringArray[2]!, stringArray[3]!, stringArray[4]!, stringArray[5]!, stringArray[6]!, stringArray[7]!, stringArray[8]!, stringArray[9]! });
+                //            listViewPrakticniProjekti.Items.Add(listViewItem);
+                //        }
+
+                //        listViewPrakticniProjekti.Refresh();
+                //    }
+
+                //    session.Close();
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                //}
+                using (ISession? session = DataLayer.GetSession())
                 {
-                    IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.SkolskaGodina, p.Grupni, p.DatumPocetka, p.DatumZavrsetka, p.RokZaZavrsetak, p.PreporuceniProgramskiJezik, p.KratakOpis, p.BrojIzvestaja from Projekat as p");
-                    IEnumerable<object[]> prakticniProjekti = query.Enumerable<object[]>();
-                    if (prakticniProjekti.IsNotEmpty())
+                    if (session != null)
                     {
-                        string?[] stringArray = prakticniProjekti.Select(x => x == null ? "null" : x.ToString()).ToArray();
+                        IQuery query = session.CreateQuery("select p.Id, p.Naziv, p.SkolskaGodina, p.Grupni, p.DatumPocetka, p.DatumZavrsetka, p.RokZaZavrsetak, p.PreporuceniProgramskiJezik, p.KratakOpis, p.BrojIzvestaja from Projekat as p");
+                        IList<object[]> prakticniProjekti = query.List<object[]>();
 
-                        listViewPrakticniProjekti.Clear();
-
-                        foreach (object[] s in prakticniProjekti)
+                        if (prakticniProjekti.Any())
                         {
-                            ListViewItem listViewItem = new ListViewItem(new string[] { stringArray[0]!, stringArray[1]!, stringArray[2]!, stringArray[3]!, stringArray[4]!, stringArray[5]!, stringArray[6]!, stringArray[7]!, stringArray[8]!, stringArray[9]! });
-                            listViewPrakticniProjekti.Items.Add(listViewItem);
+                            string?[] stringArray = prakticniProjekti.Select(x => x == null ? "" : x.ToString()).ToArray();
+                            listViewPrakticniProjekti.Items.Clear();
+
+                            foreach (object[] p in prakticniProjekti)
+                            {
+                                ListViewItem listViewItem = new ListViewItem(new string[] { stringArray[0]!, stringArray[1]!, stringArray[2]!, stringArray[3]!, stringArray[4]!, stringArray[5]!, stringArray[6]!, stringArray[7]!, stringArray[8]!, stringArray[9]! });
+                                listViewPrakticniProjekti.Items.Add(listViewItem);
+                            }
+
+                            listViewPrakticniProjekti.Refresh();
                         }
-
-                        listViewPrakticniProjekti.Refresh();
                     }
-
-                    session.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    }
                 }
             }
             catch (Exception ec)
