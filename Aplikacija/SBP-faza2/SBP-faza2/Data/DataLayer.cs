@@ -55,10 +55,10 @@ public static class DataLayer
                     //.ExposeConfiguration(BuildSchema)
                     .BuildSessionFactory();
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            MessageBox.Show(e.FormatExceptionMessage());
-            return null;
+            //MessageBox.Show(e.FormatExceptionMessage());
+            throw;
         }
     }
 }

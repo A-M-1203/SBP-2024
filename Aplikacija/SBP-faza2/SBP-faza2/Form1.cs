@@ -1,4 +1,5 @@
 using NHibernate;
+using Oracle.ManagedDataAccess.Types;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using SBP_faza2.Forme;
@@ -8,9 +9,25 @@ namespace SBP_faza2
 {
     public partial class Form1 : Form
     {
+        string exception = string.Empty;
         public Form1()
         {
             InitializeComponent();
+
+            try
+            {
+                ISession? session = DataLayer.GetSession();
+
+                session?.Close();
+
+                statusLabel.Text = "POVEZAN";
+                statusLabel.ForeColor = Color.Green;
+            }
+            catch (Exception ec)
+            {
+                detaljiLinkLabel.Visible = true;
+                exception = ec.FormatExceptionMessage();
+            }
         }
 
         private void btnVratiStudenta_Click(object sender, EventArgs e)
@@ -53,6 +70,27 @@ namespace SBP_faza2
         {
             PredmetiForm predmetiForma = new PredmetiForm();
             predmetiForma.ShowDialog(this);
+        }
+
+        private void minButton_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            dateTimeLabel.Text = DateTime.Now.Date.ToShortDateString()
+                + " | " + DateTime.Now.ToLongTimeString();
+        }
+
+        private void detaljiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(exception);
         }
     }
 }
