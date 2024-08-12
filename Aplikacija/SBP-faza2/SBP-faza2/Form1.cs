@@ -1,96 +1,100 @@
 using NHibernate;
-using Oracle.ManagedDataAccess.Types;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using SBP_faza2.Forme;
 using SBP_faza2.Forme.PredmetiForme;
 
-namespace SBP_faza2
+namespace SBP_faza2;
+
+public partial class Form1 : Form
 {
-    public partial class Form1 : Form
+    string exception = string.Empty;
+    public Form1()
     {
-        string exception = string.Empty;
-        public Form1()
+        InitializeComponent();
+
+        try
         {
-            InitializeComponent();
+            ISession? session = DataLayer.GetSession();
 
-            try
-            {
-                ISession? session = DataLayer.GetSession();
+            session?.Close();
 
-                session?.Close();
-
-                statusLabel.Text = "POVEZAN";
-                statusLabel.ForeColor = Color.Green;
-            }
-            catch (Exception ec)
-            {
-                detaljiLinkLabel.Visible = true;
-                exception = ec.FormatExceptionMessage();
-            }
+            statusLabel.Text = "POVEZAN";
+            statusLabel.ForeColor = Color.Green;
         }
-
-        private void btnVratiStudenta_Click(object sender, EventArgs e)
+        catch (Exception ec)
         {
-            try
-            {
-                ISession? session = DataLayer.GetSession();
-
-                Student s = session!.Load<Student>(4);
-
-                MessageBox.Show(s.LicnoIme + " " + s.ImeRoditelja + " " + s.Prezime);
-
-                session.Close();
-            }
-            catch (Exception ec)
-            {
-                MessageBox.Show(ec.Message);
-            }
+            detaljiLinkLabel.Visible = true;
+            exception = ec.FormatExceptionMessage();
         }
+    }
 
-        private void buttonStudenti_Click(object sender, EventArgs e)
+    private void btnVratiStudenta_Click(object sender, EventArgs e)
+    {
+        try
         {
-            StudentiForm studentiForma = new StudentiForm();
-            studentiForma.ShowDialog(this);
-        }
+            ISession? session = DataLayer.GetSession();
 
-        private void buttonTeorijskiProjekti_Click(object sender, EventArgs e)
-        {
-            TeorijskiProjektiForm teorijskiProjektiForma = new TeorijskiProjektiForm();
-            teorijskiProjektiForma.ShowDialog(this);
-        }
+            Student s = session!.Load<Student>(4);
 
-        private void buttonPrakticniProjekti_Click(object sender, EventArgs e)
-        {
-            PrakticniProjektiForm prakticniProjektiForma = new PrakticniProjektiForm();
-            prakticniProjektiForma.ShowDialog(this);
-        }
+            MessageBox.Show(s.LicnoIme + " " + s.ImeRoditelja + " " + s.Prezime);
 
-        private void buttonPredmeti_Click(object sender, EventArgs e)
-        {
-            PredmetiForm predmetiForma = new PredmetiForm();
-            predmetiForma.ShowDialog(this);
+            session.Close();
         }
+        catch (Exception ec)
+        {
+            MessageBox.Show(ec.Message);
+        }
+    }
 
-        private void minButton_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
+    private void buttonStudenti_Click(object sender, EventArgs e)
+    {
+        StudentiForm studentiForma = new StudentiForm();
+        studentiForma.ShowDialog(this);
+    }
 
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+    private void buttonTeorijskiProjekti_Click(object sender, EventArgs e)
+    {
+        TeorijskiProjektiForm teorijskiProjektiForma = new TeorijskiProjektiForm();
+        teorijskiProjektiForma.ShowDialog(this);
+    }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            dateTimeLabel.Text = DateTime.Now.Date.ToShortDateString()
-                + " | " + DateTime.Now.ToLongTimeString();
-        }
+    private void buttonPrakticniProjekti_Click(object sender, EventArgs e)
+    {
+        PrakticniProjektiForm prakticniProjektiForma = new PrakticniProjektiForm();
+        prakticniProjektiForma.ShowDialog(this);
+    }
 
-        private void detaljiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            MessageBox.Show(exception);
-        }
+    private void buttonPredmeti_Click(object sender, EventArgs e)
+    {
+        PredmetiForm predmetiForma = new PredmetiForm();
+        predmetiForma.ShowDialog(this);
+    }
+
+    private void minButton_Click(object sender, EventArgs e)
+    {
+        WindowState = FormWindowState.Minimized;
+    }
+
+    private void closeButton_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
+
+    private void timer1_Tick(object sender, EventArgs e)
+    {
+        dateTimeLabel.Text = DateTime.Now.Date.ToShortDateString()
+            + " | " + DateTime.Now.ToLongTimeString();
+    }
+
+    private void detaljiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        MessageBox.Show(exception);
+    }
+
+    private void studentiButton_Click(object sender, EventArgs e)
+    {
+        StudentiForma studentiForma = new StudentiForma();
+        studentiForma.Show(this);
     }
 }

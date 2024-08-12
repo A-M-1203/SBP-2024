@@ -143,6 +143,7 @@
             studentiButton.TextAlign = ContentAlignment.MiddleRight;
             studentiButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             studentiButton.UseVisualStyleBackColor = true;
+            studentiButton.Click += studentiButton_Click;
             // 
             // closeButton
             // 
@@ -239,7 +240,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Gray;
+            BackColor = Color.DarkGray;
             ClientSize = new Size(896, 619);
             Controls.Add(panel2);
             Controls.Add(panel1);
