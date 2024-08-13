@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             studentToolStrip = new ToolStrip();
             dodajStudentaToolStripButton = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
@@ -39,6 +40,7 @@
             toolStripSeparator4 = new ToolStripSeparator();
             odustaniToolStripButton = new ToolStripButton();
             studentGroupBox = new GroupBox();
+            successStatusLabel = new Label();
             zvezdicaLabel = new Label();
             smerErrorLabel = new Label();
             brojIndeksaErrorLabel = new Label();
@@ -62,6 +64,7 @@
             prezimeColumn = new DataGridViewTextBoxColumn();
             brojIndeksaColumn = new DataGridViewTextBoxColumn();
             smerColumn = new DataGridViewTextBoxColumn();
+            timer1 = new System.Windows.Forms.Timer(components);
             studentToolStrip.SuspendLayout();
             studentGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)studentaDataGridView).BeginInit();
@@ -78,7 +81,7 @@
             studentToolStrip.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
             studentToolStrip.Location = new Point(0, 0);
             studentToolStrip.Name = "studentToolStrip";
-            studentToolStrip.Size = new Size(1164, 43);
+            studentToolStrip.Size = new Size(1165, 43);
             studentToolStrip.TabIndex = 0;
             studentToolStrip.Text = "toolStrip1";
             // 
@@ -106,6 +109,7 @@
             izmeniStudentaToolStripButton.Name = "izmeniStudentaToolStripButton";
             izmeniStudentaToolStripButton.Size = new Size(92, 40);
             izmeniStudentaToolStripButton.Text = "Izmeni";
+            izmeniStudentaToolStripButton.Click += izmeniStudentaToolStripButton_Click;
             // 
             // toolStripSeparator2
             // 
@@ -121,6 +125,7 @@
             obrisiStudentaToolStripButton.Name = "obrisiStudentaToolStripButton";
             obrisiStudentaToolStripButton.Size = new Size(85, 40);
             obrisiStudentaToolStripButton.Text = "Obriši";
+            obrisiStudentaToolStripButton.Click += obrisiStudentaToolStripButton_Click;
             // 
             // toolStripSeparator3
             // 
@@ -135,6 +140,7 @@
             sacuvajToolStripButton.Name = "sacuvajToolStripButton";
             sacuvajToolStripButton.Size = new Size(101, 40);
             sacuvajToolStripButton.Text = "Sačuvaj";
+            sacuvajToolStripButton.Click += sacuvajToolStripButton_Click;
             // 
             // toolStripSeparator4
             // 
@@ -155,6 +161,7 @@
             // studentGroupBox
             // 
             studentGroupBox.BackColor = Color.DarkGray;
+            studentGroupBox.Controls.Add(successStatusLabel);
             studentGroupBox.Controls.Add(zvezdicaLabel);
             studentGroupBox.Controls.Add(smerErrorLabel);
             studentGroupBox.Controls.Add(brojIndeksaErrorLabel);
@@ -173,10 +180,19 @@
             studentGroupBox.Controls.Add(licnoImeLabel);
             studentGroupBox.Location = new Point(12, 46);
             studentGroupBox.Name = "studentGroupBox";
-            studentGroupBox.Size = new Size(427, 482);
+            studentGroupBox.Size = new Size(481, 482);
             studentGroupBox.TabIndex = 1;
             studentGroupBox.TabStop = false;
             studentGroupBox.Text = "Podaci";
+            // 
+            // successStatusLabel
+            // 
+            successStatusLabel.ForeColor = Color.Lime;
+            successStatusLabel.Location = new Point(27, 374);
+            successStatusLabel.Name = "successStatusLabel";
+            successStatusLabel.Size = new Size(423, 25);
+            successStatusLabel.TabIndex = 16;
+            successStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // zvezdicaLabel
             // 
@@ -232,8 +248,8 @@
             smerComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             smerComboBox.Enabled = false;
             smerComboBox.FormattingEnabled = true;
-            smerComboBox.Items.AddRange(new object[] { "RI", "UUR" });
-            smerComboBox.Location = new Point(155, 277);
+            smerComboBox.Items.AddRange(new object[] { "EEN", "RII", "ELK", "EKM", "US", "KIT" });
+            smerComboBox.Location = new Point(196, 277);
             smerComboBox.Name = "smerComboBox";
             smerComboBox.Size = new Size(254, 32);
             smerComboBox.TabIndex = 9;
@@ -241,39 +257,43 @@
             // brojIndeksaTextBox
             // 
             brojIndeksaTextBox.Enabled = false;
-            brojIndeksaTextBox.Location = new Point(155, 214);
+            brojIndeksaTextBox.Location = new Point(196, 214);
             brojIndeksaTextBox.Name = "brojIndeksaTextBox";
             brojIndeksaTextBox.Size = new Size(254, 32);
             brojIndeksaTextBox.TabIndex = 8;
+            brojIndeksaTextBox.KeyPress += brojIndeksaTextBox_KeyPress;
             // 
             // prezimeTextBox
             // 
             prezimeTextBox.Enabled = false;
-            prezimeTextBox.Location = new Point(155, 151);
+            prezimeTextBox.Location = new Point(196, 151);
             prezimeTextBox.Name = "prezimeTextBox";
             prezimeTextBox.Size = new Size(254, 32);
             prezimeTextBox.TabIndex = 7;
+            prezimeTextBox.KeyPress += prezimeTextBox_KeyPress;
             // 
             // imeRoditeljaTextBox
             // 
             imeRoditeljaTextBox.Enabled = false;
-            imeRoditeljaTextBox.Location = new Point(155, 88);
+            imeRoditeljaTextBox.Location = new Point(196, 85);
             imeRoditeljaTextBox.Name = "imeRoditeljaTextBox";
             imeRoditeljaTextBox.Size = new Size(254, 32);
             imeRoditeljaTextBox.TabIndex = 6;
+            imeRoditeljaTextBox.KeyPress += imeRoditeljaTextBox_KeyPress;
             // 
             // licnoImeTextBox
             // 
             licnoImeTextBox.Enabled = false;
-            licnoImeTextBox.Location = new Point(155, 25);
+            licnoImeTextBox.Location = new Point(196, 25);
             licnoImeTextBox.Name = "licnoImeTextBox";
             licnoImeTextBox.Size = new Size(254, 32);
             licnoImeTextBox.TabIndex = 5;
+            licnoImeTextBox.KeyPress += licnoImeTextBox_KeyPress;
             // 
             // smerLabel
             // 
             smerLabel.AutoSize = true;
-            smerLabel.Location = new Point(69, 280);
+            smerLabel.Location = new Point(90, 280);
             smerLabel.Name = "smerLabel";
             smerLabel.Size = new Size(67, 24);
             smerLabel.TabIndex = 4;
@@ -282,7 +302,7 @@
             // brojIndeksaLabel
             // 
             brojIndeksaLabel.AutoSize = true;
-            brojIndeksaLabel.Location = new Point(11, 217);
+            brojIndeksaLabel.Location = new Point(32, 217);
             brojIndeksaLabel.Name = "brojIndeksaLabel";
             brojIndeksaLabel.Size = new Size(125, 24);
             brojIndeksaLabel.TabIndex = 3;
@@ -291,7 +311,7 @@
             // prezimeLabel
             // 
             prezimeLabel.AutoSize = true;
-            prezimeLabel.Location = new Point(45, 154);
+            prezimeLabel.Location = new Point(66, 154);
             prezimeLabel.Name = "prezimeLabel";
             prezimeLabel.Size = new Size(91, 24);
             prezimeLabel.TabIndex = 2;
@@ -300,7 +320,7 @@
             // imeRoditeljaLabel
             // 
             imeRoditeljaLabel.AutoSize = true;
-            imeRoditeljaLabel.Location = new Point(6, 91);
+            imeRoditeljaLabel.Location = new Point(27, 86);
             imeRoditeljaLabel.Name = "imeRoditeljaLabel";
             imeRoditeljaLabel.Size = new Size(130, 24);
             imeRoditeljaLabel.TabIndex = 1;
@@ -309,7 +329,7 @@
             // licnoImeLabel
             // 
             licnoImeLabel.AutoSize = true;
-            licnoImeLabel.Location = new Point(32, 28);
+            licnoImeLabel.Location = new Point(53, 28);
             licnoImeLabel.Name = "licnoImeLabel";
             licnoImeLabel.Size = new Size(104, 24);
             licnoImeLabel.TabIndex = 0;
@@ -323,14 +343,16 @@
             studentaDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             studentaDataGridView.Columns.AddRange(new DataGridViewColumn[] { idColumn, licnoImeColumn, imeRoditeljaColumn, prezimeColumn, brojIndeksaColumn, smerColumn });
             studentaDataGridView.Dock = DockStyle.Right;
-            studentaDataGridView.Location = new Point(445, 43);
+            studentaDataGridView.Location = new Point(499, 43);
             studentaDataGridView.MultiSelect = false;
             studentaDataGridView.Name = "studentaDataGridView";
             studentaDataGridView.ReadOnly = true;
+            studentaDataGridView.RowHeadersVisible = false;
             studentaDataGridView.RowHeadersWidth = 51;
             studentaDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            studentaDataGridView.Size = new Size(719, 497);
+            studentaDataGridView.Size = new Size(666, 497);
             studentaDataGridView.TabIndex = 2;
+            studentaDataGridView.CellMouseDoubleClick += studentaDataGridView_CellMouseDoubleClick;
             studentaDataGridView.SelectionChanged += studentaDataGridView_SelectionChanged;
             // 
             // idColumn
@@ -387,12 +409,17 @@
             smerColumn.ReadOnly = true;
             smerColumn.Width = 85;
             // 
+            // timer1
+            // 
+            timer1.Interval = 4000;
+            timer1.Tick += timer1_Tick;
+            // 
             // StudentiForma
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkGray;
-            ClientSize = new Size(1164, 540);
+            ClientSize = new Size(1165, 540);
             Controls.Add(studentaDataGridView);
             Controls.Add(studentGroupBox);
             Controls.Add(studentToolStrip);
@@ -449,5 +476,7 @@
         private ToolStripButton sacuvajToolStripButton;
         private ToolStripSeparator toolStripSeparator4;
         private Label zvezdicaLabel;
+        private Label successStatusLabel;
+        private System.Windows.Forms.Timer timer1;
     }
 }
