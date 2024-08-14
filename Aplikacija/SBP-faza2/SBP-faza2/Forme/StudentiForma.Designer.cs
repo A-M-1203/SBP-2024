@@ -69,9 +69,24 @@
             brojIndeksaColumn = new DataGridViewTextBoxColumn();
             smerColumn = new DataGridViewTextBoxColumn();
             timer1 = new System.Windows.Forms.Timer(components);
+            pretragaPanel = new Panel();
+            ocistiPretraguButton = new Button();
+            pretraziButton = new Button();
+            smerPretraziComboBox = new ComboBox();
+            indeksPretraziTextBox = new TextBox();
+            prezimePretaziTextBox = new TextBox();
+            roditeljPretraziTextBox = new TextBox();
+            imePretraziTextBox = new TextBox();
+            smerPretragaLabel = new Label();
+            indeksPretragaLabel = new Label();
+            prezimePretragaLabel = new Label();
+            roditeljPretragaLabel = new Label();
+            imePretragaLabel = new Label();
+            minimizePanelButton = new Button();
             studentToolStrip.SuspendLayout();
             studentGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)studentDataGridView).BeginInit();
+            pretragaPanel.SuspendLayout();
             SuspendLayout();
             // 
             // studentToolStrip
@@ -174,6 +189,7 @@
             pretragaToolStripButton.Name = "pretragaToolStripButton";
             pretragaToolStripButton.Size = new Size(109, 40);
             pretragaToolStripButton.Text = "Pretraga";
+            pretragaToolStripButton.Click += pretragaToolStripButton_Click;
             // 
             // studentGroupBox
             // 
@@ -294,6 +310,7 @@
             // 
             brojIndeksaTextBox.Enabled = false;
             brojIndeksaTextBox.Location = new Point(196, 214);
+            brojIndeksaTextBox.MaxLength = 5;
             brojIndeksaTextBox.Name = "brojIndeksaTextBox";
             brojIndeksaTextBox.Size = new Size(254, 32);
             brojIndeksaTextBox.TabIndex = 8;
@@ -450,12 +467,157 @@
             timer1.Interval = 4000;
             timer1.Tick += timer1_Tick;
             // 
+            // pretragaPanel
+            // 
+            pretragaPanel.BorderStyle = BorderStyle.FixedSingle;
+            pretragaPanel.Controls.Add(ocistiPretraguButton);
+            pretragaPanel.Controls.Add(pretraziButton);
+            pretragaPanel.Controls.Add(smerPretraziComboBox);
+            pretragaPanel.Controls.Add(indeksPretraziTextBox);
+            pretragaPanel.Controls.Add(prezimePretaziTextBox);
+            pretragaPanel.Controls.Add(roditeljPretraziTextBox);
+            pretragaPanel.Controls.Add(imePretraziTextBox);
+            pretragaPanel.Controls.Add(smerPretragaLabel);
+            pretragaPanel.Controls.Add(indeksPretragaLabel);
+            pretragaPanel.Controls.Add(prezimePretragaLabel);
+            pretragaPanel.Controls.Add(roditeljPretragaLabel);
+            pretragaPanel.Controls.Add(imePretragaLabel);
+            pretragaPanel.Controls.Add(minimizePanelButton);
+            pretragaPanel.Location = new Point(499, 46);
+            pretragaPanel.Name = "pretragaPanel";
+            pretragaPanel.Size = new Size(387, 398);
+            pretragaPanel.TabIndex = 3;
+            pretragaPanel.Visible = false;
+            // 
+            // ocistiPretraguButton
+            // 
+            ocistiPretraguButton.Image = Properties.Resources.broom_icon;
+            ocistiPretraguButton.Location = new Point(254, 341);
+            ocistiPretraguButton.Name = "ocistiPretraguButton";
+            ocistiPretraguButton.Size = new Size(119, 33);
+            ocistiPretraguButton.TabIndex = 12;
+            ocistiPretraguButton.Text = "Očisti";
+            ocistiPretraguButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            ocistiPretraguButton.UseVisualStyleBackColor = true;
+            ocistiPretraguButton.Click += ocistiPretraguButton_Click;
+            // 
+            // pretraziButton
+            // 
+            pretraziButton.Image = Properties.Resources.search_research_icon;
+            pretraziButton.Location = new Point(119, 341);
+            pretraziButton.Name = "pretraziButton";
+            pretraziButton.Size = new Size(119, 33);
+            pretraziButton.TabIndex = 11;
+            pretraziButton.Text = "Pretraži";
+            pretraziButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            pretraziButton.UseVisualStyleBackColor = true;
+            pretraziButton.Click += pretraziButton_Click;
+            // 
+            // smerPretraziComboBox
+            // 
+            smerPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            smerPretraziComboBox.FormattingEnabled = true;
+            smerPretraziComboBox.Items.AddRange(new object[] { "EEN", "RII", "ELK", "EKM", "US", "KIT" });
+            smerPretraziComboBox.Location = new Point(119, 276);
+            smerPretraziComboBox.Name = "smerPretraziComboBox";
+            smerPretraziComboBox.Size = new Size(254, 32);
+            smerPretraziComboBox.TabIndex = 10;
+            // 
+            // indeksPretraziTextBox
+            // 
+            indeksPretraziTextBox.Location = new Point(119, 213);
+            indeksPretraziTextBox.MaxLength = 5;
+            indeksPretraziTextBox.Name = "indeksPretraziTextBox";
+            indeksPretraziTextBox.Size = new Size(254, 32);
+            indeksPretraziTextBox.TabIndex = 9;
+            indeksPretraziTextBox.KeyPress += indeksPretraziTextBox_KeyPress;
+            // 
+            // prezimePretaziTextBox
+            // 
+            prezimePretaziTextBox.Location = new Point(119, 150);
+            prezimePretaziTextBox.Name = "prezimePretaziTextBox";
+            prezimePretaziTextBox.Size = new Size(254, 32);
+            prezimePretaziTextBox.TabIndex = 8;
+            prezimePretaziTextBox.KeyPress += prezimePretaziTextBox_KeyPress;
+            // 
+            // roditeljPretraziTextBox
+            // 
+            roditeljPretraziTextBox.Location = new Point(119, 82);
+            roditeljPretraziTextBox.Name = "roditeljPretraziTextBox";
+            roditeljPretraziTextBox.Size = new Size(254, 32);
+            roditeljPretraziTextBox.TabIndex = 7;
+            roditeljPretraziTextBox.KeyPress += roditeljPretraziTextBox_KeyPress;
+            // 
+            // imePretraziTextBox
+            // 
+            imePretraziTextBox.Location = new Point(119, 24);
+            imePretraziTextBox.Name = "imePretraziTextBox";
+            imePretraziTextBox.Size = new Size(254, 32);
+            imePretraziTextBox.TabIndex = 6;
+            imePretraziTextBox.KeyPress += imePretraziTextBox_KeyPress;
+            // 
+            // smerPretragaLabel
+            // 
+            smerPretragaLabel.AutoSize = true;
+            smerPretragaLabel.Location = new Point(34, 279);
+            smerPretragaLabel.Name = "smerPretragaLabel";
+            smerPretragaLabel.Size = new Size(56, 24);
+            smerPretragaLabel.TabIndex = 5;
+            smerPretragaLabel.Text = "Smer";
+            // 
+            // indeksPretragaLabel
+            // 
+            indeksPretragaLabel.AutoSize = true;
+            indeksPretragaLabel.Location = new Point(24, 216);
+            indeksPretragaLabel.Name = "indeksPretragaLabel";
+            indeksPretragaLabel.Size = new Size(66, 24);
+            indeksPretragaLabel.TabIndex = 4;
+            indeksPretragaLabel.Text = "Indeks";
+            // 
+            // prezimePretragaLabel
+            // 
+            prezimePretragaLabel.AutoSize = true;
+            prezimePretragaLabel.Location = new Point(10, 153);
+            prezimePretragaLabel.Name = "prezimePretragaLabel";
+            prezimePretragaLabel.Size = new Size(80, 24);
+            prezimePretragaLabel.TabIndex = 3;
+            prezimePretragaLabel.Text = "Prezime";
+            // 
+            // roditeljPretragaLabel
+            // 
+            roditeljPretragaLabel.AutoSize = true;
+            roditeljPretragaLabel.Location = new Point(12, 85);
+            roditeljPretragaLabel.Name = "roditeljPretragaLabel";
+            roditeljPretragaLabel.Size = new Size(78, 24);
+            roditeljPretragaLabel.TabIndex = 2;
+            roditeljPretragaLabel.Text = "Roditelj";
+            // 
+            // imePretragaLabel
+            // 
+            imePretragaLabel.AutoSize = true;
+            imePretragaLabel.Location = new Point(47, 27);
+            imePretragaLabel.Name = "imePretragaLabel";
+            imePretragaLabel.Size = new Size(43, 24);
+            imePretragaLabel.TabIndex = 1;
+            imePretragaLabel.Text = "Ime";
+            // 
+            // minimizePanelButton
+            // 
+            minimizePanelButton.Image = Properties.Resources.arrow_minimise_icon;
+            minimizePanelButton.Location = new Point(3, 3);
+            minimizePanelButton.Name = "minimizePanelButton";
+            minimizePanelButton.Size = new Size(25, 25);
+            minimizePanelButton.TabIndex = 0;
+            minimizePanelButton.UseVisualStyleBackColor = true;
+            minimizePanelButton.Click += minimizePanelButton_Click;
+            // 
             // StudentiForma
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkGray;
             ClientSize = new Size(1165, 540);
+            Controls.Add(pretragaPanel);
             Controls.Add(studentDataGridView);
             Controls.Add(studentGroupBox);
             Controls.Add(studentToolStrip);
@@ -473,6 +635,8 @@
             studentGroupBox.ResumeLayout(false);
             studentGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)studentDataGridView).EndInit();
+            pretragaPanel.ResumeLayout(false);
+            pretragaPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -518,5 +682,19 @@
         private Label ukupanBrojStudenataLabel;
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripButton pretragaToolStripButton;
+        private Panel pretragaPanel;
+        private Button minimizePanelButton;
+        private Label imePretragaLabel;
+        private Label smerPretragaLabel;
+        private Label indeksPretragaLabel;
+        private Label prezimePretragaLabel;
+        private Label roditeljPretragaLabel;
+        private ComboBox smerPretraziComboBox;
+        private TextBox indeksPretraziTextBox;
+        private TextBox prezimePretaziTextBox;
+        private TextBox roditeljPretraziTextBox;
+        private TextBox imePretraziTextBox;
+        private Button pretraziButton;
+        private Button ocistiPretraguButton;
     }
 }

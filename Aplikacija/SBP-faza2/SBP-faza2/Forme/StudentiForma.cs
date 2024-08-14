@@ -495,4 +495,119 @@ public partial class StudentiForma : Form
             MessageBox.Show(ec.Message);
         }
     }
+
+    private void imePretraziTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ')
+            e.Handled = true;
+    }
+
+    private void roditeljPretraziTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ')
+            e.Handled = true;
+    }
+
+    private void prezimePretaziTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ')
+            e.Handled = true;
+    }
+
+    private void indeksPretraziTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            e.Handled = true;
+    }
+
+    private void pretragaToolStripButton_Click(object sender, EventArgs e)
+    {
+        if (pretragaPanel.Visible == false)
+        {
+            pretragaPanel.Visible = true;
+        }
+        else
+        {
+            pretragaPanel.Visible = false;
+        }
+    }
+
+    private void minimizePanelButton_Click(object sender, EventArgs e)
+    {
+        pretragaPanel.Visible = false;
+    }
+
+    private void pretraziButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                var query = session.Query<Student>().AsQueryable();
+
+                if (!string.IsNullOrEmpty(imePretraziTextBox.Text))
+                {
+                    query = query.Where(s => s.LicnoIme.ToLower().Contains(imePretraziTextBox.Text.Trim().ToLower()));
+                }
+
+                if (!string.IsNullOrEmpty(roditeljPretraziTextBox.Text))
+                {
+                    query = query.Where(s => s.ImeRoditelja.ToLower().Contains(roditeljPretraziTextBox.Text.Trim().ToLower()));
+                }
+
+                if (!string.IsNullOrEmpty(prezimePretaziTextBox.Text))
+                {
+                    query = query.Where(s => s.Prezime.ToLower().Contains(prezimePretaziTextBox.Text.Trim().ToLower()));
+                }
+
+                if (!string.IsNullOrEmpty(indeksPretraziTextBox.Text))
+                {
+                    query = query.Where(s => s.BrojIndeksa.Contains(indeksPretraziTextBox.Text));
+                }
+
+                if (smerPretraziComboBox.SelectedItem != null)
+                {
+                    query = query.Where(s => s.Smer.Trim() == smerPretraziComboBox.SelectedItem.ToString());
+                }
+
+                IList<StudentBasic> studenti = query.Select(s => new StudentBasic
+                {
+                    Id = s.Id,
+                    LicnoIme = s.LicnoIme,
+                    ImeRoditelja = s.ImeRoditelja,
+                    Prezime = s.Prezime,
+                    BrojIndeksa = s.BrojIndeksa,
+                    Smer = s.Smer
+                }).ToList();
+
+                studentDataGridView.Rows.Clear();
+
+                foreach (var s in studenti)
+                {
+                    studentDataGridView.Rows.Add(new string[]
+                    { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
+                }
+
+                studentDataGridView.Refresh();
+                studentDataGridView.ClearSelection();
+
+                session.Close();
+            }
+        }
+        catch (Exception ec)
+        {
+            MessageBox.Show(ec.Message);
+        }
+    }
+
+    private void ocistiPretraguButton_Click(object sender, EventArgs e)
+    {
+        imePretraziTextBox.Text = string.Empty;
+        roditeljPretraziTextBox.Text = string.Empty;
+        prezimePretaziTextBox.Text = string.Empty;
+        indeksPretraziTextBox.Text = string.Empty;
+
+        smerPretraziComboBox.SelectedIndex = -1;
+    }
 }
