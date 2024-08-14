@@ -16,6 +16,8 @@ public partial class StudentiForma : Form
 
     private void dodajStudentaToolStripButton_Click(object sender, EventArgs e)
     {
+        successStatusLabel.Text = "Klikom na dugme sačuvaj biće zapamćen novi student";
+
         dodajStudentaToolStripButton.Enabled = false;
         sacuvajToolStripButton.Enabled = true;
         odustaniToolStripButton.Enabled = true;
@@ -35,6 +37,8 @@ public partial class StudentiForma : Form
 
     private void odustaniToolStripButton_Click(object sender, EventArgs e)
     {
+        successStatusLabel.Text = string.Empty;
+
         odustaniToolStripButton.Enabled = false;
         sacuvajToolStripButton.Enabled = false;
         dodajStudentaToolStripButton.Enabled = true;
@@ -112,7 +116,6 @@ public partial class StudentiForma : Form
                         }).ToList();
 
                     studentaDataGridView.Rows.Clear();
-                    //studentaDataGridView.Refresh();
 
                     foreach (var s in studenti)
                     {
@@ -121,11 +124,9 @@ public partial class StudentiForma : Form
                     }
 
                     studentaDataGridView.Refresh();
+                    studentaDataGridView.ClearSelection();
 
-                    if (studentaDataGridView.RowCount > 0)
-                    {
-                        studentaDataGridView.ClearSelection();
-                    }
+                    brojPrikazanihStudenataLabel.Text = session.Query<Student>().Count().ToString();
                 }
                 else
                 {
@@ -167,6 +168,8 @@ public partial class StudentiForma : Form
     {
         if (e.RowIndex >= 0)
         {
+            successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći student";
+
             DataGridViewRow row = studentaDataGridView.Rows[e.RowIndex];
 
             Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
@@ -249,39 +252,37 @@ public partial class StudentiForma : Form
 
     private void izmeniStudentaToolStripButton_Click(object sender, EventArgs e)
     {
-        if (studentaDataGridView.SelectedRows.Count >= 0)
+        successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći student";
+        DataGridViewRow row = studentaDataGridView.SelectedRows[0];
+
+        Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
+        licnoImeTextBox.Text = row.Cells["licnoImeColumn"].Value.ToString();
+        imeRoditeljaTextBox.Text = row.Cells["imeRoditeljaColumn"].Value.ToString();
+        prezimeTextBox.Text = row.Cells["prezimeColumn"].Value.ToString();
+        brojIndeksaTextBox.Text = row.Cells["brojIndeksaColumn"].Value.ToString();
+
+        string smer = row.Cells["smerColumn"].Value.ToString()!;
+        smer = smer.Trim();
+        foreach (var item in smerComboBox.Items)
         {
-            DataGridViewRow row = studentaDataGridView.SelectedRows[0];
-
-            Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
-            licnoImeTextBox.Text = row.Cells["licnoImeColumn"].Value.ToString();
-            imeRoditeljaTextBox.Text = row.Cells["imeRoditeljaColumn"].Value.ToString();
-            prezimeTextBox.Text = row.Cells["prezimeColumn"].Value.ToString();
-            brojIndeksaTextBox.Text = row.Cells["brojIndeksaColumn"].Value.ToString();
-
-            string smer = row.Cells["smerColumn"].Value.ToString()!;
-            smer = smer.Trim();
-            foreach (var item in smerComboBox.Items)
+            if (item.ToString() == smer)
             {
-                if (item.ToString() == smer)
-                {
-                    smerComboBox.SelectedItem = item;
-                    break;
-                }
+                smerComboBox.SelectedItem = item;
+                break;
             }
-
-            licnoImeTextBox.Enabled = true;
-            imeRoditeljaTextBox.Enabled = true;
-            prezimeTextBox.Enabled = true;
-            brojIndeksaTextBox.Enabled = true;
-            smerComboBox.Enabled = true;
-
-            dodajStudentaToolStripButton.Enabled = false;
-            izmeniStudentaToolStripButton.Enabled = false;
-
-            sacuvajToolStripButton.Enabled = true;
-            odustaniToolStripButton.Enabled = true;
         }
+
+        licnoImeTextBox.Enabled = true;
+        imeRoditeljaTextBox.Enabled = true;
+        prezimeTextBox.Enabled = true;
+        brojIndeksaTextBox.Enabled = true;
+        smerComboBox.Enabled = true;
+
+        dodajStudentaToolStripButton.Enabled = false;
+        izmeniStudentaToolStripButton.Enabled = false;
+
+        sacuvajToolStripButton.Enabled = true;
+        odustaniToolStripButton.Enabled = true;
     }
 
     private void sacuvajToolStripButton_Click(object sender, EventArgs e)
@@ -339,6 +340,8 @@ public partial class StudentiForma : Form
 
                         studentaDataGridView.Refresh();
                         studentaDataGridView.ClearSelection();
+
+                        brojPrikazanihStudenataLabel.Text = session.Query<Student>().Count().ToString();
 
                         successStatusLabel.Text = "Student uspešno sačuvan";
 
@@ -472,6 +475,8 @@ public partial class StudentiForma : Form
 
                 studentaDataGridView.Refresh();
                 studentaDataGridView.ClearSelection();
+
+                brojPrikazanihStudenataLabel.Text = session.Query<Student>().Count().ToString();
 
                 session.Close();
 

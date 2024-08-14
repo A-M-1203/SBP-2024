@@ -40,6 +40,8 @@
             toolStripSeparator4 = new ToolStripSeparator();
             odustaniToolStripButton = new ToolStripButton();
             studentGroupBox = new GroupBox();
+            brojPrikazanihStudenataLabel = new Label();
+            brojStudenataLabel = new Label();
             successStatusLabel = new Label();
             zvezdicaLabel = new Label();
             smerErrorLabel = new Label();
@@ -161,6 +163,8 @@
             // studentGroupBox
             // 
             studentGroupBox.BackColor = Color.DarkGray;
+            studentGroupBox.Controls.Add(brojPrikazanihStudenataLabel);
+            studentGroupBox.Controls.Add(brojStudenataLabel);
             studentGroupBox.Controls.Add(successStatusLabel);
             studentGroupBox.Controls.Add(zvezdicaLabel);
             studentGroupBox.Controls.Add(smerErrorLabel);
@@ -185,12 +189,29 @@
             studentGroupBox.TabStop = false;
             studentGroupBox.Text = "Podaci";
             // 
+            // brojPrikazanihStudenataLabel
+            // 
+            brojPrikazanihStudenataLabel.AutoSize = true;
+            brojPrikazanihStudenataLabel.Location = new Point(196, 347);
+            brojPrikazanihStudenataLabel.Name = "brojPrikazanihStudenataLabel";
+            brojPrikazanihStudenataLabel.Size = new Size(0, 24);
+            brojPrikazanihStudenataLabel.TabIndex = 18;
+            // 
+            // brojStudenataLabel
+            // 
+            brojStudenataLabel.AutoSize = true;
+            brojStudenataLabel.Location = new Point(15, 347);
+            brojStudenataLabel.Name = "brojStudenataLabel";
+            brojStudenataLabel.Size = new Size(142, 24);
+            brojStudenataLabel.TabIndex = 17;
+            brojStudenataLabel.Text = "Broj studenata:";
+            // 
             // successStatusLabel
             // 
             successStatusLabel.ForeColor = Color.Lime;
-            successStatusLabel.Location = new Point(27, 374);
+            successStatusLabel.Location = new Point(27, 388);
             successStatusLabel.Name = "successStatusLabel";
-            successStatusLabel.Size = new Size(423, 25);
+            successStatusLabel.Size = new Size(423, 54);
             successStatusLabel.TabIndex = 16;
             successStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -478,5 +499,7 @@
         private Label zvezdicaLabel;
         private Label successStatusLabel;
         private System.Windows.Forms.Timer timer1;
+        private Label brojPrikazanihStudenataLabel;
+        private Label brojStudenataLabel;
     }
 }
