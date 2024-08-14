@@ -129,6 +129,7 @@
             predmetiButton.TextAlign = ContentAlignment.MiddleRight;
             predmetiButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             predmetiButton.UseVisualStyleBackColor = true;
+            predmetiButton.Click += predmetiButton_Click;
             // 
             // studentiButton
             // 

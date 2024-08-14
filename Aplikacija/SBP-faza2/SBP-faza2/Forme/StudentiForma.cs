@@ -18,7 +18,8 @@ public partial class StudentiForma : Form
     {
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće zapamćen novi student";
 
-        dodajStudentaToolStripButton.Enabled = false;
+        dodajToolStripButton.Enabled = false;
+
         sacuvajToolStripButton.Enabled = true;
         odustaniToolStripButton.Enabled = true;
 
@@ -41,11 +42,11 @@ public partial class StudentiForma : Form
 
         odustaniToolStripButton.Enabled = false;
         sacuvajToolStripButton.Enabled = false;
-        dodajStudentaToolStripButton.Enabled = true;
+        dodajToolStripButton.Enabled = true;
 
-        if (studentaDataGridView.SelectedRows.Count > 0)
+        if (studentDataGridView.SelectedRows.Count > 0)
         {
-            izmeniStudentaToolStripButton.Enabled = true;
+            izmeniToolStripButton.Enabled = true;
         }
 
         licnoImeTextBox.Enabled = false;
@@ -69,16 +70,16 @@ public partial class StudentiForma : Form
 
     private void studentaDataGridView_SelectionChanged(object sender, EventArgs e)
     {
-        if (studentaDataGridView.SelectedRows.Count > 0)
+        if (studentDataGridView.SelectedRows.Count > 0)
         {
-            izmeniStudentaToolStripButton.Enabled = true;
-            obrisiStudentaToolStripButton.Enabled = true;
-            Id = int.Parse(studentaDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
+            izmeniToolStripButton.Enabled = true;
+            obrisiToolStripButton.Enabled = true;
+            Id = int.Parse(studentDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
         }
         else
         {
-            izmeniStudentaToolStripButton.Enabled = false;
-            obrisiStudentaToolStripButton.Enabled = false;
+            izmeniToolStripButton.Enabled = false;
+            obrisiToolStripButton.Enabled = false;
         }
 
         licnoImeErrorLabel.Text = string.Empty;
@@ -96,7 +97,7 @@ public partial class StudentiForma : Form
             {
                 if (session != null)
                 {
-                    IList<StudentList> studenti = session.QueryOver<Student>()
+                    IList<StudentBasic> studenti = session.QueryOver<Student>()
                         .Select(
                             Projections.Property("Id"),
                             Projections.Property("LicnoIme"),
@@ -105,7 +106,7 @@ public partial class StudentiForma : Form
                             Projections.Property("BrojIndeksa"),
                             Projections.Property("Smer")
                         ).List<object[]>()
-                        .Select(row => new StudentList
+                        .Select(row => new StudentBasic
                         {
                             Id = (int)row[0],
                             LicnoIme = (string)row[1],
@@ -115,18 +116,18 @@ public partial class StudentiForma : Form
                             Smer = (string)row[5]
                         }).ToList();
 
-                    studentaDataGridView.Rows.Clear();
+                    studentDataGridView.Rows.Clear();
 
                     foreach (var s in studenti)
                     {
-                        studentaDataGridView.Rows.Add(new string[]
+                        studentDataGridView.Rows.Add(new string[]
                         { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
                     }
 
-                    studentaDataGridView.Refresh();
-                    studentaDataGridView.ClearSelection();
+                    studentDataGridView.Refresh();
+                    studentDataGridView.ClearSelection();
 
-                    brojPrikazanihStudenataLabel.Text = session.Query<Student>().Count().ToString();
+                    brojStudenataLabel.Text = session.Query<Student>().Count().ToString();
                 }
                 else
                 {
@@ -170,7 +171,7 @@ public partial class StudentiForma : Form
         {
             successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći student";
 
-            DataGridViewRow row = studentaDataGridView.Rows[e.RowIndex];
+            DataGridViewRow row = studentDataGridView.Rows[e.RowIndex];
 
             Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
             licnoImeTextBox.Text = row.Cells["licnoImeColumn"].Value.ToString();
@@ -195,8 +196,8 @@ public partial class StudentiForma : Form
             brojIndeksaTextBox.Enabled = true;
             smerComboBox.Enabled = true;
 
-            dodajStudentaToolStripButton.Enabled = false;
-            izmeniStudentaToolStripButton.Enabled = false;
+            dodajToolStripButton.Enabled = false;
+            izmeniToolStripButton.Enabled = false;
 
             sacuvajToolStripButton.Enabled = true;
             odustaniToolStripButton.Enabled = true;
@@ -253,7 +254,7 @@ public partial class StudentiForma : Form
     private void izmeniStudentaToolStripButton_Click(object sender, EventArgs e)
     {
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći student";
-        DataGridViewRow row = studentaDataGridView.SelectedRows[0];
+        DataGridViewRow row = studentDataGridView.SelectedRows[0];
 
         Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
         licnoImeTextBox.Text = row.Cells["licnoImeColumn"].Value.ToString();
@@ -278,8 +279,8 @@ public partial class StudentiForma : Form
         brojIndeksaTextBox.Enabled = true;
         smerComboBox.Enabled = true;
 
-        dodajStudentaToolStripButton.Enabled = false;
-        izmeniStudentaToolStripButton.Enabled = false;
+        dodajToolStripButton.Enabled = false;
+        izmeniToolStripButton.Enabled = false;
 
         sacuvajToolStripButton.Enabled = true;
         odustaniToolStripButton.Enabled = true;
@@ -311,7 +312,7 @@ public partial class StudentiForma : Form
                         session.Save(student);
                         session.Flush();
 
-                        IList<StudentList> studenti = session.QueryOver<Student>()
+                        IList<StudentBasic> studenti = session.QueryOver<Student>()
                         .Select(
                             Projections.Property("Id"),
                             Projections.Property("LicnoIme"),
@@ -320,7 +321,7 @@ public partial class StudentiForma : Form
                             Projections.Property("BrojIndeksa"),
                             Projections.Property("Smer")
                         ).List<object[]>()
-                        .Select(row => new StudentList
+                        .Select(row => new StudentBasic
                         {
                             Id = (int)row[0],
                             LicnoIme = (string)row[1],
@@ -330,18 +331,18 @@ public partial class StudentiForma : Form
                             Smer = (string)row[5]
                         }).ToList();
 
-                        studentaDataGridView.Rows.Clear();
+                        studentDataGridView.Rows.Clear();
 
                         foreach (var s in studenti)
                         {
-                            studentaDataGridView.Rows.Add(new string[]
+                            studentDataGridView.Rows.Add(new string[]
                             { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
                         }
 
-                        studentaDataGridView.Refresh();
-                        studentaDataGridView.ClearSelection();
+                        studentDataGridView.Refresh();
+                        studentDataGridView.ClearSelection();
 
-                        brojPrikazanihStudenataLabel.Text = session.Query<Student>().Count().ToString();
+                        brojStudenataLabel.Text = session.Query<Student>().Count().ToString();
 
                         successStatusLabel.Text = "Student uspešno sačuvan";
 
@@ -357,7 +358,7 @@ public partial class StudentiForma : Form
                         session.Save(student);
                         session.Flush();
 
-                        IList<StudentList> studenti = session.QueryOver<Student>()
+                        IList<StudentBasic> studenti = session.QueryOver<Student>()
                         .Select(
                             Projections.Property("Id"),
                             Projections.Property("LicnoIme"),
@@ -366,7 +367,7 @@ public partial class StudentiForma : Form
                             Projections.Property("BrojIndeksa"),
                             Projections.Property("Smer")
                         ).List<object[]>()
-                        .Select(row => new StudentList
+                        .Select(row => new StudentBasic
                         {
                             Id = (int)row[0],
                             LicnoIme = (string)row[1],
@@ -376,16 +377,16 @@ public partial class StudentiForma : Form
                             Smer = (string)row[5]
                         }).ToList();
 
-                        studentaDataGridView.Rows.Clear();
+                        studentDataGridView.Rows.Clear();
 
                         foreach (var s in studenti)
                         {
-                            studentaDataGridView.Rows.Add(new string[]
+                            studentDataGridView.Rows.Add(new string[]
                             { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
                         }
 
-                        studentaDataGridView.Refresh();
-                        studentaDataGridView.ClearSelection();
+                        studentDataGridView.Refresh();
+                        studentDataGridView.ClearSelection();
 
                         successStatusLabel.Text = "Student uspešno ažuriran";
 
@@ -446,7 +447,7 @@ public partial class StudentiForma : Form
                 session.Delete(student);
                 session.Flush();
 
-                IList<StudentList> studenti = session.QueryOver<Student>()
+                IList<StudentBasic> studenti = session.QueryOver<Student>()
                         .Select(
                             Projections.Property("Id"),
                             Projections.Property("LicnoIme"),
@@ -455,7 +456,7 @@ public partial class StudentiForma : Form
                             Projections.Property("BrojIndeksa"),
                             Projections.Property("Smer")
                         ).List<object[]>()
-                        .Select(row => new StudentList
+                        .Select(row => new StudentBasic
                         {
                             Id = (int)row[0],
                             LicnoIme = (string)row[1],
@@ -465,18 +466,18 @@ public partial class StudentiForma : Form
                             Smer = (string)row[5]
                         }).ToList();
 
-                studentaDataGridView.Rows.Clear();
+                studentDataGridView.Rows.Clear();
 
                 foreach (var s in studenti)
                 {
-                    studentaDataGridView.Rows.Add(new string[]
+                    studentDataGridView.Rows.Add(new string[]
                     { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
                 }
 
-                studentaDataGridView.Refresh();
-                studentaDataGridView.ClearSelection();
+                studentDataGridView.Refresh();
+                studentDataGridView.ClearSelection();
 
-                brojPrikazanihStudenataLabel.Text = session.Query<Student>().Count().ToString();
+                brojStudenataLabel.Text = session.Query<Student>().Count().ToString();
 
                 session.Close();
 

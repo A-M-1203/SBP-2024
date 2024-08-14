@@ -105,7 +105,7 @@ public partial class PredmetiForm : Form
             {
                 if (session != null)
                 {
-                    IList<PredmetList> predmeti = session.QueryOver<Predmet>()
+                    IList<PredmetBasic> predmeti = session.QueryOver<Predmet>()
                         .Select(
                             Projections.Property("Id"),
                             Projections.Property("Sifra"),
@@ -113,7 +113,7 @@ public partial class PredmetiForm : Form
                             Projections.Property("Katedra"),
                             Projections.Property("Semestar")
                         ).List<object[]>()
-                        .Select(row => new PredmetList
+                        .Select(row => new PredmetBasic
                         {
                             Id = (int)row[0],
                             Sifra = (string)row[1],

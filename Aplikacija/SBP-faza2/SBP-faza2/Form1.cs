@@ -97,4 +97,10 @@ public partial class Form1 : Form
         StudentiForma studentiForma = new StudentiForma();
         studentiForma.Show(this);
     }
+
+    private void predmetiButton_Click(object sender, EventArgs e)
+    {
+        PredmetiForma predmetiForma = new PredmetiForma();
+        predmetiForma.Show(this);
+    }
 }

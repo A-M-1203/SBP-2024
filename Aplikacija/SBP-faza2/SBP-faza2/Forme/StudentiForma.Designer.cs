@@ -30,18 +30,20 @@
         {
             components = new System.ComponentModel.Container();
             studentToolStrip = new ToolStrip();
-            dodajStudentaToolStripButton = new ToolStripButton();
+            dodajToolStripButton = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
-            izmeniStudentaToolStripButton = new ToolStripButton();
+            izmeniToolStripButton = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
-            obrisiStudentaToolStripButton = new ToolStripButton();
+            obrisiToolStripButton = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
             sacuvajToolStripButton = new ToolStripButton();
             toolStripSeparator4 = new ToolStripSeparator();
             odustaniToolStripButton = new ToolStripButton();
+            toolStripSeparator5 = new ToolStripSeparator();
+            pretragaToolStripButton = new ToolStripButton();
             studentGroupBox = new GroupBox();
-            brojPrikazanihStudenataLabel = new Label();
             brojStudenataLabel = new Label();
+            ukupanBrojStudenataLabel = new Label();
             successStatusLabel = new Label();
             zvezdicaLabel = new Label();
             smerErrorLabel = new Label();
@@ -59,7 +61,7 @@
             prezimeLabel = new Label();
             imeRoditeljaLabel = new Label();
             licnoImeLabel = new Label();
-            studentaDataGridView = new DataGridView();
+            studentDataGridView = new DataGridView();
             idColumn = new DataGridViewTextBoxColumn();
             licnoImeColumn = new DataGridViewTextBoxColumn();
             imeRoditeljaColumn = new DataGridViewTextBoxColumn();
@@ -69,7 +71,7 @@
             timer1 = new System.Windows.Forms.Timer(components);
             studentToolStrip.SuspendLayout();
             studentGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)studentaDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)studentDataGridView).BeginInit();
             SuspendLayout();
             // 
             // studentToolStrip
@@ -79,7 +81,7 @@
             studentToolStrip.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             studentToolStrip.GripStyle = ToolStripGripStyle.Hidden;
             studentToolStrip.ImageScalingSize = new Size(20, 20);
-            studentToolStrip.Items.AddRange(new ToolStripItem[] { dodajStudentaToolStripButton, toolStripSeparator1, izmeniStudentaToolStripButton, toolStripSeparator2, obrisiStudentaToolStripButton, toolStripSeparator3, sacuvajToolStripButton, toolStripSeparator4, odustaniToolStripButton });
+            studentToolStrip.Items.AddRange(new ToolStripItem[] { dodajToolStripButton, toolStripSeparator1, izmeniToolStripButton, toolStripSeparator2, obrisiToolStripButton, toolStripSeparator3, sacuvajToolStripButton, toolStripSeparator4, odustaniToolStripButton, toolStripSeparator5, pretragaToolStripButton });
             studentToolStrip.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
             studentToolStrip.Location = new Point(0, 0);
             studentToolStrip.Name = "studentToolStrip";
@@ -87,47 +89,47 @@
             studentToolStrip.TabIndex = 0;
             studentToolStrip.Text = "toolStrip1";
             // 
-            // dodajStudentaToolStripButton
+            // dodajToolStripButton
             // 
-            dodajStudentaToolStripButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dodajStudentaToolStripButton.Image = Properties.Resources.add_icon;
-            dodajStudentaToolStripButton.ImageTransparentColor = Color.Magenta;
-            dodajStudentaToolStripButton.Name = "dodajStudentaToolStripButton";
-            dodajStudentaToolStripButton.Size = new Size(85, 40);
-            dodajStudentaToolStripButton.Text = "Dodaj";
-            dodajStudentaToolStripButton.Click += dodajStudentaToolStripButton_Click;
+            dodajToolStripButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dodajToolStripButton.Image = Properties.Resources.add_icon;
+            dodajToolStripButton.ImageTransparentColor = Color.Magenta;
+            dodajToolStripButton.Name = "dodajToolStripButton";
+            dodajToolStripButton.Size = new Size(85, 40);
+            dodajToolStripButton.Text = "Dodaj";
+            dodajToolStripButton.Click += dodajStudentaToolStripButton_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new Size(6, 43);
             // 
-            // izmeniStudentaToolStripButton
+            // izmeniToolStripButton
             // 
-            izmeniStudentaToolStripButton.Enabled = false;
-            izmeniStudentaToolStripButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            izmeniStudentaToolStripButton.Image = Properties.Resources.edit_icon;
-            izmeniStudentaToolStripButton.ImageTransparentColor = Color.Magenta;
-            izmeniStudentaToolStripButton.Name = "izmeniStudentaToolStripButton";
-            izmeniStudentaToolStripButton.Size = new Size(92, 40);
-            izmeniStudentaToolStripButton.Text = "Izmeni";
-            izmeniStudentaToolStripButton.Click += izmeniStudentaToolStripButton_Click;
+            izmeniToolStripButton.Enabled = false;
+            izmeniToolStripButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            izmeniToolStripButton.Image = Properties.Resources.edit_icon;
+            izmeniToolStripButton.ImageTransparentColor = Color.Magenta;
+            izmeniToolStripButton.Name = "izmeniToolStripButton";
+            izmeniToolStripButton.Size = new Size(92, 40);
+            izmeniToolStripButton.Text = "Izmeni";
+            izmeniToolStripButton.Click += izmeniStudentaToolStripButton_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new Size(6, 43);
             // 
-            // obrisiStudentaToolStripButton
+            // obrisiToolStripButton
             // 
-            obrisiStudentaToolStripButton.Enabled = false;
-            obrisiStudentaToolStripButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            obrisiStudentaToolStripButton.Image = Properties.Resources.trash_can_icon;
-            obrisiStudentaToolStripButton.ImageTransparentColor = Color.Magenta;
-            obrisiStudentaToolStripButton.Name = "obrisiStudentaToolStripButton";
-            obrisiStudentaToolStripButton.Size = new Size(85, 40);
-            obrisiStudentaToolStripButton.Text = "Obriši";
-            obrisiStudentaToolStripButton.Click += obrisiStudentaToolStripButton_Click;
+            obrisiToolStripButton.Enabled = false;
+            obrisiToolStripButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            obrisiToolStripButton.Image = Properties.Resources.trash_can_icon;
+            obrisiToolStripButton.ImageTransparentColor = Color.Magenta;
+            obrisiToolStripButton.Name = "obrisiToolStripButton";
+            obrisiToolStripButton.Size = new Size(85, 40);
+            obrisiToolStripButton.Text = "Obriši";
+            obrisiToolStripButton.Click += obrisiStudentaToolStripButton_Click;
             // 
             // toolStripSeparator3
             // 
@@ -160,11 +162,24 @@
             odustaniToolStripButton.Text = "Odustani";
             odustaniToolStripButton.Click += odustaniToolStripButton_Click;
             // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(6, 43);
+            // 
+            // pretragaToolStripButton
+            // 
+            pretragaToolStripButton.Image = Properties.Resources.magnifying_glass_icon;
+            pretragaToolStripButton.ImageTransparentColor = Color.Magenta;
+            pretragaToolStripButton.Name = "pretragaToolStripButton";
+            pretragaToolStripButton.Size = new Size(109, 40);
+            pretragaToolStripButton.Text = "Pretraga";
+            // 
             // studentGroupBox
             // 
             studentGroupBox.BackColor = Color.DarkGray;
-            studentGroupBox.Controls.Add(brojPrikazanihStudenataLabel);
             studentGroupBox.Controls.Add(brojStudenataLabel);
+            studentGroupBox.Controls.Add(ukupanBrojStudenataLabel);
             studentGroupBox.Controls.Add(successStatusLabel);
             studentGroupBox.Controls.Add(zvezdicaLabel);
             studentGroupBox.Controls.Add(smerErrorLabel);
@@ -189,22 +204,22 @@
             studentGroupBox.TabStop = false;
             studentGroupBox.Text = "Podaci";
             // 
-            // brojPrikazanihStudenataLabel
-            // 
-            brojPrikazanihStudenataLabel.AutoSize = true;
-            brojPrikazanihStudenataLabel.Location = new Point(196, 347);
-            brojPrikazanihStudenataLabel.Name = "brojPrikazanihStudenataLabel";
-            brojPrikazanihStudenataLabel.Size = new Size(0, 24);
-            brojPrikazanihStudenataLabel.TabIndex = 18;
-            // 
             // brojStudenataLabel
             // 
             brojStudenataLabel.AutoSize = true;
-            brojStudenataLabel.Location = new Point(15, 347);
+            brojStudenataLabel.Location = new Point(303, 347);
             brojStudenataLabel.Name = "brojStudenataLabel";
-            brojStudenataLabel.Size = new Size(142, 24);
-            brojStudenataLabel.TabIndex = 17;
-            brojStudenataLabel.Text = "Broj studenata:";
+            brojStudenataLabel.Size = new Size(0, 24);
+            brojStudenataLabel.TabIndex = 18;
+            // 
+            // ukupanBrojStudenataLabel
+            // 
+            ukupanBrojStudenataLabel.AutoSize = true;
+            ukupanBrojStudenataLabel.Location = new Point(6, 347);
+            ukupanBrojStudenataLabel.Name = "ukupanBrojStudenataLabel";
+            ukupanBrojStudenataLabel.Size = new Size(212, 24);
+            ukupanBrojStudenataLabel.TabIndex = 17;
+            ukupanBrojStudenataLabel.Text = "Ukupan broj studenata:";
             // 
             // successStatusLabel
             // 
@@ -227,7 +242,7 @@
             // smerErrorLabel
             // 
             smerErrorLabel.ForeColor = Color.Red;
-            smerErrorLabel.Location = new Point(11, 312);
+            smerErrorLabel.Location = new Point(32, 312);
             smerErrorLabel.Name = "smerErrorLabel";
             smerErrorLabel.Size = new Size(398, 25);
             smerErrorLabel.TabIndex = 14;
@@ -356,25 +371,25 @@
             licnoImeLabel.TabIndex = 0;
             licnoImeLabel.Text = "Lično ime*";
             // 
-            // studentaDataGridView
+            // studentDataGridView
             // 
-            studentaDataGridView.AllowUserToAddRows = false;
-            studentaDataGridView.AllowUserToDeleteRows = false;
-            studentaDataGridView.BackgroundColor = Color.DarkGray;
-            studentaDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            studentaDataGridView.Columns.AddRange(new DataGridViewColumn[] { idColumn, licnoImeColumn, imeRoditeljaColumn, prezimeColumn, brojIndeksaColumn, smerColumn });
-            studentaDataGridView.Dock = DockStyle.Right;
-            studentaDataGridView.Location = new Point(499, 43);
-            studentaDataGridView.MultiSelect = false;
-            studentaDataGridView.Name = "studentaDataGridView";
-            studentaDataGridView.ReadOnly = true;
-            studentaDataGridView.RowHeadersVisible = false;
-            studentaDataGridView.RowHeadersWidth = 51;
-            studentaDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            studentaDataGridView.Size = new Size(666, 497);
-            studentaDataGridView.TabIndex = 2;
-            studentaDataGridView.CellMouseDoubleClick += studentaDataGridView_CellMouseDoubleClick;
-            studentaDataGridView.SelectionChanged += studentaDataGridView_SelectionChanged;
+            studentDataGridView.AllowUserToAddRows = false;
+            studentDataGridView.AllowUserToDeleteRows = false;
+            studentDataGridView.BackgroundColor = Color.DarkGray;
+            studentDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            studentDataGridView.Columns.AddRange(new DataGridViewColumn[] { idColumn, licnoImeColumn, imeRoditeljaColumn, prezimeColumn, brojIndeksaColumn, smerColumn });
+            studentDataGridView.Dock = DockStyle.Right;
+            studentDataGridView.Location = new Point(499, 43);
+            studentDataGridView.MultiSelect = false;
+            studentDataGridView.Name = "studentDataGridView";
+            studentDataGridView.ReadOnly = true;
+            studentDataGridView.RowHeadersVisible = false;
+            studentDataGridView.RowHeadersWidth = 51;
+            studentDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            studentDataGridView.Size = new Size(666, 497);
+            studentDataGridView.TabIndex = 2;
+            studentDataGridView.CellMouseDoubleClick += studentaDataGridView_CellMouseDoubleClick;
+            studentDataGridView.SelectionChanged += studentaDataGridView_SelectionChanged;
             // 
             // idColumn
             // 
@@ -441,7 +456,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkGray;
             ClientSize = new Size(1165, 540);
-            Controls.Add(studentaDataGridView);
+            Controls.Add(studentDataGridView);
             Controls.Add(studentGroupBox);
             Controls.Add(studentToolStrip);
             Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -457,18 +472,18 @@
             studentToolStrip.PerformLayout();
             studentGroupBox.ResumeLayout(false);
             studentGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)studentaDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)studentDataGridView).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private ToolStrip studentToolStrip;
-        private ToolStripButton dodajStudentaToolStripButton;
+        private ToolStripButton dodajToolStripButton;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton izmeniStudentaToolStripButton;
+        private ToolStripButton izmeniToolStripButton;
         private ToolStripSeparator toolStripSeparator2;
-        private ToolStripButton obrisiStudentaToolStripButton;
+        private ToolStripButton obrisiToolStripButton;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton odustaniToolStripButton;
         private GroupBox studentGroupBox;
@@ -487,7 +502,7 @@
         private Label prezimeErrorLabel;
         private Label imeRoditeljaErrorLabel;
         private Label smerErrorLabel;
-        private DataGridView studentaDataGridView;
+        private DataGridView studentDataGridView;
         private DataGridViewTextBoxColumn idColumn;
         private DataGridViewTextBoxColumn licnoImeColumn;
         private DataGridViewTextBoxColumn imeRoditeljaColumn;
@@ -499,7 +514,9 @@
         private Label zvezdicaLabel;
         private Label successStatusLabel;
         private System.Windows.Forms.Timer timer1;
-        private Label brojPrikazanihStudenataLabel;
         private Label brojStudenataLabel;
+        private Label ukupanBrojStudenataLabel;
+        private ToolStripSeparator toolStripSeparator5;
+        private ToolStripButton pretragaToolStripButton;
     }
 }

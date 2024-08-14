@@ -1,6 +1,6 @@
 ﻿namespace SBP_faza2;
 
-public class StudentList
+public class StudentBasic
 {
     public required int Id { get; set; }
     public required string LicnoIme { get; set; }
@@ -9,7 +9,7 @@ public class StudentList
     public required string BrojIndeksa { get; set; }
     public required string Smer { get; set; }
 
-    public StudentList(int id, string licnoIme, string imeRoditelja, string prezime, string brojIndeksa, string smer) 
+    public StudentBasic(int id, string licnoIme, string imeRoditelja, string prezime, string brojIndeksa, string smer) 
     {
         Id = id;
         LicnoIme = licnoIme;
@@ -19,13 +19,13 @@ public class StudentList
         Smer = smer;
     }
 
-    public StudentList()
+    public StudentBasic()
     {
         
     }
 }
 
-public class PredmetList
+public class PredmetBasic
 {
     public required int Id { get; set; }
     public required string Sifra { get; set; }
@@ -33,7 +33,7 @@ public class PredmetList
     public required string Katedra { get; set; }
     public required string Semestar { get; set; }
 
-    public PredmetList(int id, string sifra, string naziv, string katedra, string semestar)
+    public PredmetBasic(int id, string sifra, string naziv, string katedra, string semestar)
     {
         Id = id;
         Sifra = sifra;
@@ -42,7 +42,7 @@ public class PredmetList
         Semestar = semestar;
     }
 
-    public PredmetList()
+    public PredmetBasic()
     {
         
     }

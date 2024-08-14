@@ -108,7 +108,7 @@ public partial class StudentiForm : Form
             {
                 if (session != null)
                 {
-                    IList<StudentList> studenti = session.QueryOver<Student>()
+                    IList<StudentBasic> studenti = session.QueryOver<Student>()
                         .Select(
                             Projections.Property("Id"),
                             Projections.Property("LicnoIme"),
@@ -117,7 +117,7 @@ public partial class StudentiForm : Form
                             Projections.Property("BrojIndeksa"),
                             Projections.Property("Smer")
                         ).List<object[]>()
-                        .Select(row => new StudentList
+                        .Select(row => new StudentBasic
                         {
                             Id = (int)row[0],
                             LicnoIme = (string)row[1],
