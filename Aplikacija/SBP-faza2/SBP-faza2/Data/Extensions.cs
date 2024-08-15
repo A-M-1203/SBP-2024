@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -79,5 +80,28 @@ public static class Extensions
                type.Equals(typeof(string)) ||
                type.Equals(typeof(decimal)) ||
                type.Equals(typeof(DateTime));
+    }
+
+    public static string? ToStringOrSlash(this object? obj)
+    {
+        if (obj == null) return "/";
+
+        return obj.ToString();
+    }
+
+    public static DateTime FromStringToDate(this object obj)
+    {
+        if (obj is string str)
+        {
+            var format = "dd.MM.yyyy. HH:mm:ss";
+            var culture = CultureInfo.InvariantCulture;
+
+            if (DateTime.TryParseExact(str, format, culture, DateTimeStyles.None, out DateTime dateTime))
+            {
+                return dateTime;
+            }
+        }
+
+        return DateTime.Now;
     }
 }

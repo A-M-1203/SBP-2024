@@ -1,5 +1,7 @@
 ﻿namespace SBP_faza2;
 
+
+#region Student
 public class StudentBasic
 {
     public required int Id { get; set; }
@@ -25,6 +27,9 @@ public class StudentBasic
     }
 }
 
+#endregion
+
+#region Predmet
 public class PredmetBasic
 {
     public required int Id { get; set; }
@@ -48,6 +53,49 @@ public class PredmetBasic
     }
 }
 
+public class PredmetNazivSifra
+{
+    public required int Id { get; set; }
+    public required string Naziv { get; set; }
+    public required string Sifra { get; set; }
+
+    public PredmetNazivSifra(int id, string naziv, string sifra)
+    {
+        Id = id;
+        Naziv = naziv;
+        Sifra = sifra;
+    }
+
+    public PredmetNazivSifra()
+    {
+        
+    }
+}
+
+public class PredmetNazivSifraSemestar
+{
+    public required int Id { get; set; }
+    public required string Naziv { get; set; }
+    public required string Sifra { get; set; }
+    public required string Semestar { get; set; }
+
+    public PredmetNazivSifraSemestar(int id, string naziv, string sifra, string semestar)
+    {
+        Id = id;
+        Naziv = naziv;
+        Sifra = sifra;
+        Semestar = semestar;
+    }
+
+    public PredmetNazivSifraSemestar()
+    {
+
+    }
+}
+
+#endregion
+
+#region Projekat
 public class ProjekatBasic
 {
     public required int Id { get; set; }
@@ -89,3 +137,5 @@ public class ProjekatBasic
         
     }
 }
+
+#endregion

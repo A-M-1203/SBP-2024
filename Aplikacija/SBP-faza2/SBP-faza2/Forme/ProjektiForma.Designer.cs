@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             projekatGroupBox = new GroupBox();
+            semestarComboBox = new ComboBox();
+            semestarLabel = new Label();
             brojProjekataLabel = new Label();
             ukupanBrojProjekataLabel = new Label();
             successStatusLabel = new Label();
@@ -85,7 +87,7 @@
             grupniColumn = new DataGridViewTextBoxColumn();
             rokZaZavrsetakColumn = new DataGridViewTextBoxColumn();
             maksimalanBrojStranaColumn = new DataGridViewTextBoxColumn();
-            preporucenProgramskiJezikColumn = new DataGridViewTextBoxColumn();
+            preporuceniProgramskiJezikColumn = new DataGridViewTextBoxColumn();
             brojIzvestajaColumn = new DataGridViewTextBoxColumn();
             predmetColumn = new DataGridViewTextBoxColumn();
             tipProjektaColumn = new DataGridViewTextBoxColumn();
@@ -101,6 +103,8 @@
             // 
             // projekatGroupBox
             // 
+            projekatGroupBox.Controls.Add(semestarComboBox);
+            projekatGroupBox.Controls.Add(semestarLabel);
             projekatGroupBox.Controls.Add(brojProjekataLabel);
             projekatGroupBox.Controls.Add(ukupanBrojProjekataLabel);
             projekatGroupBox.Controls.Add(successStatusLabel);
@@ -144,6 +148,27 @@
             projekatGroupBox.TabIndex = 0;
             projekatGroupBox.TabStop = false;
             projekatGroupBox.Text = "Podaci";
+            // 
+            // semestarComboBox
+            // 
+            semestarComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            semestarComboBox.Enabled = false;
+            semestarComboBox.FormattingEnabled = true;
+            semestarComboBox.Items.AddRange(new object[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" });
+            semestarComboBox.Location = new Point(906, 20);
+            semestarComboBox.Name = "semestarComboBox";
+            semestarComboBox.Size = new Size(75, 32);
+            semestarComboBox.TabIndex = 39;
+            semestarComboBox.SelectedIndexChanged += semestarComboBox_SelectedIndexChanged;
+            // 
+            // semestarLabel
+            // 
+            semestarLabel.AutoSize = true;
+            semestarLabel.Location = new Point(808, 23);
+            semestarLabel.Name = "semestarLabel";
+            semestarLabel.Size = new Size(92, 24);
+            semestarLabel.TabIndex = 38;
+            semestarLabel.Text = "Semestar";
             // 
             // brojProjekataLabel
             // 
@@ -242,6 +267,7 @@
             // tipProjektaComboBox
             // 
             tipProjektaComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            tipProjektaComboBox.Enabled = false;
             tipProjektaComboBox.FormattingEnabled = true;
             tipProjektaComboBox.Items.AddRange(new object[] { "Teorijski", "Praktični" });
             tipProjektaComboBox.Location = new Point(695, 144);
@@ -252,14 +278,16 @@
             // predmetComboBox
             // 
             predmetComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            predmetComboBox.Enabled = false;
             predmetComboBox.FormattingEnabled = true;
             predmetComboBox.Location = new Point(695, 83);
             predmetComboBox.Name = "predmetComboBox";
-            predmetComboBox.Size = new Size(254, 32);
+            predmetComboBox.Size = new Size(341, 32);
             predmetComboBox.TabIndex = 25;
             // 
             // brojIzvestajaNumericUpDown
             // 
+            brojIzvestajaNumericUpDown.Enabled = false;
             brojIzvestajaNumericUpDown.Location = new Point(695, 21);
             brojIzvestajaNumericUpDown.Name = "brojIzvestajaNumericUpDown";
             brojIzvestajaNumericUpDown.Size = new Size(92, 32);
@@ -268,13 +296,15 @@
             // maksimalanBrojStranaErrorLabel
             // 
             maksimalanBrojStranaErrorLabel.ForeColor = Color.Red;
-            maksimalanBrojStranaErrorLabel.Location = new Point(118, 306);
+            maksimalanBrojStranaErrorLabel.Location = new Point(6, 306);
             maksimalanBrojStranaErrorLabel.Name = "maksimalanBrojStranaErrorLabel";
-            maksimalanBrojStranaErrorLabel.Size = new Size(417, 25);
+            maksimalanBrojStranaErrorLabel.Size = new Size(529, 25);
             maksimalanBrojStranaErrorLabel.TabIndex = 23;
             // 
             // preporuceniProgramskiJezikComboBox
             // 
+            preporuceniProgramskiJezikComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            preporuceniProgramskiJezikComboBox.Enabled = false;
             preporuceniProgramskiJezikComboBox.FormattingEnabled = true;
             preporuceniProgramskiJezikComboBox.Items.AddRange(new object[] { "C", "C++", "C#", "Java", "JavaScript", "Python", "Scala", "Rust", "Kotlin", "Swift", "GO", "PHP" });
             preporuceniProgramskiJezikComboBox.Location = new Point(281, 334);
@@ -294,17 +324,17 @@
             // rokZaZavrsetakErrorLabel
             // 
             rokZaZavrsetakErrorLabel.ForeColor = Color.Red;
-            rokZaZavrsetakErrorLabel.Location = new Point(118, 243);
+            rokZaZavrsetakErrorLabel.Location = new Point(6, 243);
             rokZaZavrsetakErrorLabel.Name = "rokZaZavrsetakErrorLabel";
-            rokZaZavrsetakErrorLabel.Size = new Size(417, 25);
+            rokZaZavrsetakErrorLabel.Size = new Size(529, 25);
             rokZaZavrsetakErrorLabel.TabIndex = 20;
             // 
             // grupniErrorLabel
             // 
             grupniErrorLabel.ForeColor = Color.Red;
-            grupniErrorLabel.Location = new Point(118, 180);
+            grupniErrorLabel.Location = new Point(6, 180);
             grupniErrorLabel.Name = "grupniErrorLabel";
-            grupniErrorLabel.Size = new Size(417, 25);
+            grupniErrorLabel.Size = new Size(529, 25);
             grupniErrorLabel.TabIndex = 19;
             // 
             // rokZaZavrsetakDateTimePicker
@@ -330,26 +360,28 @@
             // skolskaGodinaErrorLabel
             // 
             skolskaGodinaErrorLabel.ForeColor = Color.Red;
-            skolskaGodinaErrorLabel.Location = new Point(118, 118);
+            skolskaGodinaErrorLabel.Location = new Point(6, 118);
             skolskaGodinaErrorLabel.Name = "skolskaGodinaErrorLabel";
-            skolskaGodinaErrorLabel.Size = new Size(417, 25);
+            skolskaGodinaErrorLabel.Size = new Size(481, 25);
             skolskaGodinaErrorLabel.TabIndex = 15;
             // 
             // nazivProjektaErrorLabel
             // 
             nazivProjektaErrorLabel.ForeColor = Color.Red;
-            nazivProjektaErrorLabel.Location = new Point(118, 55);
+            nazivProjektaErrorLabel.Location = new Point(6, 55);
             nazivProjektaErrorLabel.Name = "nazivProjektaErrorLabel";
-            nazivProjektaErrorLabel.Size = new Size(417, 25);
+            nazivProjektaErrorLabel.Size = new Size(481, 25);
             nazivProjektaErrorLabel.TabIndex = 14;
             // 
             // skolskaGodinaTextBox
             // 
             skolskaGodinaTextBox.Enabled = false;
             skolskaGodinaTextBox.Location = new Point(281, 83);
+            skolskaGodinaTextBox.MaxLength = 9;
             skolskaGodinaTextBox.Name = "skolskaGodinaTextBox";
             skolskaGodinaTextBox.Size = new Size(206, 32);
             skolskaGodinaTextBox.TabIndex = 13;
+            skolskaGodinaTextBox.KeyPress += skolskaGodinaTextBox_KeyPress;
             // 
             // nazivProjektaTextBox
             // 
@@ -503,6 +535,7 @@
             izmeniToolStripButton.Name = "izmeniToolStripButton";
             izmeniToolStripButton.Size = new Size(92, 40);
             izmeniToolStripButton.Text = "Izmeni";
+            izmeniToolStripButton.Click += izmeniToolStripButton_Click;
             // 
             // toolStripSeparator1
             // 
@@ -531,6 +564,7 @@
             sacuvajToolStripButton.Name = "sacuvajToolStripButton";
             sacuvajToolStripButton.Size = new Size(101, 40);
             sacuvajToolStripButton.Text = "Sačuvaj";
+            sacuvajToolStripButton.Click += sacuvajToolStripButton_Click;
             // 
             // toolStripSeparator3
             // 
@@ -566,7 +600,7 @@
             projekatDataGridView.AllowUserToDeleteRows = false;
             projekatDataGridView.BackgroundColor = Color.DarkGray;
             projekatDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            projekatDataGridView.Columns.AddRange(new DataGridViewColumn[] { idColumn, nazivProjektaColumn, skolskaGodinaColumn, grupniColumn, rokZaZavrsetakColumn, maksimalanBrojStranaColumn, preporucenProgramskiJezikColumn, brojIzvestajaColumn, predmetColumn, tipProjektaColumn, datumPocetkaColumn, datumZavrsetkaColumn, kratakOpisColumn });
+            projekatDataGridView.Columns.AddRange(new DataGridViewColumn[] { idColumn, nazivProjektaColumn, skolskaGodinaColumn, grupniColumn, rokZaZavrsetakColumn, maksimalanBrojStranaColumn, preporuceniProgramskiJezikColumn, brojIzvestajaColumn, predmetColumn, tipProjektaColumn, datumPocetkaColumn, datumZavrsetkaColumn, kratakOpisColumn });
             projekatDataGridView.Dock = DockStyle.Bottom;
             projekatDataGridView.Location = new Point(0, 534);
             projekatDataGridView.MultiSelect = false;
@@ -577,6 +611,7 @@
             projekatDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             projekatDataGridView.Size = new Size(1064, 194);
             projekatDataGridView.TabIndex = 2;
+            projekatDataGridView.CellMouseDoubleClick += projekatDataGridView_CellMouseDoubleClick;
             projekatDataGridView.SelectionChanged += projekatDataGridView_SelectionChanged;
             // 
             // idColumn
@@ -633,14 +668,14 @@
             maksimalanBrojStranaColumn.ReadOnly = true;
             maksimalanBrojStranaColumn.Width = 141;
             // 
-            // preporucenProgramskiJezikColumn
+            // preporuceniProgramskiJezikColumn
             // 
-            preporucenProgramskiJezikColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            preporucenProgramskiJezikColumn.HeaderText = "Programski jezik";
-            preporucenProgramskiJezikColumn.MinimumWidth = 6;
-            preporucenProgramskiJezikColumn.Name = "preporucenProgramskiJezikColumn";
-            preporucenProgramskiJezikColumn.ReadOnly = true;
-            preporucenProgramskiJezikColumn.Width = 164;
+            preporuceniProgramskiJezikColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            preporuceniProgramskiJezikColumn.HeaderText = "Programski jezik";
+            preporuceniProgramskiJezikColumn.MinimumWidth = 6;
+            preporuceniProgramskiJezikColumn.Name = "preporuceniProgramskiJezikColumn";
+            preporuceniProgramskiJezikColumn.ReadOnly = true;
+            preporuceniProgramskiJezikColumn.Width = 164;
             // 
             // brojIzvestajaColumn
             // 
@@ -777,13 +812,15 @@
         private Label successStatusLabel;
         private Label ukupanBrojProjekataLabel;
         private Label brojProjekataLabel;
+        private ComboBox semestarComboBox;
+        private Label semestarLabel;
         private DataGridViewTextBoxColumn idColumn;
         private DataGridViewTextBoxColumn nazivProjektaColumn;
         private DataGridViewTextBoxColumn skolskaGodinaColumn;
         private DataGridViewTextBoxColumn grupniColumn;
         private DataGridViewTextBoxColumn rokZaZavrsetakColumn;
         private DataGridViewTextBoxColumn maksimalanBrojStranaColumn;
-        private DataGridViewTextBoxColumn preporucenProgramskiJezikColumn;
+        private DataGridViewTextBoxColumn preporuceniProgramskiJezikColumn;
         private DataGridViewTextBoxColumn brojIzvestajaColumn;
         private DataGridViewTextBoxColumn predmetColumn;
         private DataGridViewTextBoxColumn tipProjektaColumn;
