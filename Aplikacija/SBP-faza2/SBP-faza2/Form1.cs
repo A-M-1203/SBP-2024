@@ -103,4 +103,10 @@ public partial class Form1 : Form
         PredmetiForma predmetiForma = new PredmetiForma();
         predmetiForma.Show(this);
     }
+
+    private void projektiButton_Click(object sender, EventArgs e)
+    {
+        ProjektiForma projektiForma = new ProjektiForma();
+        projektiForma.Show(this);
+    }
 }

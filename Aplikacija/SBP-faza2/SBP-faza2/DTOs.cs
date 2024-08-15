@@ -47,3 +47,45 @@ public class PredmetBasic
         
     }
 }
+
+public class ProjekatBasic
+{
+    public required int Id { get; set; }
+    public required string Naziv { get; set; }
+    public required string SkolskaGodina { get; set; }
+    public required string Grupni { get; set; }
+    public required string RokZaZavrsetak { get; set; }
+    public string MaksimalanBrojStrana { get; set; } = "0";
+    public string PreporuceniProgramskiJezik { get; set; } = string.Empty;
+    public string KratakOpis { get; set; } = string.Empty;
+    public required string BrojIzvestaja { get; set; } = "0";
+    public required string NazivPredmeta { get; set; }
+    public required string TipProjekta { get; set; }
+    public required string DatumPocetka { get; set; }
+    public string DatumZavrsetka { get; set; } = string.Empty;
+
+    public ProjekatBasic(
+        int id, string nazivProjekta, string skolskaGodina, string grupni, string rokZaZavrsetak,
+        string maksimalanBrojStrana, string preporuceniProgramskiJezik, string kratakOpis, string brojIzvestaja,
+        string nazivPredmeta, string tipProjekta, string datumPocetka, string datumZavrsetka)
+    {
+        Id = id;
+        Naziv = nazivProjekta;
+        SkolskaGodina = skolskaGodina;
+        Grupni = grupni;
+        RokZaZavrsetak = rokZaZavrsetak;
+        MaksimalanBrojStrana = maksimalanBrojStrana;
+        PreporuceniProgramskiJezik = preporuceniProgramskiJezik;
+        KratakOpis = kratakOpis;
+        BrojIzvestaja = brojIzvestaja;
+        NazivPredmeta = nazivPredmeta;
+        TipProjekta = tipProjekta;
+        DatumPocetka = datumPocetka;
+        DatumZavrsetka = datumZavrsetka;
+    }
+
+    public ProjekatBasic()
+    {
+        
+    }
+}

@@ -139,9 +139,9 @@
             zvezdicaLabel.AutoSize = true;
             zvezdicaLabel.Location = new Point(75, 438);
             zvezdicaLabel.Name = "zvezdicaLabel";
-            zvezdicaLabel.Size = new Size(350, 24);
+            zvezdicaLabel.Size = new Size(341, 24);
             zvezdicaLabel.TabIndex = 12;
-            zvezdicaLabel.Text = "Polja označena zvezdicama su obavezna";
+            zvezdicaLabel.Text = "Polja označena zvezdicom su obavezna";
             // 
             // semestarErrorLabel
             // 

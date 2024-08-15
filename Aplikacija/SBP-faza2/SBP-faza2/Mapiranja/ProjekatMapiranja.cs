@@ -8,8 +8,6 @@ public class ProjekatMapiranja : ClassMap<Projekat>
     {
         Table("PROJEKAT");
 
-        DiscriminateSubClassesOnColumn("TIP_PROJEKTA");
-
         Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
 
         Map(x => x.Naziv, "NAZIV");
@@ -18,17 +16,14 @@ public class ProjekatMapiranja : ClassMap<Projekat>
         Map(x => x.DatumPocetka, "DATUM_POCETKA");
         Map(x => x.DatumZavrsetka, "DATUM_ZAVRSETKA");
         Map(x => x.RokZaZavrsetak, "ROK_ZA_ZAVRSETAK");
-        Map(x => x.MaksimalanBrojStrana, "MAKSIMALAN_BROJ_STRANA");
-        Map(x => x.PreporuceniProgramskiJezik, "PREPORUCENI_PROGRAMSKI_JEZIK");
-        Map(x => x.KratakOpis, "KRATAK_OPIS");
-        Map(x => x.BrojIzvestaja, "BROJ_IZVESTAJA");
+        //Map(x => x.Tip, "TIP_PROJEKTA").Not.Nullable();
+
+        DiscriminateSubClassesOnColumn("TIP_PROJEKTA").Not.Nullable();
 
         References(x => x.Predmet).Column("ID_PREDMETA").LazyLoad();
-        HasMany(x => x.Izvestaji).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
+        
         HasMany(x => x.Grupe).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
         HasMany(x => x.StudentiProjekti).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
-        HasMany(x => x.ProjektiLiterature).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
-        HasMany(x => x.Stranice).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
     }
 }
 
@@ -37,6 +32,10 @@ class TeorijskiProjekatMapiranja : SubclassMap<TeorijskiProjekat>
     public TeorijskiProjekatMapiranja()
     {
         DiscriminatorValue("Teorijski");
+
+        Map(x => x.MaksimalanBrojStrana, "MAKSIMALAN_BROJ_STRANA");
+
+        HasMany(x => x.ProjektiLiterature).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
     }
 }
 
@@ -45,5 +44,12 @@ class PrakticniProjekatMapiranja : SubclassMap<PrakticniProjekat>
     public PrakticniProjekatMapiranja()
     {
         DiscriminatorValue("Praktični");
+
+        Map(x => x.PreporuceniProgramskiJezik, "PREPORUCENI_PROGRAMSKI_JEZIK");
+        Map(x => x.KratakOpis, "KRATAK_OPIS");
+        Map(x => x.BrojIzvestaja, "BROJ_IZVESTAJA");
+
+        HasMany(x => x.Izvestaji).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
+        HasMany(x => x.Stranice).KeyColumn("ID_PROJEKTA").LazyLoad().Cascade.All().Inverse();
     }
 }

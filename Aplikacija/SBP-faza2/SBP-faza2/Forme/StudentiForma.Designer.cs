@@ -223,7 +223,7 @@
             // brojStudenataLabel
             // 
             brojStudenataLabel.AutoSize = true;
-            brojStudenataLabel.Location = new Point(303, 347);
+            brojStudenataLabel.Location = new Point(302, 351);
             brojStudenataLabel.Name = "brojStudenataLabel";
             brojStudenataLabel.Size = new Size(0, 24);
             brojStudenataLabel.TabIndex = 18;
@@ -231,7 +231,7 @@
             // ukupanBrojStudenataLabel
             // 
             ukupanBrojStudenataLabel.AutoSize = true;
-            ukupanBrojStudenataLabel.Location = new Point(6, 347);
+            ukupanBrojStudenataLabel.Location = new Point(11, 351);
             ukupanBrojStudenataLabel.Name = "ukupanBrojStudenataLabel";
             ukupanBrojStudenataLabel.Size = new Size(212, 24);
             ukupanBrojStudenataLabel.TabIndex = 17;
@@ -251,9 +251,9 @@
             zvezdicaLabel.AutoSize = true;
             zvezdicaLabel.Location = new Point(59, 442);
             zvezdicaLabel.Name = "zvezdicaLabel";
-            zvezdicaLabel.Size = new Size(350, 24);
+            zvezdicaLabel.Size = new Size(341, 24);
             zvezdicaLabel.TabIndex = 15;
-            zvezdicaLabel.Text = "Polja označena zvezdicama su obavezna";
+            zvezdicaLabel.Text = "Polja označena zvezdicom su obavezna";
             // 
             // smerErrorLabel
             // 

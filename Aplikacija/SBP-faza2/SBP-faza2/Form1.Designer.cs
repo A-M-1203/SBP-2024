@@ -115,6 +115,7 @@
             projektiButton.TextAlign = ContentAlignment.MiddleRight;
             projektiButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             projektiButton.UseVisualStyleBackColor = true;
+            projektiButton.Click += projektiButton_Click;
             // 
             // predmetiButton
             // 
