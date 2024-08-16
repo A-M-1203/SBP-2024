@@ -3,6 +3,7 @@ using NHibernate.Criterion;
 using NHibernate.Util;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
+using System.Collections;
 
 namespace SBP_faza2.Forme;
 
@@ -679,7 +680,8 @@ public partial class ProjektiForma : Form
                                     BrojIzvestaja = (int)brojIzvestajaNumericUpDown.Value,
                                     Predmet = predmet,
                                     DatumPocetka = datumPocetkaDateTimePicker.Value,
-                                    DatumZavrsetka = datumZavrsetkaDateTimePicker.Value
+                                    DatumZavrsetka = datumZavrsetkaDateTimePicker.Value,
+                                    KratakOpis = kratakOpisTextBox.Text
                                 };
                             }
                             else
@@ -695,7 +697,8 @@ public partial class ProjektiForma : Form
                                     BrojIzvestaja = (int)brojIzvestajaNumericUpDown.Value,
                                     Predmet = predmet,
                                     DatumPocetka = datumPocetkaDateTimePicker.Value,
-                                    DatumZavrsetka = datumZavrsetkaDateTimePicker.Value
+                                    DatumZavrsetka = datumZavrsetkaDateTimePicker.Value,
+                                    KratakOpis = kratakOpisTextBox.Text
                                 };
                             }
 
@@ -840,5 +843,323 @@ public partial class ProjektiForma : Form
         {
             MessageBox.Show(ec.Message);
         }
+    }
+
+    private void pretragaToolStripButton_Click(object sender, EventArgs e)
+    {
+        if (pretragaPanel.Visible == false)
+        {
+            pretragaPanel.Visible = true;
+            try
+            {
+                using (ISession? session = DataLayer.GetSession())
+                {
+                    if (session != null)
+                    {
+                        skolskaGodinaPretraziComboBox.Items.Clear();
+
+                        IList<string> skolskeGodine = session.Query<Projekat>()
+                            .Select(x => x.SkolskaGodina.Trim()).Distinct().ToList();
+
+                        foreach (var item in skolskeGodine)
+                        {
+                            skolskaGodinaPretraziComboBox.Items.Add(item);
+                        }
+                    }
+                }
+            }
+            catch (Exception ec)
+            {
+                MessageBox.Show(ec.Message);
+            }
+        }
+        else
+        {
+            pretragaPanel.Visible = false;
+        }
+    }
+
+    private void tipPretraziComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //if (tipPretraziComboBox.SelectedIndex != -1)
+        //{
+        //    try
+        //    {
+        //        using (ISession? session = DataLayer.GetSession())
+        //        {
+        //            if (session != null)
+        //            {
+        //                semestarPretraziComboBox.Enabled = true;
+        //                semestarPretraziComboBox.Items.Clear();
+
+        //                IList<string> semestri = session.Query<Projekat>()
+        //                    .Where(x => x.Tip == tipPretraziComboBox.SelectedItem!.ToString())
+        //                    .Select(x => x.Predmet.Semestar.Trim()).Distinct().ToList();
+
+        //                foreach (var item in semestri)
+        //                {
+        //                    semestarPretraziComboBox.Items.Add(item);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ec)
+        //    {
+        //        MessageBox.Show(ec.Message);
+        //    }
+        //}
+    }
+
+    private void semestarPretraziComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (semestarPretraziComboBox.SelectedIndex != 1)
+        {
+            try
+            {
+                using (ISession? session = DataLayer.GetSession())
+                {
+                    if (session != null)
+                    {
+                        IList<PredmetNazivSifra> predmeti = session.Query<Predmet>()
+                            .Where(p => p.Semestar.Trim() == semestarPretraziComboBox.SelectedItem!.ToString())
+                            .Select(x => new PredmetNazivSifra
+                            {
+                                Id = x.Id,
+                                Naziv = x.Naziv,
+                                Sifra = x.Sifra
+                            }).ToList();
+
+                        predmetPretraziComboBox.Items.Clear();
+
+                        foreach (var item in predmeti)
+                        {
+                            predmetPretraziComboBox.Items.Add(item.Naziv + " " + "(" + item.Sifra + ")");
+                        }
+
+                        predmetPretraziComboBox.Enabled = true;
+                    }
+                }
+            }
+            catch (Exception ec)
+            {
+                MessageBox.Show(ec.Message);
+            }
+        }
+    }
+
+    private void minimizePanelButton_Click(object sender, EventArgs e)
+    {
+        pretragaPanel.Visible = false;
+    }
+
+    private void pretraziButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                var query = session.Query<Projekat>().AsQueryable();
+
+                if (!string.IsNullOrEmpty(nazivPretraziTextBox.Text))
+                {
+                    query = query.Where(p => p.Naziv.ToLower().Contains(nazivPretraziTextBox.Text.Trim().ToLower()));
+                }
+
+                if (skolskaGodinaPretraziComboBox.SelectedItem != null)
+                {
+                    query = query.Where(p => p.SkolskaGodina == skolskaGodinaPretraziComboBox.SelectedItem.ToString());
+                }
+
+                if (grupniPretaziComboBox.SelectedItem != null)
+                {
+                    query = query.Where(p => p.Grupni == grupniPretaziComboBox.SelectedItem.ToString());
+                }
+
+                if (zavrsetakCheckBox.Checked == true)
+                {
+                    if (zavrsetakManjeVeceButton.Text == "<")
+                        query = query.Where(p => p.DatumZavrsetka < zavrsetakPreraziDateTimePicker.Value);
+                    else
+                        query = query.Where(p => p.DatumZavrsetka > zavrsetakPreraziDateTimePicker.Value);
+                }
+
+                if (maksStrCheckBox.Checked == true)
+                {
+                    if (maksBrStrManjeVeceJednakoButton.Text == "<")
+                        query = query.Where(p => p.MaksimalanBrojStrana < (int)maksStrPretraziNumericUpDown.Value);
+                    else if (maksBrStrManjeVeceJednakoButton.Text == ">")
+                        query = query.Where(p => p.MaksimalanBrojStrana > (int)maksStrPretraziNumericUpDown.Value);
+                    else
+                        query = query.Where(p => p.MaksimalanBrojStrana == (int)maksStrPretraziNumericUpDown.Value);
+                }
+
+                if (progJezikPretraziComboBox.SelectedItem != null)
+                {
+                    query = query.Where(p => p.PreporuceniProgramskiJezik == progJezikPretraziComboBox.SelectedItem.ToString());
+                }
+
+                if (izvestajiCheckBox.Checked == true)
+                {
+                    if (brojIzvestajaManjeVeceJednakoButton.Text == "<")
+                        query = query.Where(p => p.BrojIzvestaja < (int)izvestajiPretraziNumericUpDown.Value);
+                    else if (brojIzvestajaManjeVeceJednakoButton.Text == ">")
+                        query = query.Where(p => p.BrojIzvestaja > (int)izvestajiPretraziNumericUpDown.Value);
+                    else
+                        query = query.Where(p => p.BrojIzvestaja == (int)izvestajiPretraziNumericUpDown.Value);
+                }
+
+                if (tipPretraziComboBox.SelectedItem != null)
+                {
+                    query = query.Where(p => p.Tip == tipPretraziComboBox.SelectedItem.ToString());
+                }
+
+                if (predmetPretraziComboBox.SelectedItem != null)
+                {
+                    string[] predmetNazivSifra = predmetPretraziComboBox.SelectedItem.ToString()!.Split('(');
+                    string predmetNaziv = predmetNazivSifra[0].Substring(0, predmetNazivSifra[0].Length - 1);
+                    string predmetSifra = predmetNazivSifra[1].Substring(0, predmetNazivSifra[1].Length - 1);
+
+                    query = query.Where(p => p.Predmet.Naziv == predmetNaziv && p.Predmet.Sifra == predmetSifra);
+                }
+
+                if (pocetakCheckBox.Checked == true)
+                {
+                    if (pocetakManjeVeceButton.Text == "<")
+                        query = query.Where(p => p.DatumPocetka < pocetakPretraziDateTimePicker.Value);
+                    else
+                        query = query.Where(p => p.DatumPocetka > pocetakPretraziDateTimePicker.Value);
+                }
+
+                projekatDataGridView.Rows.Clear();
+
+                IList<Projekat> projekti = query.ToList();
+
+                foreach (var p in projekti)
+                {
+                    if (p.GetType() == typeof(TeorijskiProjekat))
+                    {
+                        projekatDataGridView.Rows.Add(new string[]
+                        {
+                                p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p.MaksimalanBrojStrana.ToString(),
+                                p.PreporuceniProgramskiJezik, p.BrojIzvestaja.ToString(), p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Teorijski", p.DatumPocetka.ToString(),
+                                p.DatumZavrsetka.ToString(), p.KratakOpis
+                        });
+                    }
+                    else
+                    {
+                        projekatDataGridView.Rows.Add(new string[]
+                        {
+                                p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p.MaksimalanBrojStrana.ToString(),
+                                p.PreporuceniProgramskiJezik, p.BrojIzvestaja.ToString(), p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Praktični", p.DatumPocetka.ToString(),
+                                p.DatumZavrsetka.ToString(), p.KratakOpis
+                        });
+                    }
+                }
+
+                projekatDataGridView.Refresh();
+                projekatDataGridView.ClearSelection();
+
+                session.Close();
+            }
+        }
+        catch (Exception ec)
+        {
+            MessageBox.Show(ec.Message);
+        }
+    }
+
+    private void zavrsetakCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (zavrsetakCheckBox.Checked == true)
+            zavrsetakPreraziDateTimePicker.Enabled = true;
+        else
+            zavrsetakPreraziDateTimePicker.Enabled = false;
+    }
+
+    private void pocetakCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (pocetakCheckBox.Checked == true)
+            pocetakPretraziDateTimePicker.Enabled = true;
+        else
+            pocetakPretraziDateTimePicker.Enabled = false;
+    }
+
+    private void maksStrCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (maksStrCheckBox.Checked == true)
+            maksStrPretraziNumericUpDown.Enabled = true;
+        else
+            maksStrPretraziNumericUpDown.Enabled = false;
+    }
+
+    private void izvestajiCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (izvestajiCheckBox.Checked == true)
+            izvestajiPretraziNumericUpDown.Enabled = true;
+        else
+            izvestajiPretraziNumericUpDown.Enabled = false;
+    }
+
+    private void zavrsetakManjeVeceButton_Click(object sender, EventArgs e)
+    {
+        if (zavrsetakManjeVeceButton.Text == "<")
+            zavrsetakManjeVeceButton.Text = ">";
+        else
+            zavrsetakManjeVeceButton.Text = "<";
+    }
+
+    private void maksBrStrManjeVeceJednakoButton_Click(object sender, EventArgs e)
+    {
+        if (maksBrStrManjeVeceJednakoButton.Text == "=")
+            maksBrStrManjeVeceJednakoButton.Text = "<";
+        else if (maksBrStrManjeVeceJednakoButton.Text == "<")
+            maksBrStrManjeVeceJednakoButton.Text = ">";
+        else
+            maksBrStrManjeVeceJednakoButton.Text = "=";
+    }
+
+    private void brojIzvestajaManjeVeceJednakoButton_Click(object sender, EventArgs e)
+    {
+        if (brojIzvestajaManjeVeceJednakoButton.Text == "=")
+            brojIzvestajaManjeVeceJednakoButton.Text = "<";
+        else if (brojIzvestajaManjeVeceJednakoButton.Text == "<")
+            brojIzvestajaManjeVeceJednakoButton.Text = ">";
+        else
+            brojIzvestajaManjeVeceJednakoButton.Text = "=";
+    }
+
+    private void pocetakManjeVeceButton_Click(object sender, EventArgs e)
+    {
+        if (pocetakManjeVeceButton.Text == "<")
+            pocetakManjeVeceButton.Text = ">";
+        else
+            pocetakManjeVeceButton.Text = "<";
+    }
+
+    private void ocistiPretraguButton_Click(object sender, EventArgs e)
+    {
+        nazivPretraziTextBox.Text = string.Empty;
+        skolskaGodinaPretraziComboBox.SelectedIndex = -1;
+        grupniPretaziComboBox.SelectedIndex = -1;
+        zavrsetakCheckBox.Checked = false;
+        zavrsetakPreraziDateTimePicker.Value = DateTime.Now;
+        zavrsetakManjeVeceButton.Text = "<";
+        maksStrCheckBox.Checked = false;
+        maksStrPretraziNumericUpDown.Value = 0;
+        maksBrStrManjeVeceJednakoButton.Text = "=";
+        progJezikPretraziComboBox.SelectedIndex = -1;
+        izvestajiCheckBox.Checked = false;
+        izvestajiPretraziNumericUpDown.Value = 0;
+        brojIzvestajaManjeVeceJednakoButton.Text = "=";
+        tipPretraziComboBox.SelectedIndex = -1;
+        semestarPretraziComboBox.SelectedIndex = -1;
+        predmetPretraziComboBox.SelectedIndex = -1;
+        pocetakCheckBox.Checked = false;
+        pocetakPretraziDateTimePicker.Value = DateTime.Now;
+        pocetakManjeVeceButton.Text = "<";
+
+        semestarPretraziComboBox.Enabled = false;
+        predmetPretraziComboBox.Enabled = false;
     }
 }

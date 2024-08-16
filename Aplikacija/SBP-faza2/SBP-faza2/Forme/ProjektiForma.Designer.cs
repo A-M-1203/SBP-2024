@@ -30,6 +30,40 @@
         {
             components = new System.ComponentModel.Container();
             projekatGroupBox = new GroupBox();
+            pretragaPanel = new Panel();
+            izvestajiCheckBox = new CheckBox();
+            maksStrCheckBox = new CheckBox();
+            pocetakCheckBox = new CheckBox();
+            zavrsetakCheckBox = new CheckBox();
+            skolskaGodinaPretraziComboBox = new ComboBox();
+            ocistiPretraguButton = new Button();
+            pretraziButton = new Button();
+            pocetakManjeVeceButton = new Button();
+            maksBrStrManjeVeceJednakoButton = new Button();
+            brojIzvestajaManjeVeceJednakoButton = new Button();
+            zavrsetakManjeVeceButton = new Button();
+            minimizePanelButton = new Button();
+            pocetakPretraziDateTimePicker = new DateTimePicker();
+            tipPretraziComboBox = new ComboBox();
+            predmetPretraziComboBox = new ComboBox();
+            semestarPretraziComboBox = new ComboBox();
+            izvestajiPretraziNumericUpDown = new NumericUpDown();
+            datumPocetkaPretragaLabel = new Label();
+            tipPretragaLabel = new Label();
+            predmetPretragaLabel = new Label();
+            progJezikPretraziComboBox = new ComboBox();
+            maksStrPretraziNumericUpDown = new NumericUpDown();
+            zavrsetakPreraziDateTimePicker = new DateTimePicker();
+            grupniPretaziComboBox = new ComboBox();
+            nazivPretraziTextBox = new TextBox();
+            semestarPretragaLabel = new Label();
+            preporuceniProgramskiJezikPretragaLabel = new Label();
+            brojIzvestajaPretragaLabel = new Label();
+            maksimalanBrojStranaPretragaLabel = new Label();
+            grupniPretragaLabel = new Label();
+            rokZaZavrsetakPretragaLabel = new Label();
+            skolskaGodinaPretagaLabel = new Label();
+            nazivPretragaLabel = new Label();
             semestarComboBox = new ComboBox();
             semestarLabel = new Label();
             brojProjekataLabel = new Label();
@@ -97,6 +131,9 @@
             kratakOpisColumn = new DataGridViewLinkColumn();
             timer1 = new System.Windows.Forms.Timer(components);
             projekatGroupBox.SuspendLayout();
+            pretragaPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)izvestajiPretraziNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)maksStrPretraziNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)maksimalanBrojStranaNumericUpDown).BeginInit();
             projekatToolStrip.SuspendLayout();
@@ -105,6 +142,7 @@
             // 
             // projekatGroupBox
             // 
+            projekatGroupBox.Controls.Add(pretragaPanel);
             projekatGroupBox.Controls.Add(semestarComboBox);
             projekatGroupBox.Controls.Add(semestarLabel);
             projekatGroupBox.Controls.Add(brojProjekataLabel);
@@ -150,6 +188,361 @@
             projekatGroupBox.TabIndex = 0;
             projekatGroupBox.TabStop = false;
             projekatGroupBox.Text = "Podaci";
+            // 
+            // pretragaPanel
+            // 
+            pretragaPanel.BorderStyle = BorderStyle.FixedSingle;
+            pretragaPanel.Controls.Add(izvestajiCheckBox);
+            pretragaPanel.Controls.Add(maksStrCheckBox);
+            pretragaPanel.Controls.Add(pocetakCheckBox);
+            pretragaPanel.Controls.Add(zavrsetakCheckBox);
+            pretragaPanel.Controls.Add(skolskaGodinaPretraziComboBox);
+            pretragaPanel.Controls.Add(ocistiPretraguButton);
+            pretragaPanel.Controls.Add(pretraziButton);
+            pretragaPanel.Controls.Add(pocetakManjeVeceButton);
+            pretragaPanel.Controls.Add(maksBrStrManjeVeceJednakoButton);
+            pretragaPanel.Controls.Add(brojIzvestajaManjeVeceJednakoButton);
+            pretragaPanel.Controls.Add(zavrsetakManjeVeceButton);
+            pretragaPanel.Controls.Add(minimizePanelButton);
+            pretragaPanel.Controls.Add(pocetakPretraziDateTimePicker);
+            pretragaPanel.Controls.Add(tipPretraziComboBox);
+            pretragaPanel.Controls.Add(predmetPretraziComboBox);
+            pretragaPanel.Controls.Add(semestarPretraziComboBox);
+            pretragaPanel.Controls.Add(izvestajiPretraziNumericUpDown);
+            pretragaPanel.Controls.Add(datumPocetkaPretragaLabel);
+            pretragaPanel.Controls.Add(tipPretragaLabel);
+            pretragaPanel.Controls.Add(predmetPretragaLabel);
+            pretragaPanel.Controls.Add(progJezikPretraziComboBox);
+            pretragaPanel.Controls.Add(maksStrPretraziNumericUpDown);
+            pretragaPanel.Controls.Add(zavrsetakPreraziDateTimePicker);
+            pretragaPanel.Controls.Add(grupniPretaziComboBox);
+            pretragaPanel.Controls.Add(nazivPretraziTextBox);
+            pretragaPanel.Controls.Add(semestarPretragaLabel);
+            pretragaPanel.Controls.Add(preporuceniProgramskiJezikPretragaLabel);
+            pretragaPanel.Controls.Add(brojIzvestajaPretragaLabel);
+            pretragaPanel.Controls.Add(maksimalanBrojStranaPretragaLabel);
+            pretragaPanel.Controls.Add(grupniPretragaLabel);
+            pretragaPanel.Controls.Add(rokZaZavrsetakPretragaLabel);
+            pretragaPanel.Controls.Add(skolskaGodinaPretagaLabel);
+            pretragaPanel.Controls.Add(nazivPretragaLabel);
+            pretragaPanel.Location = new Point(171, 0);
+            pretragaPanel.Name = "pretragaPanel";
+            pretragaPanel.Size = new Size(881, 386);
+            pretragaPanel.TabIndex = 40;
+            pretragaPanel.Visible = false;
+            // 
+            // izvestajiCheckBox
+            // 
+            izvestajiCheckBox.AutoSize = true;
+            izvestajiCheckBox.Location = new Point(523, 29);
+            izvestajiCheckBox.Name = "izvestajiCheckBox";
+            izvestajiCheckBox.Size = new Size(18, 17);
+            izvestajiCheckBox.TabIndex = 33;
+            izvestajiCheckBox.UseVisualStyleBackColor = true;
+            izvestajiCheckBox.CheckedChanged += izvestajiCheckBox_CheckedChanged;
+            // 
+            // maksStrCheckBox
+            // 
+            maksStrCheckBox.AutoSize = true;
+            maksStrCheckBox.Location = new Point(23, 278);
+            maksStrCheckBox.Name = "maksStrCheckBox";
+            maksStrCheckBox.Size = new Size(18, 17);
+            maksStrCheckBox.TabIndex = 32;
+            maksStrCheckBox.UseVisualStyleBackColor = true;
+            maksStrCheckBox.CheckedChanged += maksStrCheckBox_CheckedChanged;
+            // 
+            // pocetakCheckBox
+            // 
+            pocetakCheckBox.AutoSize = true;
+            pocetakCheckBox.Location = new Point(523, 278);
+            pocetakCheckBox.Name = "pocetakCheckBox";
+            pocetakCheckBox.Size = new Size(18, 17);
+            pocetakCheckBox.TabIndex = 31;
+            pocetakCheckBox.UseVisualStyleBackColor = true;
+            pocetakCheckBox.CheckedChanged += pocetakCheckBox_CheckedChanged;
+            // 
+            // zavrsetakCheckBox
+            // 
+            zavrsetakCheckBox.AutoSize = true;
+            zavrsetakCheckBox.Location = new Point(23, 219);
+            zavrsetakCheckBox.Name = "zavrsetakCheckBox";
+            zavrsetakCheckBox.Size = new Size(18, 17);
+            zavrsetakCheckBox.TabIndex = 30;
+            zavrsetakCheckBox.UseVisualStyleBackColor = true;
+            zavrsetakCheckBox.CheckedChanged += zavrsetakCheckBox_CheckedChanged;
+            // 
+            // skolskaGodinaPretraziComboBox
+            // 
+            skolskaGodinaPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            skolskaGodinaPretraziComboBox.FormattingEnabled = true;
+            skolskaGodinaPretraziComboBox.Location = new Point(233, 82);
+            skolskaGodinaPretraziComboBox.Name = "skolskaGodinaPretraziComboBox";
+            skolskaGodinaPretraziComboBox.Size = new Size(147, 32);
+            skolskaGodinaPretraziComboBox.TabIndex = 29;
+            // 
+            // ocistiPretraguButton
+            // 
+            ocistiPretraguButton.Image = Properties.Resources.broom_icon;
+            ocistiPretraguButton.Location = new Point(710, 332);
+            ocistiPretraguButton.Name = "ocistiPretraguButton";
+            ocistiPretraguButton.Size = new Size(119, 33);
+            ocistiPretraguButton.TabIndex = 28;
+            ocistiPretraguButton.Text = "Očisti";
+            ocistiPretraguButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            ocistiPretraguButton.UseVisualStyleBackColor = true;
+            ocistiPretraguButton.Click += ocistiPretraguButton_Click;
+            // 
+            // pretraziButton
+            // 
+            pretraziButton.Image = Properties.Resources.search_research_icon;
+            pretraziButton.Location = new Point(523, 332);
+            pretraziButton.Name = "pretraziButton";
+            pretraziButton.Size = new Size(119, 33);
+            pretraziButton.TabIndex = 27;
+            pretraziButton.Text = "Pretraži";
+            pretraziButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            pretraziButton.UseVisualStyleBackColor = true;
+            pretraziButton.Click += pretraziButton_Click;
+            // 
+            // pocetakManjeVeceButton
+            // 
+            pocetakManjeVeceButton.Location = new Point(838, 269);
+            pocetakManjeVeceButton.Name = "pocetakManjeVeceButton";
+            pocetakManjeVeceButton.Size = new Size(32, 32);
+            pocetakManjeVeceButton.TabIndex = 26;
+            pocetakManjeVeceButton.Text = "<";
+            pocetakManjeVeceButton.UseVisualStyleBackColor = true;
+            pocetakManjeVeceButton.Click += pocetakManjeVeceButton_Click;
+            // 
+            // maksBrStrManjeVeceJednakoButton
+            // 
+            maksBrStrManjeVeceJednakoButton.Location = new Point(386, 271);
+            maksBrStrManjeVeceJednakoButton.Name = "maksBrStrManjeVeceJednakoButton";
+            maksBrStrManjeVeceJednakoButton.Size = new Size(32, 32);
+            maksBrStrManjeVeceJednakoButton.TabIndex = 25;
+            maksBrStrManjeVeceJednakoButton.Text = "=";
+            maksBrStrManjeVeceJednakoButton.UseVisualStyleBackColor = true;
+            maksBrStrManjeVeceJednakoButton.Click += maksBrStrManjeVeceJednakoButton_Click;
+            // 
+            // brojIzvestajaManjeVeceJednakoButton
+            // 
+            brojIzvestajaManjeVeceJednakoButton.Location = new Point(838, 20);
+            brojIzvestajaManjeVeceJednakoButton.Name = "brojIzvestajaManjeVeceJednakoButton";
+            brojIzvestajaManjeVeceJednakoButton.Size = new Size(32, 32);
+            brojIzvestajaManjeVeceJednakoButton.TabIndex = 24;
+            brojIzvestajaManjeVeceJednakoButton.Text = "=";
+            brojIzvestajaManjeVeceJednakoButton.UseVisualStyleBackColor = true;
+            brojIzvestajaManjeVeceJednakoButton.Click += brojIzvestajaManjeVeceJednakoButton_Click;
+            // 
+            // zavrsetakManjeVeceButton
+            // 
+            zavrsetakManjeVeceButton.Location = new Point(386, 208);
+            zavrsetakManjeVeceButton.Name = "zavrsetakManjeVeceButton";
+            zavrsetakManjeVeceButton.Size = new Size(32, 32);
+            zavrsetakManjeVeceButton.TabIndex = 23;
+            zavrsetakManjeVeceButton.Text = "<";
+            zavrsetakManjeVeceButton.UseVisualStyleBackColor = true;
+            zavrsetakManjeVeceButton.Click += zavrsetakManjeVeceButton_Click;
+            // 
+            // minimizePanelButton
+            // 
+            minimizePanelButton.Image = Properties.Resources.arrow_minimise_icon;
+            minimizePanelButton.Location = new Point(3, 3);
+            minimizePanelButton.Name = "minimizePanelButton";
+            minimizePanelButton.Size = new Size(25, 25);
+            minimizePanelButton.TabIndex = 22;
+            minimizePanelButton.UseVisualStyleBackColor = true;
+            minimizePanelButton.Click += minimizePanelButton_Click;
+            // 
+            // pocetakPretraziDateTimePicker
+            // 
+            pocetakPretraziDateTimePicker.Enabled = false;
+            pocetakPretraziDateTimePicker.Location = new Point(597, 269);
+            pocetakPretraziDateTimePicker.Name = "pocetakPretraziDateTimePicker";
+            pocetakPretraziDateTimePicker.Size = new Size(232, 32);
+            pocetakPretraziDateTimePicker.TabIndex = 21;
+            // 
+            // tipPretraziComboBox
+            // 
+            tipPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            tipPretraziComboBox.FormattingEnabled = true;
+            tipPretraziComboBox.Items.AddRange(new object[] { "Teorijski", "Praktični" });
+            tipPretraziComboBox.Location = new Point(664, 82);
+            tipPretraziComboBox.Name = "tipPretraziComboBox";
+            tipPretraziComboBox.Size = new Size(165, 32);
+            tipPretraziComboBox.TabIndex = 20;
+            tipPretraziComboBox.SelectedIndexChanged += tipPretraziComboBox_SelectedIndexChanged;
+            // 
+            // predmetPretraziComboBox
+            // 
+            predmetPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            predmetPretraziComboBox.Enabled = false;
+            predmetPretraziComboBox.FormattingEnabled = true;
+            predmetPretraziComboBox.Location = new Point(551, 205);
+            predmetPretraziComboBox.Name = "predmetPretraziComboBox";
+            predmetPretraziComboBox.Size = new Size(278, 32);
+            predmetPretraziComboBox.TabIndex = 19;
+            // 
+            // semestarPretraziComboBox
+            // 
+            semestarPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            semestarPretraziComboBox.FormattingEnabled = true;
+            semestarPretraziComboBox.Items.AddRange(new object[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" });
+            semestarPretraziComboBox.Location = new Point(747, 143);
+            semestarPretraziComboBox.Name = "semestarPretraziComboBox";
+            semestarPretraziComboBox.Size = new Size(82, 32);
+            semestarPretraziComboBox.TabIndex = 18;
+            semestarPretraziComboBox.SelectedIndexChanged += semestarPretraziComboBox_SelectedIndexChanged;
+            // 
+            // izvestajiPretraziNumericUpDown
+            // 
+            izvestajiPretraziNumericUpDown.Enabled = false;
+            izvestajiPretraziNumericUpDown.Location = new Point(747, 20);
+            izvestajiPretraziNumericUpDown.Name = "izvestajiPretraziNumericUpDown";
+            izvestajiPretraziNumericUpDown.Size = new Size(82, 32);
+            izvestajiPretraziNumericUpDown.TabIndex = 17;
+            // 
+            // datumPocetkaPretragaLabel
+            // 
+            datumPocetkaPretragaLabel.AutoSize = true;
+            datumPocetkaPretragaLabel.Location = new Point(440, 275);
+            datumPocetkaPretragaLabel.Name = "datumPocetkaPretragaLabel";
+            datumPocetkaPretragaLabel.Size = new Size(79, 24);
+            datumPocetkaPretragaLabel.TabIndex = 16;
+            datumPocetkaPretragaLabel.Text = "Početak";
+            // 
+            // tipPretragaLabel
+            // 
+            tipPretragaLabel.AutoSize = true;
+            tipPretragaLabel.Location = new Point(480, 85);
+            tipPretragaLabel.Name = "tipPretragaLabel";
+            tipPretragaLabel.Size = new Size(37, 24);
+            tipPretragaLabel.TabIndex = 15;
+            tipPretragaLabel.Text = "Tip";
+            // 
+            // predmetPretragaLabel
+            // 
+            predmetPretragaLabel.AutoSize = true;
+            predmetPretragaLabel.Location = new Point(432, 212);
+            predmetPretragaLabel.Name = "predmetPretragaLabel";
+            predmetPretragaLabel.Size = new Size(85, 24);
+            predmetPretragaLabel.TabIndex = 14;
+            predmetPretragaLabel.Text = "Predmet";
+            // 
+            // progJezikPretraziComboBox
+            // 
+            progJezikPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            progJezikPretraziComboBox.FormattingEnabled = true;
+            progJezikPretraziComboBox.Items.AddRange(new object[] { "C", "C++", "C#", "Java", "JavaScript", "Python", "Scala", "Rust", "Kotlin", "Swift", "GO", "PHP" });
+            progJezikPretraziComboBox.Location = new Point(233, 334);
+            progJezikPretraziComboBox.Name = "progJezikPretraziComboBox";
+            progJezikPretraziComboBox.Size = new Size(147, 32);
+            progJezikPretraziComboBox.TabIndex = 13;
+            // 
+            // maksStrPretraziNumericUpDown
+            // 
+            maksStrPretraziNumericUpDown.Enabled = false;
+            maksStrPretraziNumericUpDown.Location = new Point(298, 271);
+            maksStrPretraziNumericUpDown.Name = "maksStrPretraziNumericUpDown";
+            maksStrPretraziNumericUpDown.Size = new Size(82, 32);
+            maksStrPretraziNumericUpDown.TabIndex = 12;
+            // 
+            // zavrsetakPreraziDateTimePicker
+            // 
+            zavrsetakPreraziDateTimePicker.Enabled = false;
+            zavrsetakPreraziDateTimePicker.Location = new Point(148, 208);
+            zavrsetakPreraziDateTimePicker.Name = "zavrsetakPreraziDateTimePicker";
+            zavrsetakPreraziDateTimePicker.Size = new Size(232, 32);
+            zavrsetakPreraziDateTimePicker.TabIndex = 11;
+            // 
+            // grupniPretaziComboBox
+            // 
+            grupniPretaziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            grupniPretaziComboBox.FormattingEnabled = true;
+            grupniPretaziComboBox.Items.AddRange(new object[] { "Da", "Ne" });
+            grupniPretaziComboBox.Location = new Point(298, 144);
+            grupniPretaziComboBox.Name = "grupniPretaziComboBox";
+            grupniPretaziComboBox.Size = new Size(82, 32);
+            grupniPretaziComboBox.TabIndex = 10;
+            // 
+            // nazivPretraziTextBox
+            // 
+            nazivPretraziTextBox.Location = new Point(148, 20);
+            nazivPretraziTextBox.Name = "nazivPretraziTextBox";
+            nazivPretraziTextBox.Size = new Size(232, 32);
+            nazivPretraziTextBox.TabIndex = 8;
+            // 
+            // semestarPretragaLabel
+            // 
+            semestarPretragaLabel.AutoSize = true;
+            semestarPretragaLabel.Location = new Point(427, 146);
+            semestarPretragaLabel.Name = "semestarPretragaLabel";
+            semestarPretragaLabel.Size = new Size(92, 24);
+            semestarPretragaLabel.TabIndex = 7;
+            semestarPretragaLabel.Text = "Semestar";
+            // 
+            // preporuceniProgramskiJezikPretragaLabel
+            // 
+            preporuceniProgramskiJezikPretragaLabel.AutoSize = true;
+            preporuceniProgramskiJezikPretragaLabel.Location = new Point(42, 337);
+            preporuceniProgramskiJezikPretragaLabel.Name = "preporuceniProgramskiJezikPretragaLabel";
+            preporuceniProgramskiJezikPretragaLabel.Size = new Size(100, 24);
+            preporuceniProgramskiJezikPretragaLabel.TabIndex = 6;
+            preporuceniProgramskiJezikPretragaLabel.Text = "Prog. jezik";
+            // 
+            // brojIzvestajaPretragaLabel
+            // 
+            brojIzvestajaPretragaLabel.AutoSize = true;
+            brojIzvestajaPretragaLabel.Location = new Point(438, 25);
+            brojIzvestajaPretragaLabel.Name = "brojIzvestajaPretragaLabel";
+            brojIzvestajaPretragaLabel.Size = new Size(81, 24);
+            brojIzvestajaPretragaLabel.TabIndex = 5;
+            brojIzvestajaPretragaLabel.Text = "Izveštaji";
+            // 
+            // maksimalanBrojStranaPretragaLabel
+            // 
+            maksimalanBrojStranaPretragaLabel.AutoSize = true;
+            maksimalanBrojStranaPretragaLabel.Location = new Point(49, 275);
+            maksimalanBrojStranaPretragaLabel.Name = "maksimalanBrojStranaPretragaLabel";
+            maksimalanBrojStranaPretragaLabel.Size = new Size(93, 24);
+            maksimalanBrojStranaPretragaLabel.TabIndex = 4;
+            maksimalanBrojStranaPretragaLabel.Text = "Maks. str.";
+            // 
+            // grupniPretragaLabel
+            // 
+            grupniPretragaLabel.AutoSize = true;
+            grupniPretragaLabel.Location = new Point(74, 147);
+            grupniPretragaLabel.Name = "grupniPretragaLabel";
+            grupniPretragaLabel.Size = new Size(68, 24);
+            grupniPretragaLabel.TabIndex = 3;
+            grupniPretragaLabel.Text = "Grupni";
+            // 
+            // rokZaZavrsetakPretragaLabel
+            // 
+            rokZaZavrsetakPretragaLabel.AutoSize = true;
+            rokZaZavrsetakPretragaLabel.Location = new Point(47, 214);
+            rokZaZavrsetakPretragaLabel.Name = "rokZaZavrsetakPretragaLabel";
+            rokZaZavrsetakPretragaLabel.Size = new Size(95, 24);
+            rokZaZavrsetakPretragaLabel.TabIndex = 2;
+            rokZaZavrsetakPretragaLabel.Text = "Završetak";
+            // 
+            // skolskaGodinaPretagaLabel
+            // 
+            skolskaGodinaPretagaLabel.AutoSize = true;
+            skolskaGodinaPretagaLabel.Location = new Point(3, 86);
+            skolskaGodinaPretagaLabel.Name = "skolskaGodinaPretagaLabel";
+            skolskaGodinaPretagaLabel.Size = new Size(139, 24);
+            skolskaGodinaPretagaLabel.TabIndex = 1;
+            skolskaGodinaPretagaLabel.Text = "Školska godina";
+            // 
+            // nazivPretragaLabel
+            // 
+            nazivPretragaLabel.AutoSize = true;
+            nazivPretragaLabel.Location = new Point(83, 23);
+            nazivPretragaLabel.Name = "nazivPretragaLabel";
+            nazivPretragaLabel.Size = new Size(59, 24);
+            nazivPretragaLabel.TabIndex = 0;
+            nazivPretragaLabel.Text = "Naziv";
             // 
             // semestarComboBox
             // 
@@ -596,6 +989,7 @@
             pretragaToolStripButton.Name = "pretragaToolStripButton";
             pretragaToolStripButton.Size = new Size(109, 40);
             pretragaToolStripButton.Text = "Pretraga";
+            pretragaToolStripButton.Click += pretragaToolStripButton_Click;
             // 
             // projekatDataGridView
             // 
@@ -760,6 +1154,10 @@
             Load += ProjektiForma_Load;
             projekatGroupBox.ResumeLayout(false);
             projekatGroupBox.PerformLayout();
+            pretragaPanel.ResumeLayout(false);
+            pretragaPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)izvestajiPretraziNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)maksStrPretraziNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)maksimalanBrojStranaNumericUpDown).EndInit();
             projekatToolStrip.ResumeLayout(false);
@@ -837,5 +1235,40 @@
         private DataGridViewTextBoxColumn datumZavrsetkaColumn;
         private DataGridViewLinkColumn kratakOpisColumn;
         private System.Windows.Forms.Timer timer1;
+        private Panel pretragaPanel;
+        private Label nazivPretragaLabel;
+        private Label maksimalanBrojStranaPretragaLabel;
+        private Label grupniPretragaLabel;
+        private Label rokZaZavrsetakPretragaLabel;
+        private Label skolskaGodinaPretagaLabel;
+        private Label semestarPretragaLabel;
+        private Label preporuceniProgramskiJezikPretragaLabel;
+        private Label brojIzvestajaPretragaLabel;
+        private ComboBox progJezikPretraziComboBox;
+        private NumericUpDown maksStrPretraziNumericUpDown;
+        private DateTimePicker zavrsetakPreraziDateTimePicker;
+        private ComboBox grupniPretaziComboBox;
+        private TextBox textBox2;
+        private TextBox nazivPretraziTextBox;
+        private Label datumPocetkaPretragaLabel;
+        private Label tipPretragaLabel;
+        private Label predmetPretragaLabel;
+        private DateTimePicker pocetakPretraziDateTimePicker;
+        private ComboBox tipPretraziComboBox;
+        private ComboBox predmetPretraziComboBox;
+        private ComboBox semestarPretraziComboBox;
+        private NumericUpDown izvestajiPretraziNumericUpDown;
+        private Button minimizePanelButton;
+        private Button zavrsetakManjeVeceButton;
+        private Button pocetakManjeVeceButton;
+        private Button maksBrStrManjeVeceJednakoButton;
+        private Button brojIzvestajaManjeVeceJednakoButton;
+        private Button pretraziButton;
+        private Button ocistiPretraguButton;
+        private ComboBox skolskaGodinaPretraziComboBox;
+        private CheckBox zavrsetakCheckBox;
+        private CheckBox pocetakCheckBox;
+        private CheckBox izvestajiCheckBox;
+        private CheckBox maksStrCheckBox;
     }
 }
