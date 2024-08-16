@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             projekatGroupBox = new GroupBox();
             semestarComboBox = new ComboBox();
             semestarLabel = new Label();
@@ -94,6 +95,7 @@
             datumPocetkaColumn = new DataGridViewTextBoxColumn();
             datumZavrsetkaColumn = new DataGridViewTextBoxColumn();
             kratakOpisColumn = new DataGridViewLinkColumn();
+            timer1 = new System.Windows.Forms.Timer(components);
             projekatGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)maksimalanBrojStranaNumericUpDown).BeginInit();
@@ -155,7 +157,7 @@
             semestarComboBox.Enabled = false;
             semestarComboBox.FormattingEnabled = true;
             semestarComboBox.Items.AddRange(new object[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" });
-            semestarComboBox.Location = new Point(906, 20);
+            semestarComboBox.Location = new Point(961, 20);
             semestarComboBox.Name = "semestarComboBox";
             semestarComboBox.Size = new Size(75, 32);
             semestarComboBox.TabIndex = 39;
@@ -164,7 +166,7 @@
             // semestarLabel
             // 
             semestarLabel.AutoSize = true;
-            semestarLabel.Location = new Point(808, 23);
+            semestarLabel.Location = new Point(833, 23);
             semestarLabel.Name = "semestarLabel";
             semestarLabel.Size = new Size(92, 24);
             semestarLabel.TabIndex = 38;
@@ -731,6 +733,11 @@
             kratakOpisColumn.ReadOnly = true;
             kratakOpisColumn.Width = 102;
             // 
+            // timer1
+            // 
+            timer1.Interval = 4000;
+            timer1.Tick += timer1_Tick;
+            // 
             // ProjektiForma
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
@@ -827,5 +834,6 @@
         private DataGridViewTextBoxColumn datumPocetkaColumn;
         private DataGridViewTextBoxColumn datumZavrsetkaColumn;
         private DataGridViewLinkColumn kratakOpisColumn;
+        private System.Windows.Forms.Timer timer1;
     }
 }

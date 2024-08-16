@@ -8,7 +8,7 @@ public abstract class Projekat
     public virtual required string Grupni { get; set; }
     public virtual required DateTime RokZaZavrsetak { get; set; }
     public virtual required Predmet Predmet { get; set; }
-    public virtual required string Tip { get; set; }
+    public virtual string Tip { get; set; } = null!;
     public virtual int MaksimalanBrojStrana { get; set; }
     public virtual required DateTime DatumPocetka { get; set; }
     public virtual DateTime? DatumZavrsetka { get; set; }

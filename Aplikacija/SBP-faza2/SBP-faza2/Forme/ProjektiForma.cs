@@ -1,14 +1,14 @@
 ﻿using NHibernate;
-using NHibernate.Criterion;
+using NHibernate.Util;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
-using System.Text;
 
 namespace SBP_faza2.Forme;
 
 public partial class ProjektiForma : Form
 {
     private int Id = 0;
+    private bool dodajButtonClicked = false;
     public ProjektiForma()
     {
         InitializeComponent();
@@ -16,6 +16,7 @@ public partial class ProjektiForma : Form
 
     private void dodajToolStripButton_Click(object sender, EventArgs e)
     {
+        dodajButtonClicked = true;
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće zapamćen novi projekat";
 
         dodajToolStripButton.Enabled = false;
@@ -51,6 +52,7 @@ public partial class ProjektiForma : Form
 
     private void odustaniToolStripButton_Click(object sender, EventArgs e)
     {
+        dodajButtonClicked = false;
         successStatusLabel.Text = string.Empty;
 
         odustaniToolStripButton.Enabled = false;
@@ -221,6 +223,7 @@ public partial class ProjektiForma : Form
     {
         if (e.RowIndex >= 0)
         {
+            dodajButtonClicked = false;
             successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći projekat";
 
             DataGridViewRow row = projekatDataGridView.Rows[e.RowIndex];
@@ -472,6 +475,7 @@ public partial class ProjektiForma : Form
 
     private void izmeniToolStripButton_Click(object sender, EventArgs e)
     {
+        dodajButtonClicked = false;
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći projekat";
         DataGridViewRow row = projekatDataGridView.SelectedRows[0];
 
@@ -594,6 +598,144 @@ public partial class ProjektiForma : Form
 
     private void sacuvajToolStripButton_Click(object sender, EventArgs e)
     {
-        proveriUnos();
+        bool result = proveriUnos();
+
+        if (result == true)
+        {
+            try
+            {
+                ISession? session = DataLayer.GetSession();
+                if (session != null)
+                {
+                    Projekat? projekat = session.Query<Projekat>().FirstOrDefault(p => p.Naziv == nazivProjektaTextBox.Text
+                    && p.SkolskaGodina == skolskaGodinaTextBox.Text);
+
+                    string[] predmetSifra = predmetComboBox.SelectedItem!.ToString()!.Split('(');
+                    string nazivPredmeta = predmetSifra[0].Substring(0, predmetSifra[0].Length - 1);
+                    string sifraPredmeta = predmetSifra[1].Substring(0, predmetSifra[1].Length - 1);
+
+                    Predmet predmet = session.Query<Predmet>().First(p => p.Naziv == nazivPredmeta && p.Sifra == sifraPredmeta);
+
+                    if (projekat != null && dodajButtonClicked)
+                    {
+                        successStatusLabel.ForeColor = Color.Red;
+                        successStatusLabel.Text = "Projekat sa datim nazivom i školskom godinom već postoji";
+                    }
+                    else if (projekat == null && dodajButtonClicked)
+                    {
+                        if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
+                        {
+                            projekat = new TeorijskiProjekat()
+                            {
+                                Naziv = nazivProjektaTextBox.Text,
+                                SkolskaGodina = skolskaGodinaTextBox.Text,
+                                Grupni = grupniComboBox.SelectedItem!.ToString()!,
+                                RokZaZavrsetak = rokZaZavrsetakDateTimePicker.Value,
+                                MaksimalanBrojStrana = (int)maksimalanBrojStranaNumericUpDown.Value,
+                                PreporuceniProgramskiJezik = preporuceniProgramskiJezikComboBox.SelectedItem?.ToString() ?? string.Empty,
+                                BrojIzvestaja = (int)brojIzvestajaNumericUpDown.Value,
+                                Predmet = predmet,
+                                DatumPocetka = datumPocetkaDateTimePicker.Value,
+                                DatumZavrsetka = datumZavrsetkaDateTimePicker.Value
+                            };
+                        }
+                        else
+                        {
+                            projekat = new PrakticniProjekat()
+                            {
+                                Naziv = nazivProjektaTextBox.Text,
+                                SkolskaGodina = skolskaGodinaTextBox.Text,
+                                Grupni = grupniComboBox.SelectedItem!.ToString()!,
+                                RokZaZavrsetak = rokZaZavrsetakDateTimePicker.Value,
+                                MaksimalanBrojStrana = (int)maksimalanBrojStranaNumericUpDown.Value,
+                                PreporuceniProgramskiJezik = preporuceniProgramskiJezikComboBox.SelectedItem?.ToString() ?? string.Empty,
+                                BrojIzvestaja = (int)brojIzvestajaNumericUpDown.Value,
+                                Predmet = predmet,
+                                DatumPocetka = datumPocetkaDateTimePicker.Value,
+                                DatumZavrsetka = datumZavrsetkaDateTimePicker.Value
+                            };
+                        }
+
+                        predmet.Projekti.Add(projekat);
+                        session.Save(predmet);
+                        session.Flush();
+
+                        successStatusLabel.Text = "Novi projekat je uspešno sačuvan";
+                        timer1.Enabled = true;
+                        timer1.Start();
+                    }
+                    else
+                    {
+                        if (predmet.Projekti.Contains(projekat!) == false)
+                        {
+                            predmet.Projekti.Add(projekat!);
+                            projekat.Predmet = predmet;
+                        }
+
+                        projekat!.Naziv = nazivProjektaTextBox.Text;
+                        projekat.SkolskaGodina = skolskaGodinaTextBox.Text;
+                        projekat.Grupni = grupniComboBox.SelectedItem!.ToString()!;
+                        projekat.RokZaZavrsetak = rokZaZavrsetakDateTimePicker.Value;
+                        projekat.MaksimalanBrojStrana = (int)maksimalanBrojStranaNumericUpDown.Value;
+                        projekat.PreporuceniProgramskiJezik = preporuceniProgramskiJezikComboBox.SelectedItem?.ToString() ?? string.Empty;
+                        projekat.BrojIzvestaja = (int)brojIzvestajaNumericUpDown.Value;
+                        projekat.DatumPocetka = datumPocetkaDateTimePicker.Value;
+                        projekat.DatumZavrsetka = datumZavrsetkaDateTimePicker.Value;
+                        projekat.KratakOpis = kratakOpisTextBox.Text;
+
+                        session.Update(predmet);
+                        session.Flush();
+                    }
+
+                    projekatDataGridView.Rows.Clear();
+
+                    IList<Projekat> projekti = session.QueryOver<Projekat>().List<Projekat>();
+
+                    foreach (var p in projekti)
+                    {
+                        if (p.GetType() == typeof(TeorijskiProjekat))
+                        {
+                            projekatDataGridView.Rows.Add(new string[]
+                            {
+                                p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p.MaksimalanBrojStrana.ToString(),
+                                p.PreporuceniProgramskiJezik, p.BrojIzvestaja.ToString(), p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Teorijski", p.DatumPocetka.ToString(),
+                                p.DatumZavrsetka.ToString(), p.KratakOpis
+                            });
+                        }
+                        else
+                        {
+                            projekatDataGridView.Rows.Add(new string[]
+                            {
+                                p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p.MaksimalanBrojStrana.ToString(),
+                                p.PreporuceniProgramskiJezik, p.BrojIzvestaja.ToString(), p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Praktični", p.DatumPocetka.ToString(),
+                                p.DatumZavrsetka.ToString(), p.KratakOpis
+                            });
+                        }
+                    }
+
+                    projekatDataGridView.Refresh();
+                    projekatDataGridView.ClearSelection();
+
+                    brojProjekataLabel.Text = session.Query<Projekat>().Count().ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                }
+            }
+            catch (Exception ec)
+            {
+                MessageBox.Show(ec.Message);
+            }
+        } 
+    }
+
+    private void timer1_Tick(object sender, EventArgs e)
+    {
+        successStatusLabel.ForeColor = Color.Black;
+        successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
+
+        timer1.Stop();
+        timer1.Enabled = false;
     }
 }
