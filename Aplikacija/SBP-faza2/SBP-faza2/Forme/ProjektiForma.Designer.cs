@@ -552,6 +552,7 @@
             obrisiToolStripButton.Name = "obrisiToolStripButton";
             obrisiToolStripButton.Size = new Size(85, 40);
             obrisiToolStripButton.Text = "Obriši";
+            obrisiToolStripButton.Click += obrisiToolStripButton_Click;
             // 
             // toolStripSeparator2
             // 
@@ -756,6 +757,7 @@
             ShowInTaskbar = false;
             Text = "Projekti";
             Activated += ProjektiForma_Activated;
+            Load += ProjektiForma_Load;
             projekatGroupBox.ResumeLayout(false);
             projekatGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).EndInit();

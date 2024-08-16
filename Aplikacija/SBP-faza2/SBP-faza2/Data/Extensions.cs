@@ -93,7 +93,7 @@ public static class Extensions
     {
         if (obj is string str)
         {
-            var format = "dd.MM.yyyy. HH:mm:ss";
+            var format = "dd.MM.yyyy. H:mm:ss";
             var culture = CultureInfo.InvariantCulture;
 
             if (DateTime.TryParseExact(str, format, culture, DateTimeStyles.None, out DateTime dateTime))
