@@ -46,7 +46,6 @@
             pocetakPretraziDateTimePicker = new DateTimePicker();
             tipPretraziComboBox = new ComboBox();
             predmetPretraziComboBox = new ComboBox();
-            semestarPretraziComboBox = new ComboBox();
             izvestajiPretraziNumericUpDown = new NumericUpDown();
             datumPocetkaPretragaLabel = new Label();
             tipPretragaLabel = new Label();
@@ -56,7 +55,6 @@
             zavrsetakPreraziDateTimePicker = new DateTimePicker();
             grupniPretaziComboBox = new ComboBox();
             nazivPretraziTextBox = new TextBox();
-            semestarPretragaLabel = new Label();
             preporuceniProgramskiJezikPretragaLabel = new Label();
             brojIzvestajaPretragaLabel = new Label();
             maksimalanBrojStranaPretragaLabel = new Label();
@@ -74,13 +72,13 @@
             datumZavrsetkaDateTimePicker = new DateTimePicker();
             datumPocetkaErrorLabel = new Label();
             datumPocetkaDateTimePicker = new DateTimePicker();
-            tipProjektaErrorLabel = new Label();
+            maksimalanBrojStranaErrorLabel = new Label();
             predmetErrorLabel = new Label();
             brojIzvestajaErrorLabel = new Label();
             tipProjektaComboBox = new ComboBox();
             predmetComboBox = new ComboBox();
             brojIzvestajaNumericUpDown = new NumericUpDown();
-            maksimalanBrojStranaErrorLabel = new Label();
+            tipProjektaErrorLabel = new Label();
             preporuceniProgramskiJezikComboBox = new ComboBox();
             maksimalanBrojStranaNumericUpDown = new NumericUpDown();
             rokZaZavrsetakErrorLabel = new Label();
@@ -153,13 +151,13 @@
             projekatGroupBox.Controls.Add(datumZavrsetkaDateTimePicker);
             projekatGroupBox.Controls.Add(datumPocetkaErrorLabel);
             projekatGroupBox.Controls.Add(datumPocetkaDateTimePicker);
-            projekatGroupBox.Controls.Add(tipProjektaErrorLabel);
+            projekatGroupBox.Controls.Add(maksimalanBrojStranaErrorLabel);
             projekatGroupBox.Controls.Add(predmetErrorLabel);
             projekatGroupBox.Controls.Add(brojIzvestajaErrorLabel);
             projekatGroupBox.Controls.Add(tipProjektaComboBox);
             projekatGroupBox.Controls.Add(predmetComboBox);
             projekatGroupBox.Controls.Add(brojIzvestajaNumericUpDown);
-            projekatGroupBox.Controls.Add(maksimalanBrojStranaErrorLabel);
+            projekatGroupBox.Controls.Add(tipProjektaErrorLabel);
             projekatGroupBox.Controls.Add(preporuceniProgramskiJezikComboBox);
             projekatGroupBox.Controls.Add(maksimalanBrojStranaNumericUpDown);
             projekatGroupBox.Controls.Add(rokZaZavrsetakErrorLabel);
@@ -207,7 +205,6 @@
             pretragaPanel.Controls.Add(pocetakPretraziDateTimePicker);
             pretragaPanel.Controls.Add(tipPretraziComboBox);
             pretragaPanel.Controls.Add(predmetPretraziComboBox);
-            pretragaPanel.Controls.Add(semestarPretraziComboBox);
             pretragaPanel.Controls.Add(izvestajiPretraziNumericUpDown);
             pretragaPanel.Controls.Add(datumPocetkaPretragaLabel);
             pretragaPanel.Controls.Add(tipPretragaLabel);
@@ -217,7 +214,6 @@
             pretragaPanel.Controls.Add(zavrsetakPreraziDateTimePicker);
             pretragaPanel.Controls.Add(grupniPretaziComboBox);
             pretragaPanel.Controls.Add(nazivPretraziTextBox);
-            pretragaPanel.Controls.Add(semestarPretragaLabel);
             pretragaPanel.Controls.Add(preporuceniProgramskiJezikPretragaLabel);
             pretragaPanel.Controls.Add(brojIzvestajaPretragaLabel);
             pretragaPanel.Controls.Add(maksimalanBrojStranaPretragaLabel);
@@ -234,6 +230,7 @@
             // izvestajiCheckBox
             // 
             izvestajiCheckBox.AutoSize = true;
+            izvestajiCheckBox.Enabled = false;
             izvestajiCheckBox.Location = new Point(523, 29);
             izvestajiCheckBox.Name = "izvestajiCheckBox";
             izvestajiCheckBox.Size = new Size(18, 17);
@@ -244,7 +241,8 @@
             // maksStrCheckBox
             // 
             maksStrCheckBox.AutoSize = true;
-            maksStrCheckBox.Location = new Point(23, 278);
+            maksStrCheckBox.Enabled = false;
+            maksStrCheckBox.Location = new Point(523, 90);
             maksStrCheckBox.Name = "maksStrCheckBox";
             maksStrCheckBox.Size = new Size(18, 17);
             maksStrCheckBox.TabIndex = 32;
@@ -316,7 +314,7 @@
             // 
             // maksBrStrManjeVeceJednakoButton
             // 
-            maksBrStrManjeVeceJednakoButton.Location = new Point(386, 271);
+            maksBrStrManjeVeceJednakoButton.Location = new Point(838, 78);
             maksBrStrManjeVeceJednakoButton.Name = "maksBrStrManjeVeceJednakoButton";
             maksBrStrManjeVeceJednakoButton.Size = new Size(32, 32);
             maksBrStrManjeVeceJednakoButton.TabIndex = 25;
@@ -367,32 +365,22 @@
             tipPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             tipPretraziComboBox.FormattingEnabled = true;
             tipPretraziComboBox.Items.AddRange(new object[] { "Teorijski", "Praktični" });
-            tipPretraziComboBox.Location = new Point(664, 82);
+            tipPretraziComboBox.Location = new Point(215, 269);
             tipPretraziComboBox.Name = "tipPretraziComboBox";
             tipPretraziComboBox.Size = new Size(165, 32);
             tipPretraziComboBox.TabIndex = 20;
             tipPretraziComboBox.SelectedIndexChanged += tipPretraziComboBox_SelectedIndexChanged;
+            tipPretraziComboBox.SelectionChangeCommitted += tipPretraziComboBox_SelectionChangeCommitted;
             // 
             // predmetPretraziComboBox
             // 
             predmetPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             predmetPretraziComboBox.Enabled = false;
             predmetPretraziComboBox.FormattingEnabled = true;
-            predmetPretraziComboBox.Location = new Point(551, 205);
+            predmetPretraziComboBox.Location = new Point(551, 207);
             predmetPretraziComboBox.Name = "predmetPretraziComboBox";
-            predmetPretraziComboBox.Size = new Size(278, 32);
+            predmetPretraziComboBox.Size = new Size(319, 32);
             predmetPretraziComboBox.TabIndex = 19;
-            // 
-            // semestarPretraziComboBox
-            // 
-            semestarPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            semestarPretraziComboBox.FormattingEnabled = true;
-            semestarPretraziComboBox.Items.AddRange(new object[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" });
-            semestarPretraziComboBox.Location = new Point(747, 143);
-            semestarPretraziComboBox.Name = "semestarPretraziComboBox";
-            semestarPretraziComboBox.Size = new Size(82, 32);
-            semestarPretraziComboBox.TabIndex = 18;
-            semestarPretraziComboBox.SelectedIndexChanged += semestarPretraziComboBox_SelectedIndexChanged;
             // 
             // izvestajiPretraziNumericUpDown
             // 
@@ -414,7 +402,7 @@
             // tipPretragaLabel
             // 
             tipPretragaLabel.AutoSize = true;
-            tipPretragaLabel.Location = new Point(480, 85);
+            tipPretragaLabel.Location = new Point(98, 274);
             tipPretragaLabel.Name = "tipPretragaLabel";
             tipPretragaLabel.Size = new Size(37, 24);
             tipPretragaLabel.TabIndex = 15;
@@ -432,6 +420,7 @@
             // progJezikPretraziComboBox
             // 
             progJezikPretraziComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            progJezikPretraziComboBox.Enabled = false;
             progJezikPretraziComboBox.FormattingEnabled = true;
             progJezikPretraziComboBox.Items.AddRange(new object[] { "C", "C++", "C#", "Java", "JavaScript", "Python", "Scala", "Rust", "Kotlin", "Swift", "GO", "PHP" });
             progJezikPretraziComboBox.Location = new Point(233, 334);
@@ -442,7 +431,7 @@
             // maksStrPretraziNumericUpDown
             // 
             maksStrPretraziNumericUpDown.Enabled = false;
-            maksStrPretraziNumericUpDown.Location = new Point(298, 271);
+            maksStrPretraziNumericUpDown.Location = new Point(747, 78);
             maksStrPretraziNumericUpDown.Name = "maksStrPretraziNumericUpDown";
             maksStrPretraziNumericUpDown.Size = new Size(82, 32);
             maksStrPretraziNumericUpDown.TabIndex = 12;
@@ -472,15 +461,6 @@
             nazivPretraziTextBox.Size = new Size(232, 32);
             nazivPretraziTextBox.TabIndex = 8;
             // 
-            // semestarPretragaLabel
-            // 
-            semestarPretragaLabel.AutoSize = true;
-            semestarPretragaLabel.Location = new Point(427, 146);
-            semestarPretragaLabel.Name = "semestarPretragaLabel";
-            semestarPretragaLabel.Size = new Size(92, 24);
-            semestarPretragaLabel.TabIndex = 7;
-            semestarPretragaLabel.Text = "Semestar";
-            // 
             // preporuceniProgramskiJezikPretragaLabel
             // 
             preporuceniProgramskiJezikPretragaLabel.AutoSize = true;
@@ -502,7 +482,7 @@
             // maksimalanBrojStranaPretragaLabel
             // 
             maksimalanBrojStranaPretragaLabel.AutoSize = true;
-            maksimalanBrojStranaPretragaLabel.Location = new Point(49, 275);
+            maksimalanBrojStranaPretragaLabel.Location = new Point(424, 86);
             maksimalanBrojStranaPretragaLabel.Name = "maksimalanBrojStranaPretragaLabel";
             maksimalanBrojStranaPretragaLabel.Size = new Size(93, 24);
             maksimalanBrojStranaPretragaLabel.TabIndex = 4;
@@ -635,13 +615,13 @@
             datumPocetkaDateTimePicker.Size = new Size(153, 32);
             datumPocetkaDateTimePicker.TabIndex = 30;
             // 
-            // tipProjektaErrorLabel
+            // maksimalanBrojStranaErrorLabel
             // 
-            tipProjektaErrorLabel.ForeColor = Color.Red;
-            tipProjektaErrorLabel.Location = new Point(530, 180);
-            tipProjektaErrorLabel.Name = "tipProjektaErrorLabel";
-            tipProjektaErrorLabel.Size = new Size(417, 25);
-            tipProjektaErrorLabel.TabIndex = 29;
+            maksimalanBrojStranaErrorLabel.ForeColor = Color.Red;
+            maksimalanBrojStranaErrorLabel.Location = new Point(530, 180);
+            maksimalanBrojStranaErrorLabel.Name = "maksimalanBrojStranaErrorLabel";
+            maksimalanBrojStranaErrorLabel.Size = new Size(417, 25);
+            maksimalanBrojStranaErrorLabel.TabIndex = 29;
             // 
             // predmetErrorLabel
             // 
@@ -665,10 +645,12 @@
             tipProjektaComboBox.Enabled = false;
             tipProjektaComboBox.FormattingEnabled = true;
             tipProjektaComboBox.Items.AddRange(new object[] { "Teorijski", "Praktični" });
-            tipProjektaComboBox.Location = new Point(695, 144);
+            tipProjektaComboBox.Location = new Point(281, 270);
             tipProjektaComboBox.Name = "tipProjektaComboBox";
             tipProjektaComboBox.Size = new Size(206, 32);
             tipProjektaComboBox.TabIndex = 26;
+            tipProjektaComboBox.SelectedIndexChanged += tipProjektaComboBox_SelectedIndexChanged;
+            tipProjektaComboBox.SelectionChangeCommitted += tipProjektaComboBox_SelectionChangeCommitted;
             // 
             // predmetComboBox
             // 
@@ -688,13 +670,13 @@
             brojIzvestajaNumericUpDown.Size = new Size(92, 32);
             brojIzvestajaNumericUpDown.TabIndex = 24;
             // 
-            // maksimalanBrojStranaErrorLabel
+            // tipProjektaErrorLabel
             // 
-            maksimalanBrojStranaErrorLabel.ForeColor = Color.Red;
-            maksimalanBrojStranaErrorLabel.Location = new Point(6, 306);
-            maksimalanBrojStranaErrorLabel.Name = "maksimalanBrojStranaErrorLabel";
-            maksimalanBrojStranaErrorLabel.Size = new Size(529, 25);
-            maksimalanBrojStranaErrorLabel.TabIndex = 23;
+            tipProjektaErrorLabel.ForeColor = Color.Red;
+            tipProjektaErrorLabel.Location = new Point(6, 306);
+            tipProjektaErrorLabel.Name = "tipProjektaErrorLabel";
+            tipProjektaErrorLabel.Size = new Size(529, 25);
+            tipProjektaErrorLabel.TabIndex = 23;
             // 
             // preporuceniProgramskiJezikComboBox
             // 
@@ -710,7 +692,7 @@
             // maksimalanBrojStranaNumericUpDown
             // 
             maksimalanBrojStranaNumericUpDown.Enabled = false;
-            maksimalanBrojStranaNumericUpDown.Location = new Point(281, 271);
+            maksimalanBrojStranaNumericUpDown.Location = new Point(695, 144);
             maksimalanBrojStranaNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
             maksimalanBrojStranaNumericUpDown.Name = "maksimalanBrojStranaNumericUpDown";
             maksimalanBrojStranaNumericUpDown.Size = new Size(92, 32);
@@ -816,7 +798,7 @@
             // tipProjektaLabel
             // 
             tipProjektaLabel.AutoSize = true;
-            tipProjektaLabel.Location = new Point(541, 147);
+            tipProjektaLabel.Location = new Point(140, 273);
             tipProjektaLabel.Name = "tipProjektaLabel";
             tipProjektaLabel.Size = new Size(124, 24);
             tipProjektaLabel.TabIndex = 8;
@@ -843,7 +825,7 @@
             // maksimalanBrojStranaLabel
             // 
             maksimalanBrojStranaLabel.AutoSize = true;
-            maksimalanBrojStranaLabel.Location = new Point(55, 273);
+            maksimalanBrojStranaLabel.Location = new Point(456, 147);
             maksimalanBrojStranaLabel.Name = "maksimalanBrojStranaLabel";
             maksimalanBrojStranaLabel.Size = new Size(209, 24);
             maksimalanBrojStranaLabel.TabIndex = 5;
@@ -1207,13 +1189,13 @@
         private ComboBox tipProjektaComboBox;
         private ComboBox predmetComboBox;
         private NumericUpDown brojIzvestajaNumericUpDown;
-        private Label maksimalanBrojStranaErrorLabel;
+        private Label tipProjektaErrorLabel;
         private TextBox kratakOpisTextBox;
         private Label datumZavrsetkaErrorLabel;
         private DateTimePicker datumZavrsetkaDateTimePicker;
         private Label datumPocetkaErrorLabel;
         private DateTimePicker datumPocetkaDateTimePicker;
-        private Label tipProjektaErrorLabel;
+        private Label maksimalanBrojStranaErrorLabel;
         private Label predmetErrorLabel;
         private Label brojIzvestajaErrorLabel;
         private Label successStatusLabel;
@@ -1241,7 +1223,6 @@
         private Label grupniPretragaLabel;
         private Label rokZaZavrsetakPretragaLabel;
         private Label skolskaGodinaPretagaLabel;
-        private Label semestarPretragaLabel;
         private Label preporuceniProgramskiJezikPretragaLabel;
         private Label brojIzvestajaPretragaLabel;
         private ComboBox progJezikPretraziComboBox;
@@ -1256,7 +1237,6 @@
         private DateTimePicker pocetakPretraziDateTimePicker;
         private ComboBox tipPretraziComboBox;
         private ComboBox predmetPretraziComboBox;
-        private ComboBox semestarPretraziComboBox;
         private NumericUpDown izvestajiPretraziNumericUpDown;
         private Button minimizePanelButton;
         private Button zavrsetakManjeVeceButton;

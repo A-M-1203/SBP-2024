@@ -2,6 +2,7 @@
 using NHibernate.Util;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
+using System.Collections;
 
 namespace SBP_faza2.Forme;
 
@@ -42,10 +43,10 @@ public partial class ProjektiForma : Form
         skolskaGodinaErrorLabel.Text = string.Empty;
         grupniErrorLabel.Text = string.Empty;
         rokZaZavrsetakErrorLabel.Text = string.Empty;
-        maksimalanBrojStranaErrorLabel.Text = string.Empty;
+        tipProjektaErrorLabel.Text = string.Empty;
         brojIzvestajaErrorLabel.Text = string.Empty;
         predmetErrorLabel.Text = string.Empty;
-        tipProjektaErrorLabel.Text = string.Empty;
+        maksimalanBrojStranaErrorLabel.Text = string.Empty;
         datumPocetkaErrorLabel.Text = string.Empty;
         datumZavrsetkaErrorLabel.Text = string.Empty;
     }
@@ -97,10 +98,10 @@ public partial class ProjektiForma : Form
         skolskaGodinaErrorLabel.Text = string.Empty;
         grupniErrorLabel.Text = string.Empty;
         rokZaZavrsetakErrorLabel.Text = string.Empty;
-        maksimalanBrojStranaErrorLabel.Text = string.Empty;
+        tipProjektaErrorLabel.Text = string.Empty;
         brojIzvestajaErrorLabel.Text = string.Empty;
         predmetErrorLabel.Text = string.Empty;
-        tipProjektaErrorLabel.Text = string.Empty;
+        maksimalanBrojStranaErrorLabel.Text = string.Empty;
         datumPocetkaErrorLabel.Text = string.Empty;
         datumZavrsetkaErrorLabel.Text = string.Empty;
     }
@@ -123,10 +124,10 @@ public partial class ProjektiForma : Form
         skolskaGodinaErrorLabel.Text = string.Empty;
         grupniErrorLabel.Text = string.Empty;
         rokZaZavrsetakErrorLabel.Text = string.Empty;
-        maksimalanBrojStranaErrorLabel.Text = string.Empty;
+        tipProjektaErrorLabel.Text = string.Empty;
         brojIzvestajaErrorLabel.Text = string.Empty;
         predmetErrorLabel.Text = string.Empty;
-        tipProjektaErrorLabel.Text = string.Empty;
+        maksimalanBrojStranaErrorLabel.Text = string.Empty;
         datumPocetkaErrorLabel.Text = string.Empty;
         datumZavrsetkaErrorLabel.Text = string.Empty;
     }
@@ -451,9 +452,9 @@ public partial class ProjektiForma : Form
         if (tipProjektaComboBox.SelectedItem == null)
         {
             result = false;
-            tipProjektaErrorLabel.Text = "Tip projekta mora biti izabran";
+            maksimalanBrojStranaErrorLabel.Text = "Tip projekta mora biti izabran";
         }
-        else tipProjektaErrorLabel.Text = string.Empty;
+        else maksimalanBrojStranaErrorLabel.Text = string.Empty;
 
         if (datumPocetkaDateTimePicker.Value < DateTime.Now)
         {
@@ -879,7 +880,93 @@ public partial class ProjektiForma : Form
 
     private void tipPretraziComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //if (tipPretraziComboBox.SelectedIndex != -1)
+        if (tipPretraziComboBox.SelectedIndex != -1)
+        {
+            predmetPretraziComboBox.Enabled = true;
+            if (tipPretraziComboBox.SelectedItem!.ToString() == "Teorijski")
+            {
+                maksStrCheckBox.Enabled = true;
+
+                progJezikPretraziComboBox.Enabled = false;
+                izvestajiCheckBox.Enabled = false;
+
+                try
+                {
+                    using (ISession? session = DataLayer.GetSession())
+                    {
+                        if (session != null)
+                        {
+                            predmetPretraziComboBox.Items.Clear();
+
+                            IList<Projekat> projekti = session.Query<Projekat>().ToList();
+
+                            foreach (var p in projekti)
+                            {
+                                if (p.GetType() == typeof(TeorijskiProjekat))
+                                {
+                                    if (predmetPretraziComboBox.Items.Contains(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")") == false)
+                                    {
+                                        predmetPretraziComboBox.Items.Add(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")");
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ec)
+                {
+                    MessageBox.Show(ec.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (ISession? session = DataLayer.GetSession())
+                    {
+                        if (session != null)
+                        {
+                            predmetPretraziComboBox.Items.Clear();
+
+                            IList<Projekat> projekti = session.Query<Projekat>().ToList();
+
+                            foreach (var p in projekti)
+                            {
+                                if (p.GetType() == typeof(PrakticniProjekat))
+                                {
+                                    if (predmetPretraziComboBox.Items.Contains(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")") == false)
+                                    {
+                                        predmetPretraziComboBox.Items.Add(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ec)
+                {
+                    MessageBox.Show(ec.Message);
+                }
+
+                maksStrCheckBox.Enabled = false;
+
+                progJezikPretraziComboBox.Enabled = true;
+                izvestajiCheckBox.Enabled = true;
+            }
+        }
+        else
+        {
+            predmetPretraziComboBox.Enabled = false;
+            maksStrCheckBox.Enabled = false;
+            progJezikPretraziComboBox.Enabled = false;
+            izvestajiCheckBox.Enabled = false;
+        }
+    }
+
+    private void semestarPretraziComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //if (semestarPretraziComboBox.SelectedIndex != 1)
         //{
         //    try
         //    {
@@ -887,17 +974,23 @@ public partial class ProjektiForma : Form
         //        {
         //            if (session != null)
         //            {
-        //                semestarPretraziComboBox.Enabled = true;
-        //                semestarPretraziComboBox.Items.Clear();
+        //                IList<PredmetNazivSifra> predmeti = session.Query<Predmet>()
+        //                    .Where(p => p.Semestar.Trim() == semestarPretraziComboBox.SelectedItem!.ToString())
+        //                    .Select(x => new PredmetNazivSifra
+        //                    {
+        //                        Id = x.Id,
+        //                        Naziv = x.Naziv,
+        //                        Sifra = x.Sifra
+        //                    }).ToList();
 
-        //                IList<string> semestri = session.Query<Projekat>()
-        //                    .Where(x => x.Tip == tipPretraziComboBox.SelectedItem!.ToString())
-        //                    .Select(x => x.Predmet.Semestar.Trim()).Distinct().ToList();
+        //                predmetPretraziComboBox.Items.Clear();
 
-        //                foreach (var item in semestri)
+        //                foreach (var item in predmeti)
         //                {
-        //                    semestarPretraziComboBox.Items.Add(item);
+        //                    predmetPretraziComboBox.Items.Add(item.Naziv + " " + "(" + item.Sifra + ")");
         //                }
+
+        //                predmetPretraziComboBox.Enabled = true;
         //            }
         //        }
         //    }
@@ -906,43 +999,6 @@ public partial class ProjektiForma : Form
         //        MessageBox.Show(ec.Message);
         //    }
         //}
-    }
-
-    private void semestarPretraziComboBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (semestarPretraziComboBox.SelectedIndex != 1)
-        {
-            try
-            {
-                using (ISession? session = DataLayer.GetSession())
-                {
-                    if (session != null)
-                    {
-                        IList<PredmetNazivSifra> predmeti = session.Query<Predmet>()
-                            .Where(p => p.Semestar.Trim() == semestarPretraziComboBox.SelectedItem!.ToString())
-                            .Select(x => new PredmetNazivSifra
-                            {
-                                Id = x.Id,
-                                Naziv = x.Naziv,
-                                Sifra = x.Sifra
-                            }).ToList();
-
-                        predmetPretraziComboBox.Items.Clear();
-
-                        foreach (var item in predmeti)
-                        {
-                            predmetPretraziComboBox.Items.Add(item.Naziv + " " + "(" + item.Sifra + ")");
-                        }
-
-                        predmetPretraziComboBox.Enabled = true;
-                    }
-                }
-            }
-            catch (Exception ec)
-            {
-                MessageBox.Show(ec.Message);
-            }
-        }
     }
 
     private void minimizePanelButton_Click(object sender, EventArgs e)
@@ -1007,10 +1063,10 @@ public partial class ProjektiForma : Form
                         query = query.Where(p => p.BrojIzvestaja == (int)izvestajiPretraziNumericUpDown.Value);
                 }
 
-                if (tipPretraziComboBox.SelectedItem != null)
-                {
-                    query = query.Where(p => p.Tip == tipPretraziComboBox.SelectedItem.ToString());
-                }
+                //if (tipPretraziComboBox.SelectedItem != null)
+                //{
+                //    query = query.Where(p => p.Tip == tipPretraziComboBox.SelectedItem.ToString());
+                //}
 
                 if (predmetPretraziComboBox.SelectedItem != null)
                 {
@@ -1032,6 +1088,13 @@ public partial class ProjektiForma : Form
                 projekatDataGridView.Rows.Clear();
 
                 IList<Projekat> projekti = query.ToList();
+                if (tipPretraziComboBox.SelectedItem != null)
+                {
+                    if (tipPretraziComboBox.SelectedItem!.ToString() == "Teorijski")
+                        projekti = projekti.Where(p => p.GetType() == typeof(TeorijskiProjekat)).ToList();
+                    else
+                        projekti = projekti.Where(p => p.GetType() == typeof(PrakticniProjekat)).ToList();
+                }
 
                 foreach (var p in projekti)
                 {
@@ -1151,13 +1214,142 @@ public partial class ProjektiForma : Form
         izvestajiPretraziNumericUpDown.Value = 0;
         brojIzvestajaManjeVeceJednakoButton.Text = "=";
         tipPretraziComboBox.SelectedIndex = -1;
-        semestarPretraziComboBox.SelectedIndex = -1;
         predmetPretraziComboBox.SelectedIndex = -1;
         pocetakCheckBox.Checked = false;
         pocetakPretraziDateTimePicker.Value = DateTime.Now;
         pocetakManjeVeceButton.Text = "<";
 
-        semestarPretraziComboBox.Enabled = false;
         predmetPretraziComboBox.Enabled = false;
+    }
+
+    private void tipProjektaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (tipProjektaComboBox.SelectedIndex != -1)
+        {
+            if (tipProjektaComboBox.SelectedItem.ToString() == "Teorijski")
+            {
+                maksimalanBrojStranaNumericUpDown.Enabled = true;
+
+                brojIzvestajaNumericUpDown.Enabled = false;
+                kratakOpisTextBox.Enabled = false;
+                preporuceniProgramskiJezikComboBox.Enabled = false;
+            }
+            else
+            {
+                maksimalanBrojStranaNumericUpDown.Enabled = false;
+
+                brojIzvestajaNumericUpDown.Enabled = true;
+                kratakOpisTextBox.Enabled = true;
+                preporuceniProgramskiJezikComboBox.Enabled = true;
+            }
+        }
+    }
+
+    private void tipProjektaComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (tipProjektaComboBox.SelectedIndex != -1)
+        {
+            if (tipProjektaComboBox.SelectedItem.ToString() == "Teorijski")
+            {
+                maksimalanBrojStranaNumericUpDown.Enabled = true;
+
+                brojIzvestajaNumericUpDown.Enabled = false;
+                kratakOpisTextBox.Enabled = false;
+                preporuceniProgramskiJezikComboBox.Enabled = false;
+            }
+            else
+            {
+                maksimalanBrojStranaNumericUpDown.Enabled = false;
+
+                brojIzvestajaNumericUpDown.Enabled = true;
+                kratakOpisTextBox.Enabled = true;
+                preporuceniProgramskiJezikComboBox.Enabled = true;
+            }
+        }
+    }
+
+    private void tipPretraziComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (tipPretraziComboBox.SelectedIndex != -1)
+        {
+            predmetPretraziComboBox.Enabled = true;
+            if (tipPretraziComboBox.SelectedItem!.ToString() == "Teorijski")
+            {
+                maksStrCheckBox.Enabled = true;
+
+                progJezikPretraziComboBox.Enabled = false;
+                izvestajiCheckBox.Enabled = false;
+
+                try
+                {
+                    using (ISession? session = DataLayer.GetSession())
+                    {
+                        if (session != null)
+                        {
+                            predmetPretraziComboBox.Items.Clear();
+
+                            IList<Projekat> projekti = session.Query<Projekat>().ToList();
+
+                            foreach (var p in projekti)
+                            {
+                                if (p.GetType() == typeof(TeorijskiProjekat))
+                                {
+                                    if (predmetPretraziComboBox.Items.Contains(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")") == false)
+                                    {
+                                        predmetPretraziComboBox.Items.Add(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ec)
+                {
+                    MessageBox.Show(ec.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (ISession? session = DataLayer.GetSession())
+                    {
+                        if (session != null)
+                        {
+                            predmetPretraziComboBox.Items.Clear();
+
+                            IList<Projekat> projekti = session.Query<Projekat>().ToList();
+
+                            foreach (var p in projekti)
+                            {
+                                if (p.GetType() == typeof(PrakticniProjekat))
+                                {
+                                    if (predmetPretraziComboBox.Items.Contains(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")") == false)
+                                    {
+                                        predmetPretraziComboBox.Items.Add(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ec)
+                {
+                    MessageBox.Show(ec.Message);
+                }
+
+                maksStrCheckBox.Enabled = false;
+
+                progJezikPretraziComboBox.Enabled = true;
+                izvestajiCheckBox.Enabled = true;
+            }
+        }
+        else
+        {
+            predmetPretraziComboBox.Enabled = false;
+            maksStrCheckBox.Enabled = false;
+            progJezikPretraziComboBox.Enabled = false;
+            izvestajiCheckBox.Enabled = false;
+        }
     }
 }
