@@ -101,6 +101,7 @@
             grupeButton.TextAlign = ContentAlignment.MiddleRight;
             grupeButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             grupeButton.UseVisualStyleBackColor = true;
+            grupeButton.Click += grupeButton_Click;
             // 
             // projektiButton
             // 

@@ -1,9 +1,7 @@
 ﻿using NHibernate;
-using NHibernate.Criterion;
 using NHibernate.Util;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
-using System.Collections;
 
 namespace SBP_faza2.Forme;
 

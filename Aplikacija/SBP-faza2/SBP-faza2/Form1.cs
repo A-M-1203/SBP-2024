@@ -109,4 +109,10 @@ public partial class Form1 : Form
         ProjektiForma projektiForma = new ProjektiForma();
         projektiForma.Show(this);
     }
+
+    private void grupeButton_Click(object sender, EventArgs e)
+    {
+        GrupeForma grupeForma = new GrupeForma();
+        grupeForma.Show(this);
+    }
 }
