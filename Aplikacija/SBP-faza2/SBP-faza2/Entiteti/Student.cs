@@ -2,7 +2,7 @@
 
 public class Student
 {
-    public virtual int Id { get; protected set; }
+    public virtual long Id { get; protected set; }
     public virtual required string BrojIndeksa { get; set; }
     public virtual required string LicnoIme { get; set; }
     public virtual required string ImeRoditelja { get; set; }

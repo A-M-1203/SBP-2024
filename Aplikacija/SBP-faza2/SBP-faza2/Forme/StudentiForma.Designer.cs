@@ -45,7 +45,6 @@
             brojStudenataLabel = new Label();
             ukupanBrojStudenataLabel = new Label();
             successStatusLabel = new Label();
-            zvezdicaLabel = new Label();
             smerErrorLabel = new Label();
             brojIndeksaErrorLabel = new Label();
             prezimeErrorLabel = new Label();
@@ -197,7 +196,6 @@
             studentGroupBox.Controls.Add(brojStudenataLabel);
             studentGroupBox.Controls.Add(ukupanBrojStudenataLabel);
             studentGroupBox.Controls.Add(successStatusLabel);
-            studentGroupBox.Controls.Add(zvezdicaLabel);
             studentGroupBox.Controls.Add(smerErrorLabel);
             studentGroupBox.Controls.Add(brojIndeksaErrorLabel);
             studentGroupBox.Controls.Add(prezimeErrorLabel);
@@ -239,21 +237,12 @@
             // 
             // successStatusLabel
             // 
-            successStatusLabel.ForeColor = Color.Lime;
-            successStatusLabel.Location = new Point(27, 388);
+            successStatusLabel.Location = new Point(32, 398);
             successStatusLabel.Name = "successStatusLabel";
             successStatusLabel.Size = new Size(423, 54);
-            successStatusLabel.TabIndex = 16;
+            successStatusLabel.TabIndex = 15;
+            successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
             successStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // zvezdicaLabel
-            // 
-            zvezdicaLabel.AutoSize = true;
-            zvezdicaLabel.Location = new Point(59, 442);
-            zvezdicaLabel.Name = "zvezdicaLabel";
-            zvezdicaLabel.Size = new Size(341, 24);
-            zvezdicaLabel.TabIndex = 15;
-            zvezdicaLabel.Text = "Polja označena zvezdicom su obavezna";
             // 
             // smerErrorLabel
             // 
@@ -406,7 +395,7 @@
             studentDataGridView.Size = new Size(666, 497);
             studentDataGridView.TabIndex = 2;
             studentDataGridView.CellMouseDoubleClick += studentaDataGridView_CellMouseDoubleClick;
-            studentDataGridView.SelectionChanged += studentaDataGridView_SelectionChanged;
+            studentDataGridView.SelectionChanged += studentDataGridView_SelectionChanged;
             // 
             // idColumn
             // 
@@ -675,7 +664,6 @@
         private DataGridViewTextBoxColumn smerColumn;
         private ToolStripButton sacuvajToolStripButton;
         private ToolStripSeparator toolStripSeparator4;
-        private Label zvezdicaLabel;
         private Label successStatusLabel;
         private System.Windows.Forms.Timer timer1;
         private Label brojStudenataLabel;

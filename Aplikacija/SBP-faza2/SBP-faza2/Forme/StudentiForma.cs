@@ -1,5 +1,4 @@
-﻿using NHibernate.Criterion;
-using NHibernate;
+﻿using NHibernate;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using System.Data;
@@ -8,7 +7,8 @@ namespace SBP_faza2.Forme;
 
 public partial class StudentiForma : Form
 {
-    private int Id = 0;
+    private long Id = 0;
+    private bool dodajButtonClicked = false;
     public StudentiForma()
     {
         InitializeComponent();
@@ -16,7 +16,9 @@ public partial class StudentiForma : Form
 
     private void dodajStudentaToolStripButton_Click(object sender, EventArgs e)
     {
-        successStatusLabel.Text = "Klikom na dugme sačuvaj biće zapamćen novi student";
+        dodajButtonClicked = true;
+
+        successStatusLabel.Text = "Klikom na dugme sačuvaj biće sačuvan novi student";
 
         dodajToolStripButton.Enabled = false;
 
@@ -38,10 +40,13 @@ public partial class StudentiForma : Form
 
     private void odustaniToolStripButton_Click(object sender, EventArgs e)
     {
-        successStatusLabel.Text = string.Empty;
+        dodajButtonClicked = false;
+
+        successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
 
         odustaniToolStripButton.Enabled = false;
         sacuvajToolStripButton.Enabled = false;
+
         dodajToolStripButton.Enabled = true;
 
         if (studentDataGridView.SelectedRows.Count > 0)
@@ -68,13 +73,13 @@ public partial class StudentiForma : Form
         smerErrorLabel.Text = string.Empty;
     }
 
-    private void studentaDataGridView_SelectionChanged(object sender, EventArgs e)
+    private void studentDataGridView_SelectionChanged(object sender, EventArgs e)
     {
         if (studentDataGridView.SelectedRows.Count > 0)
         {
             izmeniToolStripButton.Enabled = true;
             obrisiToolStripButton.Enabled = true;
-            Id = int.Parse(studentDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
+            Id = long.Parse(studentDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
         }
         else
         {
@@ -91,53 +96,21 @@ public partial class StudentiForma : Form
 
     private void StudentiForma_Activated(object sender, EventArgs e)
     {
-        try
+        List<StudentBasic>? studenti = DTOManager.vratiStudenteBasic();
+        if (studenti != null)
         {
-            using (ISession? session = DataLayer.GetSession())
+            studentDataGridView.Rows.Clear();
+
+            foreach (var s in studenti)
             {
-                if (session != null)
-                {
-                    IList<StudentBasic> studenti = session.QueryOver<Student>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("LicnoIme"),
-                            Projections.Property("ImeRoditelja"),
-                            Projections.Property("Prezime"),
-                            Projections.Property("BrojIndeksa"),
-                            Projections.Property("Smer")
-                        ).List<object[]>()
-                        .Select(row => new StudentBasic
-                        {
-                            Id = (int)row[0],
-                            LicnoIme = (string)row[1],
-                            ImeRoditelja = (string)row[2],
-                            Prezime = (string)row[3],
-                            BrojIndeksa = (string)row[4],
-                            Smer = (string)row[5]
-                        }).ToList();
-
-                    studentDataGridView.Rows.Clear();
-
-                    foreach (var s in studenti)
-                    {
-                        studentDataGridView.Rows.Add(new string[]
-                        { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
-                    }
-
-                    studentDataGridView.Refresh();
-                    studentDataGridView.ClearSelection();
-
-                    brojStudenataLabel.Text = session.Query<Student>().Count().ToString();
-                }
-                else
-                {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
-                }
+                studentDataGridView.Rows.Add(new string[]
+                { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
             }
-        }
-        catch (Exception ec)
-        {
-            MessageBox.Show(ec.Message);
+
+            studentDataGridView.Refresh();
+            studentDataGridView.ClearSelection();
+
+            brojStudenataLabel.Text = studentDataGridView.RowCount.ToString();
         }
     }
 
@@ -169,26 +142,17 @@ public partial class StudentiForma : Form
     {
         if (e.RowIndex >= 0)
         {
+            dodajButtonClicked = false;
             successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći student";
 
             DataGridViewRow row = studentDataGridView.Rows[e.RowIndex];
 
-            Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
+            Id = long.Parse(row.Cells["idColumn"].Value.ToString()!);
             licnoImeTextBox.Text = row.Cells["licnoImeColumn"].Value.ToString();
             imeRoditeljaTextBox.Text = row.Cells["imeRoditeljaColumn"].Value.ToString();
             prezimeTextBox.Text = row.Cells["prezimeColumn"].Value.ToString();
             brojIndeksaTextBox.Text = row.Cells["brojIndeksaColumn"].Value.ToString();
-
-            string smer = row.Cells["smerColumn"].Value.ToString()!;
-            smer = smer.Trim();
-            foreach (var item in smerComboBox.Items)
-            {
-                if (item.ToString() == smer)
-                {
-                    smerComboBox.SelectedItem = item;
-                    break;
-                }
-            }
+            smerComboBox.SelectedItem = row.Cells["smerColumn"].Value.ToString()!.Trim();
 
             licnoImeTextBox.Enabled = true;
             imeRoditeljaTextBox.Enabled = true;
@@ -201,6 +165,12 @@ public partial class StudentiForma : Form
 
             sacuvajToolStripButton.Enabled = true;
             odustaniToolStripButton.Enabled = true;
+
+            licnoImeErrorLabel.Text = string.Empty;
+            imeRoditeljaErrorLabel.Text = string.Empty;
+            prezimeErrorLabel.Text = string.Empty;
+            brojIndeksaErrorLabel.Text = string.Empty;
+            smerErrorLabel.Text = string.Empty;
         }
     }
 
@@ -253,25 +223,17 @@ public partial class StudentiForma : Form
 
     private void izmeniStudentaToolStripButton_Click(object sender, EventArgs e)
     {
+        dodajButtonClicked = false;
+
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći student";
         DataGridViewRow row = studentDataGridView.SelectedRows[0];
 
-        Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
+        Id = long.Parse(row.Cells["idColumn"].Value.ToString()!);
         licnoImeTextBox.Text = row.Cells["licnoImeColumn"].Value.ToString();
         imeRoditeljaTextBox.Text = row.Cells["imeRoditeljaColumn"].Value.ToString();
         prezimeTextBox.Text = row.Cells["prezimeColumn"].Value.ToString();
         brojIndeksaTextBox.Text = row.Cells["brojIndeksaColumn"].Value.ToString();
-
-        string smer = row.Cells["smerColumn"].Value.ToString()!;
-        smer = smer.Trim();
-        foreach (var item in smerComboBox.Items)
-        {
-            if (item.ToString() == smer)
-            {
-                smerComboBox.SelectedItem = item;
-                break;
-            }
-        }
+        smerComboBox.SelectedItem = row.Cells["smerColumn"].Value.ToString()!.Trim();
 
         licnoImeTextBox.Enabled = true;
         imeRoditeljaTextBox.Enabled = true;
@@ -284,188 +246,126 @@ public partial class StudentiForma : Form
 
         sacuvajToolStripButton.Enabled = true;
         odustaniToolStripButton.Enabled = true;
+
+        licnoImeErrorLabel.Text = string.Empty;
+        imeRoditeljaErrorLabel.Text = string.Empty;
+        prezimeErrorLabel.Text = string.Empty;
+        brojIndeksaErrorLabel.Text = string.Empty;
+        smerErrorLabel.Text = string.Empty;
     }
 
-    private void sacuvajToolStripButton_Click(object sender, EventArgs e)
+    private async void sacuvajToolStripButton_Click(object sender, EventArgs e)
     {
         bool result = proveriUnos();
 
         if (result == true)
         {
-            try
+            bool postojiIndeks;
+
+            StudentBasic student = new StudentBasic
             {
-                ISession? session = DataLayer.GetSession();
-                if (session != null)
+                Id = this.Id,
+                LicnoIme = licnoImeTextBox.Text,
+                ImeRoditelja = imeRoditeljaTextBox.Text,
+                Prezime = prezimeTextBox.Text,
+                BrojIndeksa = brojIndeksaTextBox.Text,
+                Smer = smerComboBox.SelectedItem!.ToString()!
+            };
+
+            bool rez;
+            if (dodajButtonClicked == false)
+            {
+                StudentBasic? studentZaProveru = await DTOManager.vratiStudentBasicAsync(Id);
+                if (studentZaProveru!.BrojIndeksa != brojIndeksaTextBox.Text)
                 {
-                    Student student = session.Query<Student>().FirstOrDefault(s => s.BrojIndeksa == brojIndeksaTextBox.Text)!;
-                    if (student == null)
+                    rez = await DTOManager.PostojiIndeks(brojIndeksaTextBox.Text);
+                    if (rez == true)
                     {
-                        student = new Student
-                        {
-                            LicnoIme = CapitalizeEachWord(licnoImeTextBox.Text.Trim()),
-                            ImeRoditelja = CapitalizeEachWord(imeRoditeljaTextBox.Text.Trim()),
-                            Prezime = CapitalizeEachWord(prezimeTextBox.Text.Trim()),
-                            BrojIndeksa = brojIndeksaTextBox.Text,
-                            Smer = smerComboBox.SelectedItem!.ToString()!
-                        };
+                        successStatusLabel.ForeColor = Color.Red;
+                        successStatusLabel.Text = "Student sa ovim indeksom već postoji";
 
-                        session.Save(student);
-                        session.Flush();
-
-                        IList<StudentBasic> studenti = session.QueryOver<Student>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("LicnoIme"),
-                            Projections.Property("ImeRoditelja"),
-                            Projections.Property("Prezime"),
-                            Projections.Property("BrojIndeksa"),
-                            Projections.Property("Smer")
-                        ).List<object[]>()
-                        .Select(row => new StudentBasic
-                        {
-                            Id = (int)row[0],
-                            LicnoIme = (string)row[1],
-                            ImeRoditelja = (string)row[2],
-                            Prezime = (string)row[3],
-                            BrojIndeksa = (string)row[4],
-                            Smer = (string)row[5]
-                        }).ToList();
-
-                        studentDataGridView.Rows.Clear();
-
-                        foreach (var s in studenti)
-                        {
-                            studentDataGridView.Rows.Add(new string[]
-                            { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
-                        }
-
-                        studentDataGridView.Refresh();
-                        studentDataGridView.ClearSelection();
-
-                        brojStudenataLabel.Text = session.Query<Student>().Count().ToString();
-
-                        successStatusLabel.Text = "Student uspešno sačuvan";
-
+                        timer1.Enabled = true;
+                        timer1.Start();
+                        return;
                     }
-                    else
-                    {
-                        student.LicnoIme = CapitalizeEachWord(licnoImeTextBox.Text.Trim());
-                        student.ImeRoditelja = CapitalizeEachWord(imeRoditeljaTextBox.Text.Trim());
-                        student.Prezime = CapitalizeEachWord(prezimeTextBox.Text.Trim());
-                        student.BrojIndeksa = brojIndeksaTextBox.Text;
-                        student.Smer = smerComboBox.SelectedItem!.ToString()!;
+                }
 
-                        session.Save(student);
-                        session.Flush();
-
-                        IList<StudentBasic> studenti = session.QueryOver<Student>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("LicnoIme"),
-                            Projections.Property("ImeRoditelja"),
-                            Projections.Property("Prezime"),
-                            Projections.Property("BrojIndeksa"),
-                            Projections.Property("Smer")
-                        ).List<object[]>()
-                        .Select(row => new StudentBasic
-                        {
-                            Id = (int)row[0],
-                            LicnoIme = (string)row[1],
-                            ImeRoditelja = (string)row[2],
-                            Prezime = (string)row[3],
-                            BrojIndeksa = (string)row[4],
-                            Smer = (string)row[5]
-                        }).ToList();
-
-                        studentDataGridView.Rows.Clear();
-
-                        foreach (var s in studenti)
-                        {
-                            studentDataGridView.Rows.Add(new string[]
-                            { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
-                        }
-
-                        studentDataGridView.Refresh();
-                        studentDataGridView.ClearSelection();
-
-                        successStatusLabel.Text = "Student uspešno ažuriran";
-
-                    }
-
-                    session.Close();
-
-                    timer1.Enabled = true;
-                    timer1.Start();
+                rez = await DTOManager.izmeniStudentaAsync(student);
+                if (rez == true)
+                {
+                    successStatusLabel.ForeColor = Color.Lime;
+                    successStatusLabel.Text = "Student uspešno ažuriran";
                 }
                 else
                 {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Greška prilikom ažuriranja studenta";
                 }
             }
-            catch (Exception ec)
+            else
             {
-                MessageBox.Show(ec.Message);
+                postojiIndeks = await DTOManager.PostojiIndeks(brojIndeksaTextBox.Text);
+                if (postojiIndeks == true)
+                {
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Student sa ovim indeksom već postoji";
+
+                    timer1.Enabled = true;
+                    timer1.Start();
+                    return;
+                }
+
+                rez = await DTOManager.dodajStudentaAsync(student);
+                if (rez == true)
+                {
+                    successStatusLabel.ForeColor = Color.Lime;
+                    successStatusLabel.Text = "Student uspešno dodat";
+                }
+                else
+                {
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Greška prilikom dodavanja studenta";
+                }
             }
+
+            studentDataGridView.Rows.Clear();
+
+            List<StudentBasic>? studenti = DTOManager.vratiStudenteBasic();
+            if (studenti != null)
+            {
+                foreach (var s in studenti)
+                {
+                    studentDataGridView.Rows.Add(new string[]
+                    { s.Id.ToString(), s.LicnoIme, s.ImeRoditelja, s.Prezime, s.BrojIndeksa, s.Smer });
+                }
+
+                studentDataGridView.Refresh();
+                studentDataGridView.ClearSelection();
+
+                brojStudenataLabel.Text = studentDataGridView.RowCount.ToString();
+            }
+
+            timer1.Enabled = true;
+            timer1.Start();
         }
-        else
-            successStatusLabel.Text = string.Empty;
     }
 
     private void timer1_Tick(object sender, EventArgs e)
     {
-        successStatusLabel.Text = string.Empty;
+        successStatusLabel.ForeColor = Color.Black;
+        successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
         timer1.Stop();
         timer1.Enabled = false;
     }
 
-    public static string CapitalizeEachWord(string input)
+    private async void obrisiStudentaToolStripButton_Click(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(input))
-            return input;
-
-        var words = input.Split(' ');
-        for (int i = 0; i < words.Length; i++)
+        bool rez = await DTOManager.obrisiStudentaAsync(Id);
+        if (rez == true)
         {
-            if (words[i].Length > 0)
+            List<StudentBasic>? studenti = DTOManager.vratiStudenteBasic();
+            if (studenti != null)
             {
-                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1);
-            }
-        }
-
-        return string.Join(' ', words);
-    }
-
-    private void obrisiStudentaToolStripButton_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            ISession? session = DataLayer.GetSession();
-            if (session != null)
-            {
-                Student student = session.Load<Student>(Id);
-
-                session.Delete(student);
-                session.Flush();
-
-                IList<StudentBasic> studenti = session.QueryOver<Student>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("LicnoIme"),
-                            Projections.Property("ImeRoditelja"),
-                            Projections.Property("Prezime"),
-                            Projections.Property("BrojIndeksa"),
-                            Projections.Property("Smer")
-                        ).List<object[]>()
-                        .Select(row => new StudentBasic
-                        {
-                            Id = (int)row[0],
-                            LicnoIme = (string)row[1],
-                            ImeRoditelja = (string)row[2],
-                            Prezime = (string)row[3],
-                            BrojIndeksa = (string)row[4],
-                            Smer = (string)row[5]
-                        }).ToList();
-
                 studentDataGridView.Rows.Clear();
 
                 foreach (var s in studenti)
@@ -477,23 +377,20 @@ public partial class StudentiForma : Form
                 studentDataGridView.Refresh();
                 studentDataGridView.ClearSelection();
 
-                brojStudenataLabel.Text = session.Query<Student>().Count().ToString();
+                brojStudenataLabel.Text = studentDataGridView.RowCount.ToString();
 
-                session.Close();
-
+                successStatusLabel.ForeColor = Color.Lime;
                 successStatusLabel.Text = "Student uspešno obrisan";
-                timer1.Enabled = true;
-                timer1.Start();
-            }
-            else
-            {
-                MessageBox.Show("Greška prilikom otvaranja konekcije");
             }
         }
-        catch (Exception ec)
+        else
         {
-            MessageBox.Show(ec.Message);
+            successStatusLabel.ForeColor = Color.Red;
+            successStatusLabel.Text = "Greška prilikom brisanje studenta";
         }
+
+        timer1.Enabled = true;
+        timer1.Start();
     }
 
     private void imePretraziTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -591,6 +488,8 @@ public partial class StudentiForma : Form
 
                 studentDataGridView.Refresh();
                 studentDataGridView.ClearSelection();
+
+                brojStudenataLabel.Text = studentDataGridView.RowCount.ToString();
 
                 session.Close();
             }
