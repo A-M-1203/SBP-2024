@@ -3,12 +3,14 @@ using NHibernate;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using System.Data;
+using NHibernate.Linq;
 
 namespace SBP_faza2.Forme;
 
 public partial class PredmetiForma : Form
 {
-    private int Id = 0;
+    private long Id = 0;
+    private bool dodajButtonClicked = false;
     public PredmetiForma()
     {
         InitializeComponent();
@@ -16,6 +18,8 @@ public partial class PredmetiForma : Form
 
     private void dodajPredmetToolStripButton_Click(object sender, EventArgs e)
     {
+        dodajButtonClicked = true;
+
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće sačuvan novi predmet";
 
         dodajToolStripButton.Enabled = false;
@@ -36,10 +40,13 @@ public partial class PredmetiForma : Form
 
     private void odustaniToolStripButton_Click(object sender, EventArgs e)
     {
-        successStatusLabel.Text = string.Empty;
+        dodajButtonClicked = false;
+
+        successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
 
         odustaniToolStripButton.Enabled = false;
         sacuvajToolStripButton.Enabled = false;
+
         dodajToolStripButton.Enabled = true;
 
         if (predmetDataGridView.SelectedRows.Count > 0)
@@ -69,7 +76,7 @@ public partial class PredmetiForma : Form
         {
             izmeniToolStripButton.Enabled = true;
             obrisiToolStripButton.Enabled = true;
-            Id = int.Parse(predmetDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
+            Id = long.Parse(predmetDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
         }
         else
         {
@@ -85,51 +92,21 @@ public partial class PredmetiForma : Form
 
     private void PredmetiForma_Activated(object sender, EventArgs e)
     {
-        try
+        List<PredmetBasic>? predmeti = DTOManager.VratiPredmeteBasic();
+        if (predmeti != null)
         {
-            using (ISession? session = DataLayer.GetSession())
+            predmetDataGridView.Rows.Clear();
+
+            foreach (var p in predmeti)
             {
-                if (session != null)
-                {
-                    IList<PredmetBasic> predmeti = session.QueryOver<Predmet>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("Sifra"),
-                            Projections.Property("Naziv"),
-                            Projections.Property("Katedra"),
-                            Projections.Property("Semestar")
-                        ).List<object[]>()
-                        .Select(row => new PredmetBasic
-                        {
-                            Id = (int)row[0],
-                            Sifra = (string)row[1],
-                            Naziv = (string)row[2],
-                            Katedra = (string)row[3],
-                            Semestar = (string)row[4]
-                        }).ToList();
-
-                    predmetDataGridView.Rows.Clear();
-
-                    foreach (var p in predmeti)
-                    {
-                        predmetDataGridView.Rows.Add(new string[]
-                        { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
-                    }
-
-                    predmetDataGridView.Refresh();
-                    predmetDataGridView.ClearSelection();
-
-                    brojPredmetaLabel.Text = session.Query<Predmet>().Count().ToString();
-                }
-                else
-                {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
-                }
+                predmetDataGridView.Rows.Add(new string[]
+                { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
             }
-        }
-        catch (Exception ec)
-        {
-            MessageBox.Show(ec.Message);
+
+            predmetDataGridView.Refresh();
+            predmetDataGridView.ClearSelection();
+
+            brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
         }
     }
 
@@ -170,35 +147,16 @@ public partial class PredmetiForma : Form
     {
         if (e.RowIndex >= 0)
         {
+            dodajButtonClicked = false;
             successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći predmet";
 
             DataGridViewRow row = predmetDataGridView.Rows[e.RowIndex];
 
-            Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
+            Id = long.Parse(row.Cells["idColumn"].Value.ToString()!);
             sifraPredmetaTextBox.Text = row.Cells["sifraPredmetaColumn"].Value.ToString();
             nazivPredmetaTextBox.Text = row.Cells["nazivPredmetaColumn"].Value.ToString();
-
-            string katedra = row.Cells["katedraColumn"].Value.ToString()!;
-            katedra = katedra.Trim();
-            foreach (var item in katedraComboBox.Items)
-            {
-                if (item.ToString() == katedra)
-                {
-                    katedraComboBox.SelectedItem = item;
-                    break;
-                }
-            }
-
-            string semestar = row.Cells["semestarColumn"].Value.ToString()!;
-            semestar = semestar.Trim();
-            foreach (var item in semestarComboBox.Items)
-            {
-                if (item.ToString() == semestar)
-                {
-                    semestarComboBox.SelectedItem = item;
-                    break;
-                }
-            }
+            katedraComboBox.SelectedItem = row.Cells["katedraColumn"].Value.ToString();
+            semestarComboBox.SelectedItem = row.Cells["semestarColumn"].Value.ToString()!.Trim();
 
             sifraPredmetaTextBox.Enabled = true;
             nazivPredmetaTextBox.Enabled = true;
@@ -210,10 +168,15 @@ public partial class PredmetiForma : Form
 
             sacuvajToolStripButton.Enabled = true;
             odustaniToolStripButton.Enabled = true;
+
+            sifraPredmetaErrorLabel.Text = string.Empty;
+            nazivPredmetaErrorLabel.Text = string.Empty;
+            katedraErrorLabel.Text = string.Empty;
+            semestarErrorLabel.Text = string.Empty;
         }
     }
 
-    private bool proveriUnos()
+    private bool ProveriUnos()
     {
         bool result = true;
 
@@ -250,34 +213,15 @@ public partial class PredmetiForma : Form
 
     private void izmeniToolStripButton_Click(object sender, EventArgs e)
     {
+        dodajButtonClicked = false;
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći predmet";
         DataGridViewRow row = predmetDataGridView.SelectedRows[0];
 
-        Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
+        Id = long.Parse(row.Cells["idColumn"].Value.ToString()!);
         sifraPredmetaTextBox.Text = row.Cells["sifraPredmetaColumn"].Value.ToString();
         nazivPredmetaTextBox.Text = row.Cells["nazivPredmetaColumn"].Value.ToString();
-
-        string katedra = row.Cells["katedraColumn"].Value.ToString()!;
-        katedra = katedra.Trim();
-        foreach (var item in katedraComboBox.Items)
-        {
-            if (item.ToString() == katedra)
-            {
-                katedraComboBox.SelectedItem = item;
-                break;
-            }
-        }
-
-        string semestar = row.Cells["semestarColumn"].Value.ToString()!;
-        semestar = semestar.Trim();
-        foreach (var item in semestarComboBox.Items)
-        {
-            if (item.ToString() == semestar)
-            {
-                semestarComboBox.SelectedItem = item;
-                break;
-            }
-        }
+        katedraComboBox.SelectedItem = row.Cells["katedraColumn"].Value.ToString();
+        semestarComboBox.SelectedItem = row.Cells["semestarColumn"].Value.ToString()!.Trim();
 
         sifraPredmetaTextBox.Enabled = true;
         nazivPredmetaTextBox.Enabled = true;
@@ -289,163 +233,124 @@ public partial class PredmetiForma : Form
 
         sacuvajToolStripButton.Enabled = true;
         odustaniToolStripButton.Enabled = true;
+
+        sifraPredmetaErrorLabel.Text = string.Empty;
+        nazivPredmetaErrorLabel.Text = string.Empty;
+        katedraErrorLabel.Text = string.Empty;
+        semestarErrorLabel.Text = string.Empty;
     }
 
-    private void sacuvajToolStripButton_Click(object sender, EventArgs e)
+    private async void sacuvajToolStripButton_Click(object sender, EventArgs e)
     {
-        bool result = proveriUnos();
+        bool result = ProveriUnos();
 
         if (result == true)
         {
-            try
+            bool postojiSifra;
+
+            PredmetBasic predmet = new PredmetBasic
             {
-                ISession? session = DataLayer.GetSession();
-                if (session != null)
+                Id = this.Id,
+                Sifra = sifraPredmetaTextBox.Text,
+                Naziv = nazivPredmetaTextBox.Text,
+                Katedra = katedraComboBox.SelectedItem!.ToString()!,
+                Semestar = semestarComboBox.SelectedItem!.ToString()!.Trim()!
+            };
+
+            bool rez;
+            if (dodajButtonClicked == false)
+            {
+                PredmetBasic? predmetZaProveru = await DTOManager.VratiPredmetBasicAsync(Id);
+                if (predmetZaProveru!.Sifra != sifraPredmetaTextBox.Text)
                 {
-                    Predmet predmet = session.Query<Predmet>().FirstOrDefault(p => p.Sifra == sifraPredmetaTextBox.Text)!;
-                    if (predmet == null)
+                    rez = await DTOManager.PostojiSifra(sifraPredmetaTextBox.Text);
+                    if (rez == true)
                     {
-                        predmet = new Predmet
-                        {
-                            Sifra = sifraPredmetaTextBox.Text,
-                            Naziv = nazivPredmetaTextBox.Text.Trim(),
-                            Katedra = katedraComboBox.SelectedItem!.ToString()!,
-                            Semestar = semestarComboBox.SelectedItem!.ToString()!
-                        };
+                        successStatusLabel.ForeColor = Color.Red;
+                        successStatusLabel.Text = "Predmet sa ovom šifrom već postoji";
 
-                        session.Save(predmet);
-                        session.Flush();
-
-                        IList<PredmetBasic> predmeti = session.QueryOver<Predmet>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("Sifra"),
-                            Projections.Property("Naziv"),
-                            Projections.Property("Katedra"),
-                            Projections.Property("Semestar")
-                        ).List<object[]>()
-                        .Select(row => new PredmetBasic
-                        {
-                            Id = (int)row[0],
-                            Sifra = (string)row[1],
-                            Naziv = (string)row[2],
-                            Katedra = (string)row[3],
-                            Semestar = (string)row[4]
-                        }).ToList();
-
-                        predmetDataGridView.Rows.Clear();
-
-                        foreach (var p in predmeti)
-                        {
-                            predmetDataGridView.Rows.Add(new string[]
-                            { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
-                        }
-
-                        predmetDataGridView.Refresh();
-                        predmetDataGridView.ClearSelection();
-
-                        brojPredmetaLabel.Text = session.Query<Predmet>().Count().ToString();
-
-                        successStatusLabel.Text = "Predmet uspešno sačuvan";
-
+                        timer1.Enabled = true;
+                        timer1.Start();
+                        return;
                     }
-                    else
-                    {
-                        predmet.Sifra = sifraPredmetaTextBox.Text;
-                        predmet.Naziv = nazivPredmetaTextBox.Text.Trim();
-                        predmet.Katedra = katedraComboBox.SelectedItem!.ToString()!;
-                        predmet.Semestar = semestarComboBox.SelectedItem!.ToString()!;
+                }
 
-                        session.Save(predmet);
-                        session.Flush();
-
-                        IList<PredmetBasic> predmeti = session.QueryOver<Predmet>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("Sifra"),
-                            Projections.Property("Naziv"),
-                            Projections.Property("Katedra"),
-                            Projections.Property("Semestar")
-                        ).List<object[]>()
-                        .Select(row => new PredmetBasic
-                        {
-                            Id = (int)row[0],
-                            Sifra = (string)row[1],
-                            Naziv = (string)row[2],
-                            Katedra = (string)row[3],
-                            Semestar = (string)row[4]
-                        }).ToList();
-
-                        predmetDataGridView.Rows.Clear();
-
-                        foreach (var p in predmeti)
-                        {
-                            predmetDataGridView.Rows.Add(new string[]
-                            { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
-                        }
-
-                        predmetDataGridView.Refresh();
-                        predmetDataGridView.ClearSelection();
-
-                        successStatusLabel.Text = "Predmet uspešno ažuriran";
-
-                    }
-
-                    session.Close();
-
-                    timer1.Enabled = true;
-                    timer1.Start();
+                rez = await DTOManager.IzmeniPredmetAsync(predmet);
+                if (rez == true)
+                {
+                    successStatusLabel.ForeColor = Color.Lime;
+                    successStatusLabel.Text = "Predmet uspešno ažuriran";
                 }
                 else
                 {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Greška prilikom ažuriranja predmeta";
                 }
             }
-            catch (Exception ec)
+            else
             {
-                MessageBox.Show(ec.Message);
+                postojiSifra = await DTOManager.PostojiSifra(sifraPredmetaTextBox.Text);
+                if (postojiSifra == true)
+                {
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Predmet sa ovom šifrom već postoji";
+
+                    timer1.Enabled = true;
+                    timer1.Start();
+                    return;
+                }
+
+                rez = await DTOManager.DodajPredmetAsync(predmet);
+                if (rez == true)
+                {
+                    successStatusLabel.ForeColor = Color.Lime;
+                    successStatusLabel.Text = "Predmet uspešno dodat";
+                }
+                else
+                {
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Greška prilikom dodavanja predmeta";
+                }
             }
+
+            predmetDataGridView.Rows.Clear();
+
+            List<PredmetBasic>? predmeti = DTOManager.VratiPredmeteBasic();
+            if (predmeti != null)
+            {
+                foreach (var p in predmeti)
+                {
+                    predmetDataGridView.Rows.Add(new string[]
+                    { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
+                }
+
+                predmetDataGridView.Refresh();
+                predmetDataGridView.ClearSelection();
+
+                brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
+            }
+
+            timer1.Enabled = true;
+            timer1.Start();
         }
-        else
-            successStatusLabel.Text = string.Empty;
     }
 
     private void timer1_Tick(object sender, EventArgs e)
     {
-        successStatusLabel.Text = string.Empty;
+        successStatusLabel.ForeColor = Color.Black;
+        successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
         timer1.Stop();
         timer1.Enabled = false;
     }
 
-    private void obrisiToolStripButton_Click(object sender, EventArgs e)
+    private async void obrisiToolStripButton_Click(object sender, EventArgs e)
     {
-        try
+        bool rez = await DTOManager.ObrisiPredmetAsync(Id);
+        if (rez == true)
         {
-            ISession? session = DataLayer.GetSession();
-            if (session != null)
+            List<PredmetBasic>? predmeti = DTOManager.VratiPredmeteBasic();
+            if (predmeti != null)
             {
-                Predmet predmet = session.Load<Predmet>(Id);
-
-                session.Delete(predmet);
-                session.Flush();
-
-                IList<PredmetBasic> predmeti = session.QueryOver<Predmet>()
-                        .Select(
-                            Projections.Property("Id"),
-                            Projections.Property("Sifra"),
-                            Projections.Property("Naziv"),
-                            Projections.Property("Katedra"),
-                            Projections.Property("Semestar")
-                        ).List<object[]>()
-                        .Select(row => new PredmetBasic
-                        {
-                            Id = (int)row[0],
-                            Sifra = (string)row[1],
-                            Naziv = (string)row[2],
-                            Katedra = (string)row[3],
-                            Semestar = (string)row[4]
-                        }).ToList();
-
                 predmetDataGridView.Rows.Clear();
 
                 foreach (var p in predmeti)
@@ -457,23 +362,20 @@ public partial class PredmetiForma : Form
                 predmetDataGridView.Refresh();
                 predmetDataGridView.ClearSelection();
 
-                brojPredmetaLabel.Text = session.Query<Predmet>().Count().ToString();
+                brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
 
-                session.Close();
-
+                successStatusLabel.ForeColor = Color.Lime;
                 successStatusLabel.Text = "Predmet uspešno obrisan";
-                timer1.Enabled = true;
-                timer1.Start();
-            }
-            else
-            {
-                MessageBox.Show("Greška prilikom otvaranja konekcije");
             }
         }
-        catch (Exception ec)
+        else
         {
-            MessageBox.Show(ec.Message);
+            successStatusLabel.ForeColor = Color.Red;
+            successStatusLabel.Text = "Greška prilikom brisanja predmeta";
         }
+
+        timer1.Enabled = true;
+        timer1.Start();
     }
 
     private void pretagaToolStripButton_Click(object sender, EventArgs e)
@@ -521,7 +423,7 @@ public partial class PredmetiForma : Form
         }
     }
 
-    private void pretraziButton_Click(object sender, EventArgs e)
+    private async void pretraziButton_Click(object sender, EventArgs e)
     {
         try
         {
@@ -530,12 +432,12 @@ public partial class PredmetiForma : Form
             {
                 var query = session.Query<Predmet>().AsQueryable();
 
-                if (!string.IsNullOrEmpty(sifraPretraziTextBox.Text))
+                if (!string.IsNullOrWhiteSpace(sifraPretraziTextBox.Text))
                 {
                     query = query.Where(p => p.Sifra.Contains(sifraPretraziTextBox.Text));
                 }
 
-                if (!string.IsNullOrEmpty(nazivPretraziTextBox.Text))
+                if (!string.IsNullOrWhiteSpace(nazivPretraziTextBox.Text))
                 {
                     query = query.Where(p => p.Naziv.ToLower().Contains(nazivPretraziTextBox.Text.ToLower()));
                 }
@@ -550,16 +452,14 @@ public partial class PredmetiForma : Form
                     query = query.Where(p => p.Semestar.Trim() == semestarPretraziComboBox.SelectedItem.ToString());
                 }
 
-
-
-                IList<PredmetBasic> predmeti = query.Select(p => new PredmetBasic
+                IList<PredmetBasic> predmeti = await query.Select(p => new PredmetBasic
                 {
                     Id = p.Id,
                     Sifra = p.Sifra,
                     Naziv = p.Naziv,
                     Katedra = p.Katedra,
                     Semestar = p.Semestar
-                }).ToList();
+                }).ToListAsync();
 
                 predmetDataGridView.Rows.Clear();
 
@@ -571,6 +471,8 @@ public partial class PredmetiForma : Form
 
                 predmetDataGridView.Refresh();
                 predmetDataGridView.ClearSelection();
+
+                brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
 
                 session.Close();
             }

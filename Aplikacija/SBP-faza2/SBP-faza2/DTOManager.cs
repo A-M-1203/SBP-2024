@@ -1,5 +1,6 @@
 ﻿using NHibernate;
 using NHibernate.Linq;
+using Remotion.Linq.Clauses.ResultOperators;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 
@@ -8,7 +9,7 @@ namespace SBP_faza2;
 public class DTOManager
 {
     #region Student
-    public static async Task<Student?> vratiStudentAsync(long id)
+    public static async Task<Student?> VratiStudentAsync(long id)
     {
         Student? student = null;
 
@@ -58,7 +59,7 @@ public class DTOManager
         return false;
     }
 
-    public static async Task<StudentBasic?> vratiStudentBasicAsync(long id)
+    public static async Task<StudentBasic?> VratiStudentBasicAsync(long id)
     {
         StudentBasic? student = null;
 
@@ -92,7 +93,7 @@ public class DTOManager
         return student;
     }
 
-    public static List<StudentBasic>? vratiStudenteBasic()
+    public static List<StudentBasic>? VratiStudenteBasic()
     {
         List<StudentBasic>? studenti = null;
         try
@@ -130,7 +131,7 @@ public class DTOManager
         return studenti;
     }
 
-    public static List<string>? vratiImeRoditeljPrezimeStudenta()
+    public static List<string>? VratiImeRoditeljPrezimeStudenta()
     {
         List<string>? studentiImeRoditeljPrezime = null;
         try
@@ -159,7 +160,7 @@ public class DTOManager
         return studentiImeRoditeljPrezime;
     }
 
-    public static async Task<bool> izmeniStudentaAsync(StudentBasic student)
+    public static async Task<bool> IzmeniStudentaAsync(StudentBasic student)
     {
         try
         {
@@ -192,7 +193,7 @@ public class DTOManager
         return false;
     }
 
-    public static async Task<bool> dodajStudentaAsync(StudentBasic student)
+    public static async Task<bool> DodajStudentaAsync(StudentBasic student)
     {
         try
         {
@@ -226,7 +227,7 @@ public class DTOManager
         return false;
     }
 
-    public static async Task<bool> obrisiStudentaAsync(long id)
+    public static async Task<bool> ObrisiStudentaAsync(long id)
     {
         try
         {
@@ -268,6 +269,757 @@ public class DTOManager
         }
 
         return string.Join(' ', words);
+    }
+
+    #endregion
+
+    #region Predmet
+
+    public static async Task<Predmet?> VratiPredmetAsync(long id)
+    {
+        Predmet? predmet = null;
+
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                predmet = await session.LoadAsync<Predmet>(id);
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmet;
+    }
+
+    public static async Task<Predmet?> VratiPredmetAsync(string naziv, string sifra)
+    {
+        Predmet? predmet = null;
+
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                predmet = await session.Query<Predmet>().FirstAsync(p => p.Naziv == naziv && p.Sifra == sifra);
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmet;
+    }
+
+    public static async Task<List<string>?> VratiPredmetePoSemestruAsync(string semestar)
+    {
+        List<string>? predmeti = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                predmeti = await session.Query<Predmet>()
+                    .Where(p => p.Semestar.Trim() == semestar.Trim())
+                    .Select(p => p.Naziv + " " + "(" + p.Sifra + ")")
+                    .ToListAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmeti;
+    }
+
+    public static async Task<List<string>?> VratiPredmetePoTipuProjektaAsync(string tipProjekta)
+    {
+        List<string>? predmeti = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IList<Projekat> projekti = await session.Query<Projekat>().ToListAsync();
+                predmeti = new List<string>();
+                if (tipProjekta == "Teorijski")
+                {
+                    foreach (var p in projekti)
+                    {
+                        if (p.GetType() == typeof(TeorijskiProjekat))
+                        {
+                            if (predmeti.Contains(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")") == false)
+                            {
+                                predmeti.Add(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var p in projekti)
+                    {
+                        if (p.GetType() == typeof(PrakticniProjekat))
+                        {
+                            if (predmeti.Contains(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")") == false)
+                            {
+                                predmeti.Add(p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmeti;
+    }
+
+    public static async Task<bool> PostojiSifra(string sifra)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Predmet? predmet = await session.Query<Predmet>().FirstOrDefaultAsync(s => s.Sifra == sifra);
+                if (predmet != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<PredmetBasic?> VratiPredmetBasicAsync(long id)
+    {
+        PredmetBasic? predmet = null;
+
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Predmet p = await session.LoadAsync<Predmet>(id);
+                predmet = new PredmetBasic
+                {
+                    Id = p.Id,
+                    Sifra = p.Sifra,
+                    Naziv = p.Naziv,
+                    Katedra = p.Katedra,
+                    Semestar = p.Semestar
+                };
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja studenta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmet;
+    }
+
+    public static async Task<PredmetBasic?> VratiPredmetBasicAsync(string naziv, string sifra)
+    {
+        PredmetBasic? predmet = null;
+
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Predmet p = await session.Query<Predmet>().FirstAsync(p => p.Naziv == naziv && p.Sifra == sifra);
+                predmet = new PredmetBasic
+                {
+                    Id = p.Id,
+                    Sifra = p.Sifra,
+                    Naziv = p.Naziv,
+                    Katedra = p.Katedra,
+                    Semestar = p.Semestar
+                };
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmet;
+    }
+
+    public static List<PredmetBasic>? VratiPredmeteBasic()
+    {
+        List<PredmetBasic>? predmeti = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Predmet> p = session.Query<Predmet>();
+
+                predmeti = new List<PredmetBasic>();
+                foreach (var pred in p)
+                {
+                    predmeti.Add(new PredmetBasic
+                    {
+                        Id = pred.Id,
+                        Sifra = pred.Sifra,
+                        Naziv = pred.Naziv,
+                        Katedra = pred.Katedra,
+                        Semestar = pred.Semestar
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmeti;
+    }
+
+    public static async Task<List<string>?> VratiNazivSifruPredmeta()
+    {
+        List<string>? predmetiNazivSifra = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                predmetiNazivSifra = await session.Query<Predmet>()
+                    .Select(p => p.Naziv + " " + "(" + p.Sifra + ")").ToListAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmetiNazivSifra;
+    }
+
+    public static List<string>? VratiNazivSifruPredmeta(string semestar)
+    {
+        List<string>? predmetiNazivSifra = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Predmet> predmeti = session.Query<Predmet>()
+                    .Where(p => p.Semestar.Trim() == semestar.Trim());
+
+                predmetiNazivSifra = new List<string>();
+                foreach (var p in predmeti)
+                {
+                    predmetiNazivSifra
+                        .Add(p.Naziv + " " + "(" + p.Sifra + ")");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja predmeta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return predmetiNazivSifra;
+    }
+
+    public static async Task<bool> IzmeniPredmetAsync(PredmetBasic predmet)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Predmet p = session.Load<Predmet>(predmet.Id);
+
+                p.Sifra = predmet.Sifra;
+                p.Naziv = predmet.Naziv.Trim();
+                p.Katedra = predmet.Katedra;
+                p.Semestar = predmet.Semestar;
+
+                await session.SaveOrUpdateAsync(p);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja predmeta.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajPredmetAsync(PredmetBasic predmet)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Predmet p = new Predmet
+                {
+                    Sifra = predmet.Sifra,
+                    Naziv = predmet.Naziv.Trim(),
+                    Katedra = predmet.Katedra,
+                    Semestar = predmet.Semestar
+                };
+
+                await session.SaveAsync(p);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom čuvanja predmeta.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiPredmetAsync(long id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Predmet predmet = await session.LoadAsync<Predmet>(id);
+
+                await session.DeleteAsync(predmet);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja predmeta.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region Projekat
+
+    public static async Task<Projekat?> VratiProjekat(long id)
+    {
+        Projekat? projekat = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                projekat = await session.LoadAsync<Projekat>(id);
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return projekat;
+    }
+
+    public static async Task<ProjekatBasic?> VratiProjekatBasic(long id)
+    {
+        ProjekatBasic? projekat = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Projekat p = await session.LoadAsync<Projekat>(id);
+                if (p.GetType() == typeof(TeorijskiProjekat))
+                {
+                    projekat = new TeorijskiProjekatBasic
+                    {
+                        Id = p.Id,
+                        Naziv = p.Naziv,
+                        SkolskaGodina = p.SkolskaGodina,
+                        Grupni = p.Grupni,
+                        RokZaZavrsetak = p.RokZaZavrsetak,
+                        MaksimalanBrojStrana = p.MaksimalanBrojStrana,
+                        PreporuceniProgramskiJezik = p.PreporuceniProgramskiJezik,
+                        KratakOpis = p.KratakOpis,
+                        BrojIzvestaja = p.BrojIzvestaja,
+                        Predmet = (await DTOManager.VratiPredmetBasicAsync(p.Predmet.Id))!,
+                        Tip = "Teorijski",
+                        DatumPocetka = p.DatumPocetka,
+                        DatumZavrsetka = p.DatumZavrsetka
+                    };
+                }
+                else
+                {
+                    projekat = new PrakticniProjekatBasic
+                    {
+                        Id = p.Id,
+                        Naziv = p.Naziv,
+                        SkolskaGodina = p.SkolskaGodina,
+                        Grupni = p.Grupni,
+                        RokZaZavrsetak = p.RokZaZavrsetak,
+                        MaksimalanBrojStrana = p.MaksimalanBrojStrana,
+                        PreporuceniProgramskiJezik = p.PreporuceniProgramskiJezik,
+                        KratakOpis = p.KratakOpis,
+                        BrojIzvestaja = p.BrojIzvestaja,
+                        Predmet = (await DTOManager.VratiPredmetBasicAsync(p.Predmet.Id))!,
+                        Tip = "Praktični",
+                        DatumPocetka = p.DatumPocetka,
+                        DatumZavrsetka = p.DatumZavrsetka
+                    };
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return projekat;
+    }
+
+    public static List<ProjekatPregled>? VratiSveProjekte()
+    {
+        List<ProjekatPregled>? projekti = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Projekat> p = session.Query<Projekat>();
+
+                projekti = new List<ProjekatPregled>();
+                foreach (var proj in p)
+                {
+                    if (proj.GetType() == typeof(TeorijskiProjekat))
+                    {
+                        projekti.Add(new ProjekatPregled
+                        {
+                            Id = proj.Id,
+                            Naziv = proj.Naziv,
+                            SkolskaGodina = proj.SkolskaGodina,
+                            Grupni = proj.Grupni,
+                            RokZaZavrsetak = proj.RokZaZavrsetak,
+                            MaksimalanBrojStrana = proj.MaksimalanBrojStrana,
+                            PreporuceniProgramskiJezik = proj.PreporuceniProgramskiJezik,
+                            KratakOpis = proj.KratakOpis,
+                            BrojIzvestaja = proj.BrojIzvestaja,
+                            Tip = "Teorijski",
+                            Predmet = proj.Predmet.Naziv + " " + "(" + proj.Predmet.Sifra + ")",
+                            DatumPocetka = proj.DatumPocetka,
+                            DatumZavrsetka = proj.DatumZavrsetka
+                        });
+                    }
+                    else
+                    {
+                        projekti.Add(new ProjekatPregled
+                        {
+                            Id = proj.Id,
+                            Naziv = proj.Naziv,
+                            SkolskaGodina = proj.SkolskaGodina,
+                            Grupni = proj.Grupni,
+                            RokZaZavrsetak = proj.RokZaZavrsetak,
+                            MaksimalanBrojStrana = proj.MaksimalanBrojStrana,
+                            PreporuceniProgramskiJezik = proj.PreporuceniProgramskiJezik,
+                            KratakOpis = proj.KratakOpis,
+                            BrojIzvestaja = proj.BrojIzvestaja,
+                            Tip = "Praktični",
+                            Predmet = proj.Predmet.Naziv + " " + "(" + proj.Predmet.Sifra + ")",
+                            DatumPocetka = proj.DatumPocetka,
+                            DatumZavrsetka = proj.DatumZavrsetka
+                        });
+                    }
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekata iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return projekti;
+    }
+
+    public static async Task<bool> PostojiProjekatAsync(string naziv, string skolskaGodina, Type tip)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Projekat? projekat = await session.Query<Projekat>()
+                    .FirstOrDefaultAsync(p => p.Naziv.Trim() == naziv.Trim() && p.SkolskaGodina == skolskaGodina);
+         
+                if (projekat != null && projekat.GetType() == tip)
+                    return true;
+                else
+                    return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> IzmeniProjekatAsync(ProjekatBasic projekat)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Projekat p;
+                if (projekat.GetType() == typeof(PrakticniProjekatBasic))
+                {
+                    p = session.Load<Projekat>(projekat.Id);
+                    p.Naziv = projekat.Naziv;
+                    p.SkolskaGodina = projekat.SkolskaGodina;
+                    p.Grupni = projekat.Grupni;
+                    p.MaksimalanBrojStrana = projekat.MaksimalanBrojStrana;
+                    p.Predmet = (((p.Predmet.Naziv != projekat.Predmet.Naziv)
+                        || (p.Predmet.Sifra != projekat.Predmet.Sifra)) 
+                        ? await VratiPredmetAsync(projekat.Id) : p.Predmet)!;
+                }
+                else
+                {
+                    p = session.Load<Projekat>(projekat.Id);
+                    p.Naziv = projekat.Naziv;
+                    p.SkolskaGodina = projekat.SkolskaGodina;
+                    p.Grupni = projekat.Grupni;
+                    p.PreporuceniProgramskiJezik = projekat.PreporuceniProgramskiJezik;
+                    p.KratakOpis = projekat.KratakOpis;
+                    p.BrojIzvestaja = projekat.BrojIzvestaja;
+                    p.Predmet = (((p.Predmet.Naziv != projekat.Predmet.Naziv)
+                        || (p.Predmet.Sifra != projekat.Predmet.Sifra))
+                        ? await VratiPredmetAsync(projekat.Id) : p.Predmet)!;
+                }
+
+                await session.SaveOrUpdateAsync(p.Predmet);
+                await session.SaveOrUpdateAsync(p);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajProjekatAsync(ProjekatBasic projekat)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Predmet? predmet = await session.LoadAsync<Predmet>(projekat.Predmet.Id);
+                if (predmet != null) 
+                {
+                    Projekat p;
+                    if (projekat.GetType() == typeof(TeorijskiProjekatBasic))
+                    {
+                        p = new TeorijskiProjekat
+                        {
+                            Naziv = projekat.Naziv,
+                            SkolskaGodina = projekat.SkolskaGodina,
+                            Grupni = projekat.Grupni,
+                            RokZaZavrsetak = projekat.RokZaZavrsetak,
+                            MaksimalanBrojStrana = projekat.MaksimalanBrojStrana,
+                            Predmet = predmet,
+                            DatumPocetka = projekat.DatumPocetka,
+                            DatumZavrsetka = projekat.DatumZavrsetka
+                        };
+                    }
+                    else
+                    {
+                        p = new PrakticniProjekat
+                        {
+                            Naziv = projekat.Naziv,
+                            SkolskaGodina = projekat.SkolskaGodina,
+                            Grupni = projekat.Grupni,
+                            RokZaZavrsetak = projekat.RokZaZavrsetak,
+                            PreporuceniProgramskiJezik = projekat.PreporuceniProgramskiJezik,
+                            KratakOpis = projekat.KratakOpis,
+                            BrojIzvestaja = projekat.BrojIzvestaja,
+                            Predmet = predmet,
+                            DatumPocetka = projekat.DatumPocetka,
+                            DatumZavrsetka = projekat.DatumZavrsetka
+                        };
+                    }
+
+                    await session.SaveAsync(p.Predmet);
+                    await session.SaveAsync(p);
+                    await session.FlushAsync();
+                    session.Close();
+                    return true;
+                }
+
+                session.Close();
+                return false;
+            }
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Greška prilikom dodavanja projekta u bazu.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiProjekatAsync(long id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Projekat projekat = session.Load<Projekat>(id);
+
+                await session.DeleteAsync(projekat);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<List<string>?> VratiSkolskeGodine()
+    {
+        List<string>? skolskeGodine = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                skolskeGodine = await session.Query<Projekat>()
+                    .Select(p => p.SkolskaGodina.Trim()).Distinct().ToListAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja školskih godina iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return skolskeGodine;
     }
 
     #endregion

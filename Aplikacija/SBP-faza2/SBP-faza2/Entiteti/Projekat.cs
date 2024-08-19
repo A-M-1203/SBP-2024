@@ -2,19 +2,19 @@
 
 public abstract class Projekat
 {
-    public virtual int Id { get; protected set; }
+    public virtual long Id { get; protected set; }
     public virtual required string Naziv { get; set; }
     public virtual required string SkolskaGodina { get; set; }
     public virtual required string Grupni { get; set; }
     public virtual required DateTime RokZaZavrsetak { get; set; }
     public virtual required Predmet Predmet { get; set; }
     public virtual string Tip { get; set; } = null!;
-    public virtual int MaksimalanBrojStrana { get; set; }
+    public virtual int? MaksimalanBrojStrana { get; set; }
     public virtual required DateTime DatumPocetka { get; set; }
     public virtual DateTime? DatumZavrsetka { get; set; }
     public virtual string? PreporuceniProgramskiJezik { get; set; }
     public virtual string? KratakOpis { get; set; }
-    public virtual required int BrojIzvestaja { get; set; }
+    public virtual int? BrojIzvestaja { get; set; }
     public virtual IList<Izvestaj> Izvestaji { get; set; }
     public virtual IList<PreporuceneStranice> Stranice { get; set; }
     public virtual IList<Grupa> Grupe { get; set; }

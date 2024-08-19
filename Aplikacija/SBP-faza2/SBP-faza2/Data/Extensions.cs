@@ -89,7 +89,7 @@ public static class Extensions
         return obj.ToString();
     }
 
-    public static DateTime FromStringToDate(this object obj)
+    public static DateTime? FromStringToDate(this object obj)
     {
         if (obj is string str)
         {
@@ -102,6 +102,6 @@ public static class Extensions
             }
         }
 
-        return DateTime.Now;
+        return null;
     }
 }

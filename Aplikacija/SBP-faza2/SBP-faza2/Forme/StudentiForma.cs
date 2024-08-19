@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using NHibernate.Linq;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using System.Data;
@@ -96,7 +97,7 @@ public partial class StudentiForma : Form
 
     private void StudentiForma_Activated(object sender, EventArgs e)
     {
-        List<StudentBasic>? studenti = DTOManager.vratiStudenteBasic();
+        List<StudentBasic>? studenti = DTOManager.VratiStudenteBasic();
         if (studenti != null)
         {
             studentDataGridView.Rows.Clear();
@@ -174,7 +175,7 @@ public partial class StudentiForma : Form
         }
     }
 
-    private bool proveriUnos()
+    private bool ProveriUnos()
     {
         bool result = true;
 
@@ -221,7 +222,7 @@ public partial class StudentiForma : Form
         return result;
     }
 
-    private void izmeniStudentaToolStripButton_Click(object sender, EventArgs e)
+    private void izmeniToolStripButton_Click(object sender, EventArgs e)
     {
         dodajButtonClicked = false;
 
@@ -256,7 +257,7 @@ public partial class StudentiForma : Form
 
     private async void sacuvajToolStripButton_Click(object sender, EventArgs e)
     {
-        bool result = proveriUnos();
+        bool result = ProveriUnos();
 
         if (result == true)
         {
@@ -275,7 +276,7 @@ public partial class StudentiForma : Form
             bool rez;
             if (dodajButtonClicked == false)
             {
-                StudentBasic? studentZaProveru = await DTOManager.vratiStudentBasicAsync(Id);
+                StudentBasic? studentZaProveru = await DTOManager.VratiStudentBasicAsync(Id);
                 if (studentZaProveru!.BrojIndeksa != brojIndeksaTextBox.Text)
                 {
                     rez = await DTOManager.PostojiIndeks(brojIndeksaTextBox.Text);
@@ -290,7 +291,7 @@ public partial class StudentiForma : Form
                     }
                 }
 
-                rez = await DTOManager.izmeniStudentaAsync(student);
+                rez = await DTOManager.IzmeniStudentaAsync(student);
                 if (rez == true)
                 {
                     successStatusLabel.ForeColor = Color.Lime;
@@ -315,7 +316,7 @@ public partial class StudentiForma : Form
                     return;
                 }
 
-                rez = await DTOManager.dodajStudentaAsync(student);
+                rez = await DTOManager.DodajStudentaAsync(student);
                 if (rez == true)
                 {
                     successStatusLabel.ForeColor = Color.Lime;
@@ -330,7 +331,7 @@ public partial class StudentiForma : Form
 
             studentDataGridView.Rows.Clear();
 
-            List<StudentBasic>? studenti = DTOManager.vratiStudenteBasic();
+            List<StudentBasic>? studenti = DTOManager.VratiStudenteBasic();
             if (studenti != null)
             {
                 foreach (var s in studenti)
@@ -358,12 +359,12 @@ public partial class StudentiForma : Form
         timer1.Enabled = false;
     }
 
-    private async void obrisiStudentaToolStripButton_Click(object sender, EventArgs e)
+    private async void obrisiToolStripButton_Click(object sender, EventArgs e)
     {
-        bool rez = await DTOManager.obrisiStudentaAsync(Id);
+        bool rez = await DTOManager.ObrisiStudentaAsync(Id);
         if (rez == true)
         {
-            List<StudentBasic>? studenti = DTOManager.vratiStudenteBasic();
+            List<StudentBasic>? studenti = DTOManager.VratiStudenteBasic();
             if (studenti != null)
             {
                 studentDataGridView.Rows.Clear();
@@ -386,7 +387,7 @@ public partial class StudentiForma : Form
         else
         {
             successStatusLabel.ForeColor = Color.Red;
-            successStatusLabel.Text = "Greška prilikom brisanje studenta";
+            successStatusLabel.Text = "Greška prilikom brisanja studenta";
         }
 
         timer1.Enabled = true;
@@ -434,7 +435,7 @@ public partial class StudentiForma : Form
         pretragaPanel.Visible = false;
     }
 
-    private void pretraziButton_Click(object sender, EventArgs e)
+    private async void pretraziButton_Click(object sender, EventArgs e)
     {
         try
         {
@@ -443,22 +444,22 @@ public partial class StudentiForma : Form
             {
                 var query = session.Query<Student>().AsQueryable();
 
-                if (!string.IsNullOrEmpty(imePretraziTextBox.Text))
+                if (!string.IsNullOrWhiteSpace(imePretraziTextBox.Text))
                 {
                     query = query.Where(s => s.LicnoIme.ToLower().Contains(imePretraziTextBox.Text.Trim().ToLower()));
                 }
 
-                if (!string.IsNullOrEmpty(roditeljPretraziTextBox.Text))
+                if (!string.IsNullOrWhiteSpace(roditeljPretraziTextBox.Text))
                 {
                     query = query.Where(s => s.ImeRoditelja.ToLower().Contains(roditeljPretraziTextBox.Text.Trim().ToLower()));
                 }
 
-                if (!string.IsNullOrEmpty(prezimePretaziTextBox.Text))
+                if (!string.IsNullOrWhiteSpace(prezimePretaziTextBox.Text))
                 {
                     query = query.Where(s => s.Prezime.ToLower().Contains(prezimePretaziTextBox.Text.Trim().ToLower()));
                 }
 
-                if (!string.IsNullOrEmpty(indeksPretraziTextBox.Text))
+                if (!string.IsNullOrWhiteSpace(indeksPretraziTextBox.Text))
                 {
                     query = query.Where(s => s.BrojIndeksa.Contains(indeksPretraziTextBox.Text));
                 }
@@ -468,7 +469,7 @@ public partial class StudentiForma : Form
                     query = query.Where(s => s.Smer.Trim() == smerPretraziComboBox.SelectedItem.ToString());
                 }
 
-                IList<StudentBasic> studenti = query.Select(s => new StudentBasic
+                IList<StudentBasic> studenti = await query.Select(s => new StudentBasic
                 {
                     Id = s.Id,
                     LicnoIme = s.LicnoIme,
@@ -476,7 +477,7 @@ public partial class StudentiForma : Form
                     Prezime = s.Prezime,
                     BrojIndeksa = s.BrojIndeksa,
                     Smer = s.Smer
-                }).ToList();
+                }).ToListAsync();
 
                 studentDataGridView.Rows.Clear();
 

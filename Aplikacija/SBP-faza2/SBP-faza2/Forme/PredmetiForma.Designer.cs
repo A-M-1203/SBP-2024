@@ -31,9 +31,8 @@
             components = new System.ComponentModel.Container();
             predmetGroupBox = new GroupBox();
             brojPredmetaLabel = new Label();
-            ukupanBrojPredmetaLabel = new Label();
+            brojPrikazanihPredmetaLabel = new Label();
             successStatusLabel = new Label();
-            zvezdicaLabel = new Label();
             semestarErrorLabel = new Label();
             katedraErrorLabel = new Label();
             nazivPredmetaErrorLabel = new Label();
@@ -86,9 +85,8 @@
             // predmetGroupBox
             // 
             predmetGroupBox.Controls.Add(brojPredmetaLabel);
-            predmetGroupBox.Controls.Add(ukupanBrojPredmetaLabel);
+            predmetGroupBox.Controls.Add(brojPrikazanihPredmetaLabel);
             predmetGroupBox.Controls.Add(successStatusLabel);
-            predmetGroupBox.Controls.Add(zvezdicaLabel);
             predmetGroupBox.Controls.Add(semestarErrorLabel);
             predmetGroupBox.Controls.Add(katedraErrorLabel);
             predmetGroupBox.Controls.Add(nazivPredmetaErrorLabel);
@@ -111,37 +109,28 @@
             // brojPredmetaLabel
             // 
             brojPredmetaLabel.AutoSize = true;
-            brojPredmetaLabel.Location = new Point(285, 292);
+            brojPredmetaLabel.Location = new Point(407, 292);
             brojPredmetaLabel.Name = "brojPredmetaLabel";
             brojPredmetaLabel.Size = new Size(0, 24);
             brojPredmetaLabel.TabIndex = 15;
             // 
-            // ukupanBrojPredmetaLabel
+            // brojPrikazanihPredmetaLabel
             // 
-            ukupanBrojPredmetaLabel.AutoSize = true;
-            ukupanBrojPredmetaLabel.Location = new Point(20, 292);
-            ukupanBrojPredmetaLabel.Name = "ukupanBrojPredmetaLabel";
-            ukupanBrojPredmetaLabel.Size = new Size(209, 24);
-            ukupanBrojPredmetaLabel.TabIndex = 14;
-            ukupanBrojPredmetaLabel.Text = "Ukupan broj predmeta:";
+            brojPrikazanihPredmetaLabel.AutoSize = true;
+            brojPrikazanihPredmetaLabel.Location = new Point(20, 292);
+            brojPrikazanihPredmetaLabel.Name = "brojPrikazanihPredmetaLabel";
+            brojPrikazanihPredmetaLabel.Size = new Size(232, 24);
+            brojPrikazanihPredmetaLabel.TabIndex = 14;
+            brojPrikazanihPredmetaLabel.Text = "Broj prikazanih predmeta:";
             // 
             // successStatusLabel
             // 
-            successStatusLabel.ForeColor = Color.Lime;
-            successStatusLabel.Location = new Point(29, 358);
+            successStatusLabel.Location = new Point(29, 368);
             successStatusLabel.Name = "successStatusLabel";
             successStatusLabel.Size = new Size(423, 54);
-            successStatusLabel.TabIndex = 13;
+            successStatusLabel.TabIndex = 12;
+            successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
             successStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // zvezdicaLabel
-            // 
-            zvezdicaLabel.AutoSize = true;
-            zvezdicaLabel.Location = new Point(75, 438);
-            zvezdicaLabel.Name = "zvezdicaLabel";
-            zvezdicaLabel.Size = new Size(341, 24);
-            zvezdicaLabel.TabIndex = 12;
-            zvezdicaLabel.Text = "Polja označena zvezdicom su obavezna";
             // 
             // semestarErrorLabel
             // 
@@ -610,9 +599,8 @@
         private Label semestarErrorLabel;
         private ToolStripSeparator toolStripSeparator4;
         private ToolStripButton pretagaToolStripButton;
-        private Label zvezdicaLabel;
         private Label successStatusLabel;
-        private Label ukupanBrojPredmetaLabel;
+        private Label brojPrikazanihPredmetaLabel;
         private Label brojPredmetaLabel;
         private System.Windows.Forms.Timer timer1;
         private Panel pretragaPanel;

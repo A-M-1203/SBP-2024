@@ -98,24 +98,24 @@ public class PredmetNazivSifraSemestar
 #region Projekat
 public class ProjekatBasic
 {
-    public required int Id { get; set; }
+    public required long Id { get; set; }
     public required string Naziv { get; set; }
     public required string SkolskaGodina { get; set; }
     public required string Grupni { get; set; }
-    public required string RokZaZavrsetak { get; set; }
-    public string MaksimalanBrojStrana { get; set; } = "0";
-    public string PreporuceniProgramskiJezik { get; set; } = string.Empty;
-    public string KratakOpis { get; set; } = string.Empty;
-    public required string BrojIzvestaja { get; set; } = "0";
-    public required string NazivPredmeta { get; set; }
-    public required string TipProjekta { get; set; }
-    public required string DatumPocetka { get; set; }
-    public string DatumZavrsetka { get; set; } = string.Empty;
+    public required DateTime RokZaZavrsetak { get; set; }
+    public int? MaksimalanBrojStrana { get; set; }
+    public string? PreporuceniProgramskiJezik { get; set; }
+    public string? KratakOpis { get; set; }
+    public int? BrojIzvestaja { get; set; }
+    public required PredmetBasic Predmet { get; set; }
+    public required string Tip { get; set; }
+    public required DateTime DatumPocetka { get; set; }
+    public DateTime? DatumZavrsetka { get; set; }
 
     public ProjekatBasic(
-        int id, string nazivProjekta, string skolskaGodina, string grupni, string rokZaZavrsetak,
-        string maksimalanBrojStrana, string preporuceniProgramskiJezik, string kratakOpis, string brojIzvestaja,
-        string nazivPredmeta, string tipProjekta, string datumPocetka, string datumZavrsetka)
+        long id, string nazivProjekta, string skolskaGodina, string grupni, DateTime rokZaZavrsetak,
+        int? maksimalanBrojStrana, string? preporuceniProgramskiJezik, string? kratakOpis, int? brojIzvestaja,
+        string tipProjekta, DateTime datumPocetka, DateTime? datumZavrsetka)
     {
         Id = id;
         Naziv = nazivProjekta;
@@ -126,8 +126,7 @@ public class ProjekatBasic
         PreporuceniProgramskiJezik = preporuceniProgramskiJezik;
         KratakOpis = kratakOpis;
         BrojIzvestaja = brojIzvestaja;
-        NazivPredmeta = nazivPredmeta;
-        TipProjekta = tipProjekta;
+        Tip = tipProjekta;
         DatumPocetka = datumPocetka;
         DatumZavrsetka = datumZavrsetka;
     }
@@ -135,6 +134,101 @@ public class ProjekatBasic
     public ProjekatBasic()
     {
         
+    }
+}
+
+public class TeorijskiProjekatBasic : ProjekatBasic
+{
+    public TeorijskiProjekatBasic(
+        long id, string nazivProjekta, string skolskaGodina, string grupni, DateTime rokZaZavrsetak,
+        int maksimalanBrojStrana, string tipProjekta, DateTime datumPocetka, DateTime? datumZavrsetka) 
+        : base(id, nazivProjekta, skolskaGodina, grupni, rokZaZavrsetak, maksimalanBrojStrana, 
+                null, null, null, tipProjekta, datumPocetka, datumZavrsetka)
+    {
+        
+    }
+
+    public TeorijskiProjekatBasic()
+    {
+        
+    }
+}
+
+public class PrakticniProjekatBasic : ProjekatBasic
+{
+    public PrakticniProjekatBasic(
+        long id, string nazivProjekta, string skolskaGodina, string grupni, DateTime rokZaZavrsetak,
+        string preporuceniProgramskiJezik, string kratakOpis, int brojIzvestaja,
+        string tipProjekta, DateTime datumPocetka, DateTime? datumZavrsetka)
+        : base(id, nazivProjekta, skolskaGodina, grupni, rokZaZavrsetak, null, preporuceniProgramskiJezik, 
+            kratakOpis, brojIzvestaja, tipProjekta, datumPocetka, datumZavrsetka)
+    {
+        
+    }
+
+    public PrakticniProjekatBasic()
+    {
+        
+    }
+}
+
+public class ProjekatPregled
+{
+    public long Id { get; set; }
+    public required string Naziv { get; set; }
+    public required string SkolskaGodina { get; set; }
+    public required string Grupni { get; set; }
+    public required DateTime RokZaZavrsetak { get; set; }
+    public int? MaksimalanBrojStrana { get; set; }
+    public string? PreporuceniProgramskiJezik { get; set; }
+    public string? KratakOpis { get; set; }
+    public int? BrojIzvestaja { get; set; }
+    public required string Tip { get; set; }
+    public required string Predmet { get; set; }
+    public required DateTime DatumPocetka { get; set; }
+    public DateTime? DatumZavrsetka { get; set; }
+
+    public ProjekatPregled(long id, string naziv, string skolskaGodina, string grupni, DateTime rokZaZavrsetak,
+        int? maksimalanBrojStrana, string? preporuceniProgramskiJezik, string? kratakOpis, int? brojIzvestaja,
+        string tip, string predmet, DateTime datumPocetka, DateTime? datumZavrsetka)
+    {
+        Id = id;
+        Naziv = naziv;
+        SkolskaGodina = skolskaGodina;
+        Grupni = grupni;
+        RokZaZavrsetak = rokZaZavrsetak;
+        MaksimalanBrojStrana = maksimalanBrojStrana;
+        PreporuceniProgramskiJezik = preporuceniProgramskiJezik;
+        KratakOpis = kratakOpis;
+        BrojIzvestaja = brojIzvestaja;
+        Tip = tip;
+        Predmet = predmet;
+        DatumPocetka = datumPocetka;
+        DatumZavrsetka = datumZavrsetka;
+    }
+
+    public ProjekatPregled()
+    {
+        
+    }
+}
+
+public class TeorijskiProjekatPregled : ProjekatPregled
+{
+    public TeorijskiProjekatPregled(int id, string naziv, string skolskaGodina, string grupni, DateTime rokZaZavrsetak, 
+        int maksimalanBrojStrana, string tip, string predmet, DateTime datumPocetka, DateTime? datumZavrsetka) 
+        : base(id, naziv, skolskaGodina, grupni, rokZaZavrsetak, maksimalanBrojStrana, null, null, null, tip, predmet, datumPocetka, datumZavrsetka)
+    {
+    }
+}
+
+public class PrakticniProjekatPregled : ProjekatPregled
+{
+    public PrakticniProjekatPregled(int id, string naziv, string skolskaGodina, string grupni, DateTime rokZaZavrsetak,
+        string preporuceniProgramskiJezik, string kratakOpis, int brojIzvestaja, 
+        string tip, string predmet, DateTime datumPocetka, DateTime? datumZavrsetka) 
+        : base(id, naziv, skolskaGodina, grupni, rokZaZavrsetak, null, preporuceniProgramskiJezik, kratakOpis, brojIzvestaja, tip, predmet, datumPocetka, datumZavrsetka)
+    {
     }
 }
 

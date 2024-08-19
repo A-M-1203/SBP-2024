@@ -43,7 +43,7 @@
             pretragaToolStripButton = new ToolStripButton();
             studentGroupBox = new GroupBox();
             brojStudenataLabel = new Label();
-            ukupanBrojStudenataLabel = new Label();
+            brojPrikazanihStudenataLabel = new Label();
             successStatusLabel = new Label();
             smerErrorLabel = new Label();
             brojIndeksaErrorLabel = new Label();
@@ -127,7 +127,7 @@
             izmeniToolStripButton.Name = "izmeniToolStripButton";
             izmeniToolStripButton.Size = new Size(92, 40);
             izmeniToolStripButton.Text = "Izmeni";
-            izmeniToolStripButton.Click += izmeniStudentaToolStripButton_Click;
+            izmeniToolStripButton.Click += izmeniToolStripButton_Click;
             // 
             // toolStripSeparator2
             // 
@@ -143,7 +143,7 @@
             obrisiToolStripButton.Name = "obrisiToolStripButton";
             obrisiToolStripButton.Size = new Size(85, 40);
             obrisiToolStripButton.Text = "Obriši";
-            obrisiToolStripButton.Click += obrisiStudentaToolStripButton_Click;
+            obrisiToolStripButton.Click += obrisiToolStripButton_Click;
             // 
             // toolStripSeparator3
             // 
@@ -194,7 +194,7 @@
             // 
             studentGroupBox.BackColor = Color.DarkGray;
             studentGroupBox.Controls.Add(brojStudenataLabel);
-            studentGroupBox.Controls.Add(ukupanBrojStudenataLabel);
+            studentGroupBox.Controls.Add(brojPrikazanihStudenataLabel);
             studentGroupBox.Controls.Add(successStatusLabel);
             studentGroupBox.Controls.Add(smerErrorLabel);
             studentGroupBox.Controls.Add(brojIndeksaErrorLabel);
@@ -221,19 +221,19 @@
             // brojStudenataLabel
             // 
             brojStudenataLabel.AutoSize = true;
-            brojStudenataLabel.Location = new Point(302, 351);
+            brojStudenataLabel.Location = new Point(409, 351);
             brojStudenataLabel.Name = "brojStudenataLabel";
             brojStudenataLabel.Size = new Size(0, 24);
             brojStudenataLabel.TabIndex = 18;
             // 
-            // ukupanBrojStudenataLabel
+            // brojPrikazanihStudenataLabel
             // 
-            ukupanBrojStudenataLabel.AutoSize = true;
-            ukupanBrojStudenataLabel.Location = new Point(11, 351);
-            ukupanBrojStudenataLabel.Name = "ukupanBrojStudenataLabel";
-            ukupanBrojStudenataLabel.Size = new Size(212, 24);
-            ukupanBrojStudenataLabel.TabIndex = 17;
-            ukupanBrojStudenataLabel.Text = "Ukupan broj studenata:";
+            brojPrikazanihStudenataLabel.AutoSize = true;
+            brojPrikazanihStudenataLabel.Location = new Point(11, 351);
+            brojPrikazanihStudenataLabel.Name = "brojPrikazanihStudenataLabel";
+            brojPrikazanihStudenataLabel.Size = new Size(235, 24);
+            brojPrikazanihStudenataLabel.TabIndex = 17;
+            brojPrikazanihStudenataLabel.Text = "Broj prikazanih studenata:";
             // 
             // successStatusLabel
             // 
@@ -667,7 +667,7 @@
         private Label successStatusLabel;
         private System.Windows.Forms.Timer timer1;
         private Label brojStudenataLabel;
-        private Label ukupanBrojStudenataLabel;
+        private Label brojPrikazanihStudenataLabel;
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripButton pretragaToolStripButton;
         private Panel pretragaPanel;

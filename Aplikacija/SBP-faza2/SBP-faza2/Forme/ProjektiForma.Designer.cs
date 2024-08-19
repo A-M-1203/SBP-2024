@@ -101,6 +101,7 @@
             grupniLabel = new Label();
             skolskaGodinaLabel = new Label();
             nazivProjektaLabel = new Label();
+            datumZavrsetkaCheckBox = new CheckBox();
             projekatToolStrip = new ToolStrip();
             dodajToolStripButton = new ToolStripButton();
             toolStripButton2 = new ToolStripSeparator();
@@ -180,6 +181,7 @@
             projekatGroupBox.Controls.Add(grupniLabel);
             projekatGroupBox.Controls.Add(skolskaGodinaLabel);
             projekatGroupBox.Controls.Add(nazivProjektaLabel);
+            projekatGroupBox.Controls.Add(datumZavrsetkaCheckBox);
             projekatGroupBox.Location = new Point(12, 46);
             projekatGroupBox.Name = "projekatGroupBox";
             projekatGroupBox.Size = new Size(1042, 482);
@@ -221,7 +223,7 @@
             pretragaPanel.Controls.Add(rokZaZavrsetakPretragaLabel);
             pretragaPanel.Controls.Add(skolskaGodinaPretagaLabel);
             pretragaPanel.Controls.Add(nazivPretragaLabel);
-            pretragaPanel.Location = new Point(171, 0);
+            pretragaPanel.Location = new Point(249, 334);
             pretragaPanel.Name = "pretragaPanel";
             pretragaPanel.Size = new Size(881, 386);
             pretragaPanel.TabIndex = 40;
@@ -370,7 +372,6 @@
             tipPretraziComboBox.Size = new Size(165, 32);
             tipPretraziComboBox.TabIndex = 20;
             tipPretraziComboBox.SelectedIndexChanged += tipPretraziComboBox_SelectedIndexChanged;
-            tipPretraziComboBox.SelectionChangeCommitted += tipPretraziComboBox_SelectionChangeCommitted;
             // 
             // predmetPretraziComboBox
             // 
@@ -593,7 +594,7 @@
             // 
             datumZavrsetkaDateTimePicker.Enabled = false;
             datumZavrsetkaDateTimePicker.Format = DateTimePickerFormat.Short;
-            datumZavrsetkaDateTimePicker.Location = new Point(695, 267);
+            datumZavrsetkaDateTimePicker.Location = new Point(883, 267);
             datumZavrsetkaDateTimePicker.Name = "datumZavrsetkaDateTimePicker";
             datumZavrsetkaDateTimePicker.Size = new Size(153, 32);
             datumZavrsetkaDateTimePicker.TabIndex = 32;
@@ -610,7 +611,7 @@
             // 
             datumPocetkaDateTimePicker.Enabled = false;
             datumPocetkaDateTimePicker.Format = DateTimePickerFormat.Short;
-            datumPocetkaDateTimePicker.Location = new Point(695, 208);
+            datumPocetkaDateTimePicker.Location = new Point(883, 208);
             datumPocetkaDateTimePicker.Name = "datumPocetkaDateTimePicker";
             datumPocetkaDateTimePicker.Size = new Size(153, 32);
             datumPocetkaDateTimePicker.TabIndex = 30;
@@ -655,7 +656,6 @@
             // predmetComboBox
             // 
             predmetComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            predmetComboBox.Enabled = false;
             predmetComboBox.FormattingEnabled = true;
             predmetComboBox.Location = new Point(695, 83);
             predmetComboBox.Name = "predmetComboBox";
@@ -692,7 +692,7 @@
             // maksimalanBrojStranaNumericUpDown
             // 
             maksimalanBrojStranaNumericUpDown.Enabled = false;
-            maksimalanBrojStranaNumericUpDown.Location = new Point(695, 144);
+            maksimalanBrojStranaNumericUpDown.Location = new Point(944, 144);
             maksimalanBrojStranaNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
             maksimalanBrojStranaNumericUpDown.Name = "maksimalanBrojStranaNumericUpDown";
             maksimalanBrojStranaNumericUpDown.Size = new Size(92, 32);
@@ -875,6 +875,16 @@
             nazivProjektaLabel.Size = new Size(146, 24);
             nazivProjektaLabel.TabIndex = 0;
             nazivProjektaLabel.Text = "Naziv projekta*";
+            // 
+            // datumZavrsetkaCheckBox
+            // 
+            datumZavrsetkaCheckBox.AutoSize = true;
+            datumZavrsetkaCheckBox.Location = new Point(671, 278);
+            datumZavrsetkaCheckBox.Name = "datumZavrsetkaCheckBox";
+            datumZavrsetkaCheckBox.Size = new Size(18, 17);
+            datumZavrsetkaCheckBox.TabIndex = 41;
+            datumZavrsetkaCheckBox.UseVisualStyleBackColor = true;
+            datumZavrsetkaCheckBox.CheckedChanged += datumZavrsetkaCheckBox_CheckedChanged;
             // 
             // projekatToolStrip
             // 
@@ -1250,5 +1260,6 @@
         private CheckBox pocetakCheckBox;
         private CheckBox izvestajiCheckBox;
         private CheckBox maksStrCheckBox;
+        private CheckBox datumZavrsetkaCheckBox;
     }
 }
