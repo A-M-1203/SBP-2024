@@ -1,6 +1,5 @@
 ﻿using NHibernate;
 using NHibernate.Linq;
-using Remotion.Linq.Clauses.ResultOperators;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 
@@ -864,16 +863,19 @@ public class DTOManager
             if (session != null)
             {
                 Projekat p;
-                if (projekat.GetType() == typeof(PrakticniProjekatBasic))
+                if (projekat.GetType() == typeof(TeorijskiProjekatBasic))
                 {
                     p = session.Load<Projekat>(projekat.Id);
                     p.Naziv = projekat.Naziv;
                     p.SkolskaGodina = projekat.SkolskaGodina;
                     p.Grupni = projekat.Grupni;
+                    p.RokZaZavrsetak = projekat.RokZaZavrsetak;
                     p.MaksimalanBrojStrana = projekat.MaksimalanBrojStrana;
                     p.Predmet = (((p.Predmet.Naziv != projekat.Predmet.Naziv)
                         || (p.Predmet.Sifra != projekat.Predmet.Sifra)) 
                         ? await VratiPredmetAsync(projekat.Id) : p.Predmet)!;
+                    p.DatumPocetka = projekat.DatumPocetka;
+                    p.DatumZavrsetka = projekat.DatumZavrsetka;
                 }
                 else
                 {
@@ -881,15 +883,18 @@ public class DTOManager
                     p.Naziv = projekat.Naziv;
                     p.SkolskaGodina = projekat.SkolskaGodina;
                     p.Grupni = projekat.Grupni;
+                    p.RokZaZavrsetak = projekat.RokZaZavrsetak;
                     p.PreporuceniProgramskiJezik = projekat.PreporuceniProgramskiJezik;
                     p.KratakOpis = projekat.KratakOpis;
                     p.BrojIzvestaja = projekat.BrojIzvestaja;
                     p.Predmet = (((p.Predmet.Naziv != projekat.Predmet.Naziv)
                         || (p.Predmet.Sifra != projekat.Predmet.Sifra))
                         ? await VratiPredmetAsync(projekat.Id) : p.Predmet)!;
+                    p.DatumPocetka = projekat.DatumPocetka;
+                    p.DatumZavrsetka = projekat.DatumZavrsetka;
                 }
 
-                await session.SaveOrUpdateAsync(p.Predmet);
+                //await session.SaveOrUpdateAsync(p.Predmet);
                 await session.SaveOrUpdateAsync(p);
                 await session.FlushAsync();
                 session.Close();
@@ -950,7 +955,7 @@ public class DTOManager
                         };
                     }
 
-                    await session.SaveAsync(p.Predmet);
+                    //await session.SaveAsync(p.Predmet);
                     await session.SaveAsync(p);
                     await session.FlushAsync();
                     session.Close();

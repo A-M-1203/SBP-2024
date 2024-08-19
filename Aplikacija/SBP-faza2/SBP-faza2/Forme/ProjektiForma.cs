@@ -18,6 +18,7 @@ public partial class ProjektiForma : Form
     {
         dodajButtonClicked = true;
 
+        successStatusLabel.ForeColor = Color.Black;
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće sačuvan novi projekat";
 
         dodajToolStripButton.Enabled = false;
@@ -29,14 +30,9 @@ public partial class ProjektiForma : Form
         skolskaGodinaTextBox.Enabled = true;
         grupniComboBox.Enabled = true;
         rokZaZavrsetakDateTimePicker.Enabled = true;
-        maksimalanBrojStranaNumericUpDown.Enabled = true;
-        preporuceniProgramskiJezikComboBox.Enabled = true;
-        brojIzvestajaNumericUpDown.Enabled = true;
-        semestarComboBox.Enabled = true;
-        predmetComboBox.Enabled = true;
         tipProjektaComboBox.Enabled = true;
+        predmetComboBox.Enabled = true;
         datumPocetkaDateTimePicker.Enabled = true;
-        kratakOpisTextBox.Enabled = true;
 
         nazivProjektaErrorLabel.Text = string.Empty;
         skolskaGodinaErrorLabel.Text = string.Empty;
@@ -73,7 +69,6 @@ public partial class ProjektiForma : Form
         maksimalanBrojStranaNumericUpDown.Enabled = false;
         preporuceniProgramskiJezikComboBox.Enabled = false;
         brojIzvestajaNumericUpDown.Enabled = false;
-        semestarComboBox.Enabled = false;
         predmetComboBox.Enabled = false;
         tipProjektaComboBox.Enabled = false;
         datumPocetkaDateTimePicker.Enabled = false;
@@ -88,11 +83,10 @@ public partial class ProjektiForma : Form
         preporuceniProgramskiJezikComboBox.SelectedIndex = -1;
         preporuceniProgramskiJezikComboBox.SelectedText = string.Empty;
         brojIzvestajaNumericUpDown.Value = 0;
-        semestarComboBox.SelectedIndex = -1;
         predmetComboBox.SelectedIndex = -1;
         tipProjektaComboBox.SelectedIndex = -1;
         datumPocetkaDateTimePicker.Value = DateTime.Now.AddDays(1);
-        datumZavrsetkaDateTimePicker.Value = DateTime.Now;
+        datumZavrsetkaDateTimePicker.Value = rokZaZavrsetakDateTimePicker.Value;
         kratakOpisTextBox.Text = string.Empty;
 
         nazivProjektaErrorLabel.Text = string.Empty;
@@ -157,7 +151,7 @@ public partial class ProjektiForma : Form
                     p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
                     p.MaksimalanBrojStrana?.ToString() ?? string.Empty, p?.PreporuceniProgramskiJezik ?? string.Empty,
                     p.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
-                    p.DatumZavrsetka.ToString() ?? string.Empty
+                    p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
                 });
             }
 
@@ -188,6 +182,7 @@ public partial class ProjektiForma : Form
         if (e.RowIndex >= 0)
         {
             dodajButtonClicked = false;
+            successStatusLabel.ForeColor = Color.Black;
             successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći projekat";
 
             DataGridViewRow row = projekatDataGridView.Rows[e.RowIndex];
@@ -199,12 +194,12 @@ public partial class ProjektiForma : Form
             var zavrsetak = row.Cells["rokZaZavrsetakColumn"].Value?.ToString();
             if (DateTime.TryParse(zavrsetak, out var parsedZavrsetak))
             {
-                datumZavrsetkaDateTimePicker.Value = parsedZavrsetak;
-                datumZavrsetkaDateTimePicker.Enabled = true;
+                rokZaZavrsetakDateTimePicker.Value = parsedZavrsetak;
+                rokZaZavrsetakDateTimePicker.Enabled = true;
             }
             else
             {
-                datumZavrsetkaDateTimePicker.Enabled = false;
+                rokZaZavrsetakDateTimePicker.Enabled = false;
             }
 
             var brojStr = row.Cells["maksimalanBrojStranaColumn"].Value?.ToString();
@@ -240,7 +235,7 @@ public partial class ProjektiForma : Form
                 datumPocetkaDateTimePicker.Enabled = false;
             }
 
-            var kraj = row.Cells["datumPocetkaColumn"].Value?.ToString();
+            var kraj = row.Cells["datumZavrsetkaColumn"].Value?.ToString();
             if (DateTime.TryParse(kraj, out var parsedKraj))
             {
                 datumZavrsetkaDateTimePicker.Value = parsedKraj;
@@ -257,9 +252,8 @@ public partial class ProjektiForma : Form
             skolskaGodinaTextBox.Enabled = true;
             grupniComboBox.Enabled = true;
             rokZaZavrsetakDateTimePicker.Enabled = true;
-            semestarComboBox.Enabled = true;
             predmetComboBox.Enabled = true;
-            tipProjektaComboBox.Enabled = true;
+            tipProjektaComboBox.Enabled = false;
             datumPocetkaDateTimePicker.Enabled = true;
 
             dodajToolStripButton.Enabled = false;
@@ -281,35 +275,18 @@ public partial class ProjektiForma : Form
         }
     }
 
-    private string ObrisiSifruPredmeta(string input)
-    {
-        int startIndex = input.IndexOf('(');
-        int endIndex = input.IndexOf(')');
+    //private string ObrisiSifruPredmeta(string input)
+    //{
+    //    int startIndex = input.IndexOf('(');
+    //    int endIndex = input.IndexOf(')');
 
-        if (startIndex != -1 && endIndex != -1 && endIndex > startIndex)
-        {
-            input = input.Remove(startIndex, (endIndex - startIndex) + 1).Trim();
-        }
+    //    if (startIndex != -1 && endIndex != -1 && endIndex > startIndex)
+    //    {
+    //        input = input.Remove(startIndex, (endIndex - startIndex) + 1).Trim();
+    //    }
 
-        return input;
-    }
-
-    private void semestarComboBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (semestarComboBox.SelectedIndex != -1)
-        {
-            semestarComboBox.Items.Clear();
-
-            List<string>? predmetiNazivSifra = DTOManager.VratiNazivSifruPredmeta(semestarComboBox.SelectedItem!.ToString()!);
-            if (predmetiNazivSifra != null)
-            {
-                foreach (var p in predmetiNazivSifra)
-                {
-                    semestarComboBox.Items.Add(p);
-                }
-            }
-        }
-    }
+    //    return input;
+    //}
 
     private bool ProveriUnos()
     {
@@ -376,7 +353,7 @@ public partial class ProjektiForma : Form
         }
         else maksimalanBrojStranaErrorLabel.Text = string.Empty;
 
-        if (datumPocetkaDateTimePicker.Value < DateTime.Now)
+        if (datumPocetkaDateTimePicker.Value < DateTime.Now && dodajButtonClicked == true)
         {
             result = false;
             datumPocetkaErrorLabel.Text = "Datum početka ne može da bude pre danas";
@@ -395,6 +372,7 @@ public partial class ProjektiForma : Form
     private void izmeniToolStripButton_Click(object sender, EventArgs e)
     {
         dodajButtonClicked = false;
+        successStatusLabel.ForeColor = Color.Black;
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći projekat";
         DataGridViewRow row = projekatDataGridView.SelectedRows[0];
 
@@ -405,12 +383,12 @@ public partial class ProjektiForma : Form
         var zavrsetak = row.Cells["rokZaZavrsetakColumn"].Value?.ToString();
         if (DateTime.TryParse(zavrsetak, out var parsedZavrsetak))
         {
-            datumZavrsetkaDateTimePicker.Value = parsedZavrsetak;
-            datumZavrsetkaDateTimePicker.Enabled = true;
+            rokZaZavrsetakDateTimePicker.Value = parsedZavrsetak;
+            rokZaZavrsetakDateTimePicker.Enabled = true;
         }
         else
         {
-            datumZavrsetkaDateTimePicker.Enabled = false;
+            rokZaZavrsetakDateTimePicker.Enabled = false;
         }
 
         var brojStr = row.Cells["maksimalanBrojStranaColumn"].Value?.ToString();
@@ -446,7 +424,7 @@ public partial class ProjektiForma : Form
             datumPocetkaDateTimePicker.Enabled = false;
         }
 
-        var kraj = row.Cells["datumPocetkaColumn"].Value?.ToString();
+        var kraj = row.Cells["datumZavrsetkaColumn"].Value?.ToString();
         if (DateTime.TryParse(kraj, out var parsedKraj))
         {
             datumZavrsetkaDateTimePicker.Value = parsedKraj;
@@ -463,9 +441,8 @@ public partial class ProjektiForma : Form
         skolskaGodinaTextBox.Enabled = true;
         grupniComboBox.Enabled = true;
         rokZaZavrsetakDateTimePicker.Enabled = true;
-        semestarComboBox.Enabled = true;
         predmetComboBox.Enabled = true;
-        tipProjektaComboBox.Enabled = true;
+        tipProjektaComboBox.Enabled = false;
         datumPocetkaDateTimePicker.Enabled = true;
 
         dodajToolStripButton.Enabled = false;
@@ -520,7 +497,7 @@ public partial class ProjektiForma : Form
                         Predmet = predmetBasic!,
                         Tip = "Teorijski",
                         DatumPocetka = datumPocetkaDateTimePicker.Value,
-                        DatumZavrsetka = datumZavrsetkaCheckBox.Checked == true ? datumZavrsetkaDateTimePicker.Value : null
+                        DatumZavrsetka = datumZavrsetkaDateTimePicker.Enabled == true ? datumZavrsetkaDateTimePicker.Value : null
                     };
                 }
                 else
@@ -539,9 +516,14 @@ public partial class ProjektiForma : Form
                         Predmet = predmetBasic!,
                         Tip = "Praktični",
                         DatumPocetka = datumPocetkaDateTimePicker.Value,
-                        DatumZavrsetka = datumZavrsetkaCheckBox.Checked == true ? datumZavrsetkaDateTimePicker.Value : null
+                        //DatumZavrsetka = datumZavrsetkaDateTimePicker.Enabled == true ? datumZavrsetkaDateTimePicker.Value : null
                     };
                 }
+
+                if (datumZavrsetkaDateTimePicker.Enabled == true)
+                    projekat.DatumZavrsetka = datumZavrsetkaDateTimePicker.Value;
+                else
+                    projekat.DatumZavrsetka = null;
 
                 bool rez;
                 if (dodajButtonClicked == false)
@@ -568,7 +550,7 @@ public partial class ProjektiForma : Form
                     if (postojiProjekat == true)
                     {
                         successStatusLabel.ForeColor = Color.Red;
-                        successStatusLabel.Text = "Projekat sa ovim nazivom i ovom školskom godinom već postoji na nekom predmetu";
+                        successStatusLabel.Text = "Projekat sa ovim nazivom i ovom školskom godinom već postoji";
 
                         timer1.Enabled = true;
                         timer1.Start();
@@ -596,10 +578,10 @@ public partial class ProjektiForma : Form
                         {
                             projekatDataGridView.Rows.Add(new string[]
                             {
-                            p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
-                            p.MaksimalanBrojStrana?.ToString() ?? string.Empty, p?.PreporuceniProgramskiJezik ?? string.Empty,
-                            p.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
-                            p.DatumZavrsetka.ToString() ?? string.Empty
+                                p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
+                                p.MaksimalanBrojStrana?.ToString() ?? string.Empty, p?.PreporuceniProgramskiJezik ?? string.Empty,
+                                p?.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
+                                p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
                             });
                         }
 
@@ -628,7 +610,7 @@ public partial class ProjektiForma : Form
     {
         rokZaZavrsetakDateTimePicker.Value = DateTime.Now.AddMonths(1).AddDays(2);
         datumPocetkaDateTimePicker.Value = DateTime.Now.AddDays(1);
-        datumZavrsetkaDateTimePicker.Value = DateTime.Now;
+        datumZavrsetkaDateTimePicker.Value = rokZaZavrsetakDateTimePicker.Value;
     }
 
     private async void obrisiToolStripButton_Click(object sender, EventArgs e)
@@ -648,7 +630,7 @@ public partial class ProjektiForma : Form
                         p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
                         p.MaksimalanBrojStrana?.ToString() ?? string.Empty, p?.PreporuceniProgramskiJezik ?? string.Empty,
                         p.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
-                        p.DatumZavrsetka.ToString() ?? string.Empty
+                        p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
                     });
                 }
 
@@ -659,6 +641,51 @@ public partial class ProjektiForma : Form
 
                 successStatusLabel.ForeColor = Color.Lime;
                 successStatusLabel.Text = "Projekat uspešno obrisan";
+
+                projekatDataGridView.ClearSelection();
+
+                odustaniToolStripButton.Enabled = false;
+                sacuvajToolStripButton.Enabled = false;
+                
+                dodajToolStripButton.Enabled = true;
+
+                nazivProjektaTextBox.Enabled = false;
+                skolskaGodinaTextBox.Enabled = false;
+                grupniComboBox.Enabled = false;
+                rokZaZavrsetakDateTimePicker.Enabled = false;
+                maksimalanBrojStranaNumericUpDown.Enabled = false;
+                preporuceniProgramskiJezikComboBox.Enabled = false;
+                brojIzvestajaNumericUpDown.Enabled = false;
+                predmetComboBox.Enabled = false;
+                tipProjektaComboBox.Enabled = false;
+                datumPocetkaDateTimePicker.Enabled = false;
+                datumZavrsetkaCheckBox.Checked = false;
+                kratakOpisTextBox.Enabled = false;
+
+                nazivProjektaTextBox.Text = string.Empty;
+                skolskaGodinaTextBox.Text = string.Empty;
+                grupniComboBox.SelectedIndex = -1;
+                rokZaZavrsetakDateTimePicker.Value = DateTime.Now.AddMonths(1).AddDays(2);
+                maksimalanBrojStranaNumericUpDown.Value = 0;
+                preporuceniProgramskiJezikComboBox.SelectedIndex = -1;
+                preporuceniProgramskiJezikComboBox.SelectedText = string.Empty;
+                brojIzvestajaNumericUpDown.Value = 0;
+                predmetComboBox.SelectedIndex = -1;
+                tipProjektaComboBox.SelectedIndex = -1;
+                datumPocetkaDateTimePicker.Value = DateTime.Now.AddDays(1);
+                datumZavrsetkaDateTimePicker.Value = DateTime.Now;
+                kratakOpisTextBox.Text = string.Empty;
+
+                nazivProjektaErrorLabel.Text = string.Empty;
+                skolskaGodinaErrorLabel.Text = string.Empty;
+                grupniErrorLabel.Text = string.Empty;
+                rokZaZavrsetakErrorLabel.Text = string.Empty;
+                tipProjektaErrorLabel.Text = string.Empty;
+                brojIzvestajaErrorLabel.Text = string.Empty;
+                predmetErrorLabel.Text = string.Empty;
+                maksimalanBrojStranaErrorLabel.Text = string.Empty;
+                datumPocetkaErrorLabel.Text = string.Empty;
+                datumZavrsetkaErrorLabel.Text = string.Empty;
             }
         }
         else
@@ -832,7 +859,7 @@ public partial class ProjektiForma : Form
                         {
                             p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p ?.MaksimalanBrojStrana.ToString() ?? string.Empty,
                             p?.PreporuceniProgramskiJezik ?? string.Empty, p?.BrojIzvestaja.ToString() ?? string.Empty, p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Teorijski", p.DatumPocetka.ToString(),
-                            p?.DatumZavrsetka.ToString() ?? string.Empty, p ?.KratakOpis ?? string.Empty
+                            p?.DatumZavrsetka.ToString() ?? string.Empty, p?.KratakOpis ?? string.Empty
                         });
                     }
                     else
@@ -841,7 +868,7 @@ public partial class ProjektiForma : Form
                         {
                             p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p ?.MaksimalanBrojStrana.ToString() ?? string.Empty,
                             p?.PreporuceniProgramskiJezik ?? string.Empty, p?.BrojIzvestaja.ToString() ?? string.Empty, p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Praktični", p.DatumPocetka.ToString(),
-                            p?.DatumZavrsetka.ToString() ?? string.Empty, p ?.KratakOpis ?? string.Empty
+                            p?.DatumZavrsetka.ToString() ?? string.Empty, p?.KratakOpis ?? string.Empty
                         });
                     }
                 }
@@ -954,7 +981,7 @@ public partial class ProjektiForma : Form
     {
         if (tipProjektaComboBox.SelectedIndex != -1)
         {
-            if (tipProjektaComboBox.SelectedItem.ToString() == "Teorijski")
+            if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
             {
                 maksimalanBrojStranaNumericUpDown.Enabled = true;
 
@@ -977,7 +1004,7 @@ public partial class ProjektiForma : Form
     {
         if (tipProjektaComboBox.SelectedIndex != -1)
         {
-            if (tipProjektaComboBox.SelectedItem.ToString() == "Teorijski")
+            if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
             {
                 maksimalanBrojStranaNumericUpDown.Enabled = true;
 
