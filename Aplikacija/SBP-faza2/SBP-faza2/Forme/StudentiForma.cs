@@ -291,7 +291,7 @@ public partial class StudentiForma : Form
                     }
                 }
 
-                rez = await DTOManager.IzmeniStudentaAsync(student);
+                rez = await DTOManager.IzmeniStudentAsync(student);
                 if (rez == true)
                 {
                     successStatusLabel.ForeColor = Color.Lime;
@@ -316,7 +316,7 @@ public partial class StudentiForma : Form
                     return;
                 }
 
-                rez = await DTOManager.DodajStudentaAsync(student);
+                rez = await DTOManager.DodajStudentAsync(student);
                 if (rez == true)
                 {
                     successStatusLabel.ForeColor = Color.Lime;
@@ -361,7 +361,7 @@ public partial class StudentiForma : Form
 
     private async void obrisiToolStripButton_Click(object sender, EventArgs e)
     {
-        bool rez = await DTOManager.ObrisiStudentaAsync(Id);
+        bool rez = await DTOManager.ObrisiStudentAsync(Id);
         if (rez == true)
         {
             List<StudentBasic>? studenti = DTOManager.VratiStudenteBasic();

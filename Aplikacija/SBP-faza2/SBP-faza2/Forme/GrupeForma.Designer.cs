@@ -264,7 +264,7 @@
             tipProjektaComboBox.Size = new Size(161, 32);
             tipProjektaComboBox.TabIndex = 4;
             tipProjektaComboBox.SelectedIndexChanged += tipProjektaComboBox_SelectedIndexChanged;
-            tipProjektaComboBox.SelectionChangeCommitted += tipProjektaComboBox_SelectionChangeCommitted;
+            tipProjektaComboBox.SelectedValueChanged += tipProjektaComboBox_SelectedValueChanged;
             // 
             // tipProjektaLabel
             // 
@@ -361,7 +361,7 @@
             pretragaPanel.Controls.Add(projekatPretragaLabel);
             pretragaPanel.Controls.Add(tipPretragaLabel);
             pretragaPanel.Controls.Add(nazivPretragaLabel);
-            pretragaPanel.Location = new Point(545, 46);
+            pretragaPanel.Location = new Point(545, 43);
             pretragaPanel.Name = "pretragaPanel";
             pretragaPanel.Size = new Size(437, 255);
             pretragaPanel.TabIndex = 3;
@@ -423,7 +423,6 @@
             tipPretragaComboBox.Size = new Size(161, 32);
             tipPretragaComboBox.TabIndex = 21;
             tipPretragaComboBox.SelectedIndexChanged += tipPretragaComboBox_SelectedIndexChanged;
-            tipPretragaComboBox.SelectionChangeCommitted += tipPretragaComboBox_SelectionChangeCommitted;
             // 
             // nazivPretragaTextBox
             // 

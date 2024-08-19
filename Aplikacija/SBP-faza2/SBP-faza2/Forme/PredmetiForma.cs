@@ -1,5 +1,4 @@
-﻿using NHibernate.Criterion;
-using NHibernate;
+﻿using NHibernate;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 using System.Data;
@@ -20,6 +19,7 @@ public partial class PredmetiForma : Form
     {
         dodajButtonClicked = true;
 
+        successStatusLabel.ForeColor = Color.Black;
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće sačuvan novi predmet";
 
         dodajToolStripButton.Enabled = false;
@@ -42,6 +42,7 @@ public partial class PredmetiForma : Form
     {
         dodajButtonClicked = false;
 
+        successStatusLabel.ForeColor = Color.Black;
         successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
 
         odustaniToolStripButton.Enabled = false;
@@ -92,22 +93,7 @@ public partial class PredmetiForma : Form
 
     private void PredmetiForma_Activated(object sender, EventArgs e)
     {
-        List<PredmetBasic>? predmeti = DTOManager.VratiPredmeteBasic();
-        if (predmeti != null)
-        {
-            predmetDataGridView.Rows.Clear();
-
-            foreach (var p in predmeti)
-            {
-                predmetDataGridView.Rows.Add(new string[]
-                { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
-            }
-
-            predmetDataGridView.Refresh();
-            predmetDataGridView.ClearSelection();
-
-            brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
-        }
+        DodajPredmeteDataGridView();
     }
 
     private void sifraPredmetaTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -148,6 +134,7 @@ public partial class PredmetiForma : Form
         if (e.RowIndex >= 0)
         {
             dodajButtonClicked = false;
+            successStatusLabel.ForeColor = Color.Black;
             successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći predmet";
 
             DataGridViewRow row = predmetDataGridView.Rows[e.RowIndex];
@@ -313,22 +300,7 @@ public partial class PredmetiForma : Form
                 }
             }
 
-            predmetDataGridView.Rows.Clear();
-
-            List<PredmetBasic>? predmeti = DTOManager.VratiPredmeteBasic();
-            if (predmeti != null)
-            {
-                foreach (var p in predmeti)
-                {
-                    predmetDataGridView.Rows.Add(new string[]
-                    { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
-                }
-
-                predmetDataGridView.Refresh();
-                predmetDataGridView.ClearSelection();
-
-                brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
-            }
+            DodajPredmeteDataGridView();
 
             timer1.Enabled = true;
             timer1.Start();
@@ -339,6 +311,7 @@ public partial class PredmetiForma : Form
     {
         successStatusLabel.ForeColor = Color.Black;
         successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
+
         timer1.Stop();
         timer1.Enabled = false;
     }
@@ -348,25 +321,7 @@ public partial class PredmetiForma : Form
         bool rez = await DTOManager.ObrisiPredmetAsync(Id);
         if (rez == true)
         {
-            List<PredmetBasic>? predmeti = DTOManager.VratiPredmeteBasic();
-            if (predmeti != null)
-            {
-                predmetDataGridView.Rows.Clear();
-
-                foreach (var p in predmeti)
-                {
-                    predmetDataGridView.Rows.Add(new string[]
-                    { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
-                }
-
-                predmetDataGridView.Refresh();
-                predmetDataGridView.ClearSelection();
-
-                brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
-
-                successStatusLabel.ForeColor = Color.Lime;
-                successStatusLabel.Text = "Predmet uspešno obrisan";
-            }
+            DodajPredmeteDataGridView();
         }
         else
         {
@@ -495,5 +450,26 @@ public partial class PredmetiForma : Form
 
         katedraPretaziComboBox.SelectedIndex = -1;
         semestarPretraziComboBox.SelectedIndex = -1;
+    }
+
+    private void DodajPredmeteDataGridView()
+    {
+        List<PredmetBasic>? predmeti = DTOManager.VratiPredmeteBasic();
+
+        if (predmeti != null)
+        {
+            predmetDataGridView.Rows.Clear();
+
+            foreach (var p in predmeti)
+            {
+                predmetDataGridView.Rows.Add(new string[]
+                { p.Id.ToString(), p.Sifra, p.Naziv, p.Katedra, p.Semestar });
+            }
+
+            predmetDataGridView.Refresh();
+            predmetDataGridView.ClearSelection();
+
+            brojPredmetaLabel.Text = predmetDataGridView.RowCount.ToString();
+        }
     }
 }

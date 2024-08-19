@@ -159,14 +159,14 @@ public class DTOManager
         return studentiImeRoditeljPrezime;
     }
 
-    public static async Task<bool> IzmeniStudentaAsync(StudentBasic student)
+    public static async Task<bool> IzmeniStudentAsync(StudentBasic student)
     {
         try
         {
             ISession? session = DataLayer.GetSession();
             if (session != null)
             {
-                Student s = session.Load<Student>(student.Id);
+                Student s = await session.LoadAsync<Student>(student.Id);
 
                 s.LicnoIme = PrvoSlovoVeliko(student.LicnoIme.Trim());
                 s.ImeRoditelja = PrvoSlovoVeliko(student.ImeRoditelja.Trim());
@@ -192,7 +192,7 @@ public class DTOManager
         return false;
     }
 
-    public static async Task<bool> DodajStudentaAsync(StudentBasic student)
+    public static async Task<bool> DodajStudentAsync(StudentBasic student)
     {
         try
         {
@@ -226,7 +226,7 @@ public class DTOManager
         return false;
     }
 
-    public static async Task<bool> ObrisiStudentaAsync(long id)
+    public static async Task<bool> ObrisiStudentAsync(long id)
     {
         try
         {
@@ -675,7 +675,7 @@ public class DTOManager
 
     #region Projekat
 
-    public static async Task<Projekat?> VratiProjekat(long id)
+    public static async Task<Projekat?> VratiProjekatAsync(long id)
     {
         Projekat? projekat = null;
         try
@@ -699,7 +699,90 @@ public class DTOManager
         return projekat;
     }
 
-    public static async Task<ProjekatBasic?> VratiProjekatBasic(long id)
+    public static async Task<Projekat?> VratiProjekatPoNazivuAsync(string nazivProjekta)
+    {
+        Projekat? projekat = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                projekat = await session.Query<Projekat>().FirstAsync(p => p.Naziv == nazivProjekta);
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return projekat;
+    }
+
+    public static async Task<ProjekatBasic?> VratiProjekatBasicPoNazivuAsync(string nazivProjekta)
+    {
+        ProjekatBasic? projekat = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Projekat p = (await DTOManager.VratiProjekatPoNazivuAsync(nazivProjekta))!;
+                PredmetBasic pred = (await DTOManager.VratiPredmetBasicAsync(p.Predmet.Id))!;
+                if (p.GetType() == typeof(TeorijskiProjekat))
+                {
+                    projekat = new TeorijskiProjekatBasic
+                    {
+                        Id = p.Id,
+                        Naziv = p.Naziv,
+                        SkolskaGodina = p.SkolskaGodina,
+                        Grupni = p.Grupni,
+                        RokZaZavrsetak = p.RokZaZavrsetak,
+                        MaksimalanBrojStrana = p.MaksimalanBrojStrana,
+                        Predmet = pred,
+                        Tip = "Teorijski",
+                        DatumPocetka = p.DatumPocetka,
+                        DatumZavrsetka = p.DatumZavrsetka
+                    };
+                }
+                else
+                {
+                    projekat = new PrakticniProjekatBasic
+                    {
+                        Id = p.Id,
+                        Naziv = p.Naziv,
+                        SkolskaGodina = p.SkolskaGodina,
+                        Grupni = p.Grupni,
+                        RokZaZavrsetak = p.RokZaZavrsetak,
+                        PreporuceniProgramskiJezik = p.PreporuceniProgramskiJezik,
+                        BrojIzvestaja = p.BrojIzvestaja,
+                        KratakOpis = p.KratakOpis,
+                        Predmet = pred,
+                        Tip = "Teorijski",
+                        DatumPocetka = p.DatumPocetka,
+                        DatumZavrsetka = p.DatumZavrsetka
+                    };
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+               "Greška",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+        }
+
+        return projekat;
+    }
+
+    public static async Task<ProjekatBasic?> VratiProjekatBasicAsync(long id)
     {
         ProjekatBasic? projekat = null;
         try
@@ -761,7 +844,7 @@ public class DTOManager
         return projekat;
     }
 
-    public static List<ProjekatPregled>? VratiSveProjekte()
+    public static List<ProjekatPregled>? VratiSveProjektePregled()
     {
         List<ProjekatPregled>? projekti = null;
         try
@@ -826,6 +909,50 @@ public class DTOManager
         }
 
         return projekti;
+    }
+
+    public static async Task<List<TeorijskiProjekat>?> VratiTeorijskeProjekteAsync()
+    {
+        List<TeorijskiProjekat>? teorijskiProjekti = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                teorijskiProjekti = await session.Query<TeorijskiProjekat>().ToListAsync();
+            }
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekata iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+              "Greška",
+              MessageBoxButtons.OK,
+              MessageBoxIcon.Error);
+        }
+
+        return teorijskiProjekti;
+    }
+
+    public static async Task<List<PrakticniProjekat>?> VratiPrakticneProjekteAsync()
+    {
+        List<PrakticniProjekat>? prakticniProjekti = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                prakticniProjekti = await session.Query<PrakticniProjekat>().ToListAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja projekata iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+              "Greška",
+              MessageBoxButtons.OK,
+              MessageBoxIcon.Error);
+        }
+
+        return prakticniProjekti;
     }
 
     public static async Task<bool> PostojiProjekatAsync(string naziv, string skolskaGodina, Type tip)
@@ -1025,6 +1152,261 @@ public class DTOManager
         }
 
         return skolskeGodine;
+    }
+
+    #endregion
+
+    #region Grupa
+
+    public static async Task<GrupaBasic?> VratiGrupaBasicAsync(long id)
+    {
+        GrupaBasic? grupa = null;
+
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Grupa g = await session.LoadAsync<Grupa>(id);
+                ProjekatBasic p = (await DTOManager.VratiProjekatBasicAsync(g.Projekat.Id))!;
+                grupa = new GrupaBasic
+                {
+                    Id = g.Id,
+                    Naziv = g.NazivGrupe,
+                    Projekat = p
+                };
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja grupe iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return grupa;
+    }
+
+    public static async Task<List<GrupaBasic>?> VratiGrupeBasicAsync()
+    {
+        List<GrupaBasic>? grupe = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                ProjekatBasic p;
+                IEnumerable<Grupa> g = session.Query<Grupa>();
+
+                grupe = new List<GrupaBasic>();
+                foreach (var gru in g)
+                {
+                    p = (await DTOManager.VratiProjekatBasicAsync(gru.Projekat.Id))!;
+                    grupe.Add(new GrupaBasic
+                    {
+                        Id = gru.Id,
+                        Naziv = gru.NazivGrupe,
+                        Projekat = p
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja grupa iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return grupe;
+    }
+
+    public static List<GrupaPregled>? VratiGrupePregled()
+    {
+        List<GrupaPregled>? grupe = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Grupa> g = session.Query<Grupa>();
+
+                grupe = new List<GrupaPregled>();
+                foreach (var gru in g)
+                {
+                    grupe.Add(new GrupaPregled
+                    {
+                        Id = gru.Id,
+                        Naziv = gru.NazivGrupe,
+                        Projekat = gru.Projekat.Naziv
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja grupa iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return grupe;
+    }
+
+    public static List<GrupaPregled>? VratiGrupePoTipuProjekta(Type tipProjekta)
+    {
+        List<GrupaPregled>? g = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                List<GrupaPregled>? grupe = DTOManager.VratiGrupePregled();
+                if (grupe != null)
+                {
+                    foreach (var gru in grupe)
+                    {
+                        if (gru.Projekat.GetType() == tipProjekta)
+                            g?.Add(gru);
+                    }
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja grupa iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return g;
+    }
+
+    public static async Task<bool> IzmeniGrupaAsync(GrupaBasic grupa)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Grupa g = await session.LoadAsync<Grupa>(grupa.Id);
+
+                g.NazivGrupe = grupa.Naziv;
+                if (g.Projekat.Id != grupa.Projekat.Id)
+                {
+                    Projekat p = await session.LoadAsync<Projekat>(grupa.Projekat.Id);
+                    g.Projekat = p;
+                }
+
+                await session.SaveOrUpdateAsync(g);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja grupe.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajGrupaAsync(GrupaBasic grupa)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Projekat p = await session.LoadAsync<Projekat>(grupa.Projekat.Id);
+
+                Grupa g = new Grupa
+                {
+                    NazivGrupe = grupa.Naziv,
+                    Projekat = p
+                };
+
+                await session.SaveAsync(g);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom čuvanja grupe.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiGrupaAsync(long id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Grupa grupa = await session.LoadAsync<Grupa>(id);
+
+                await session.DeleteAsync(grupa);
+                await session.FlushAsync();
+                session.Close();
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja grupe.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> PostojiGrupa(string naziv)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Grupa? grupa = await session.Query<Grupa>().FirstOrDefaultAsync(g => g.NazivGrupe == naziv);
+                if (grupa != null)
+                    return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja grupe.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
     }
 
     #endregion

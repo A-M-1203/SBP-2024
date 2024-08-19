@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using NHibernate.Linq;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
 
@@ -6,7 +7,7 @@ namespace SBP_faza2.Forme;
 
 public partial class GrupeForma : Form
 {
-    private int Id = 0;
+    private long Id = 0;
     private bool dodajButtonClicked = false;
     public GrupeForma()
     {
@@ -16,6 +17,8 @@ public partial class GrupeForma : Form
     private void dodajToolStripButton_Click(object sender, EventArgs e)
     {
         dodajButtonClicked = true;
+
+        successStatusLabel.ForeColor = Color.Black;
         successStatusLabel.Text = "Klikom na dugme sačuvaj biće sačuvana nova grupa";
 
         dodajToolStripButton.Enabled = false;
@@ -34,10 +37,13 @@ public partial class GrupeForma : Form
     private void odustaniToolStripButton_Click(object sender, EventArgs e)
     {
         dodajButtonClicked = false;
-        successStatusLabel.Text = string.Empty;
+
+        successStatusLabel.ForeColor = Color.Black;
+        successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
 
         odustaniToolStripButton.Enabled = false;
         sacuvajToolStripButton.Enabled = false;
+
         dodajToolStripButton.Enabled = true;
 
         if (grupaDataGridView.SelectedRows.Count > 0)
@@ -64,180 +70,50 @@ public partial class GrupeForma : Form
         {
             izmeniToolStripButton.Enabled = true;
             obrisiToolStripButton.Enabled = true;
-            Id = int.Parse(grupaDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
+            Id = long.Parse(grupaDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
         }
         else
         {
             izmeniToolStripButton.Enabled = false;
             obrisiToolStripButton.Enabled = false;
         }
+
+        nazivGrupeErrorLabel.Text = string.Empty;
+        tipProjektaErrorLabel.Text = string.Empty;
+        projekatErrorLabel.Text = string.Empty;
     }
 
     private void GrupeForma_Activated(object sender, EventArgs e)
     {
-        try
-        {
-            using (ISession? session = DataLayer.GetSession())
-            {
-                if (session != null)
-                {
-                    if (tipProjektaComboBox.SelectedIndex != -1)
-                    {
-                        projekatComboBox.Items.Clear();
-                        IList<Projekat> projekti = session.QueryOver<Projekat>().List<Projekat>();
-
-                        if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(TeorijskiProjekat))
-                                {
-                                    projekatComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(PrakticniProjekat))
-                                {
-                                    projekatComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-                    }
-
-                    grupaDataGridView.Rows.Clear();
-
-                    IList<Grupa> grupe = session.QueryOver<Grupa>().List<Grupa>();
-
-                    foreach (var g in grupe)
-                    {
-                        grupaDataGridView.Rows.Add(new string[]
-                        {
-                            g.Id.ToString(),
-                            g.NazivGrupe,
-                            g.Projekat.Naziv
-                        });
-                    }
-
-                    grupaDataGridView.Refresh();
-                    grupaDataGridView.ClearSelection();
-
-                    brojGrupaLabel.Text = session.Query<Grupa>().Count().ToString();
-                }
-                else
-                {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
-                }
-            }
-        }
-        catch (Exception ec)
-        {
-            MessageBox.Show(ec.Message);
-        }
+        DodajGrupeDataGridView();
     }
 
-    private void tipProjektaComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-    {
-        if (tipProjektaComboBox.SelectedIndex != -1)
-        {
-            try
-            {
-                using (ISession? session = DataLayer.GetSession())
-                {
-                    if (session != null)
-                    {
-                        projekatComboBox.Items.Clear();
-                        IList<Projekat> projekti = session.QueryOver<Projekat>().List<Projekat>();
-
-                        if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(TeorijskiProjekat))
-                                {
-                                    projekatComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(PrakticniProjekat))
-                                {
-                                    projekatComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-
-                        projekatComboBox.Enabled = true;
-                    }
-                }
-            }
-            catch (Exception ec)
-            {
-                MessageBox.Show(ec.Message);
-            }
-        }
-        else
-        {
-            projekatComboBox.SelectedIndex = -1;
-            projekatComboBox.Enabled = false;
-        }
-    }
-
-    private void grupaDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+    private async void grupaDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
     {
         if (e.RowIndex >= 0)
         {
-            try
+            dodajButtonClicked = false;
+            successStatusLabel.ForeColor = Color.Black;
+            successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjena postojeća grupa";
+
+            DataGridViewRow row = grupaDataGridView.Rows[e.RowIndex];
+
+            Id = long.Parse(row.Cells["idColumn"].Value.ToString()!);
+            nazivGrupeTextBox.Text = row.Cells["nazivGrupeColumn"].Value.ToString();
+            string nazivProjekta = row.Cells["projekatColumn"].Value.ToString()!;
+
+            Projekat? projekat = await DTOManager.VratiProjekatPoNazivuAsync(nazivProjekta);
+            if (projekat != null)
             {
-                using (ISession? session = DataLayer.GetSession())
-                {
-                    if (session != null)
-                    {
-                        dodajButtonClicked = false;
-                        successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjena postojeća grupa";
+                string? tipProjekta;
+                if (projekat.GetType() == typeof(TeorijskiProjekat))
+                    tipProjekta = "Teorijski";
+                else
+                    tipProjekta = "Praktični";
 
-                        DataGridViewRow row = grupaDataGridView.Rows[e.RowIndex];
+                tipProjektaComboBox.SelectedItem = tipProjekta;
 
-                        Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
-                        nazivGrupeTextBox.Text = row.Cells["nazivGrupeColumn"].Value.ToString();
-                        string nazivProjekta = row.Cells["projekatColumn"].Value.ToString()!;
-
-                        Projekat projekat = session.Query<Projekat>().First(p => p.Naziv == nazivProjekta);
-                        string? tipProjekta = null;
-                        if (projekat.GetType() == typeof(TeorijskiProjekat))
-                            tipProjekta = "Teorijski";
-                        else
-                            tipProjekta = "Praktični";
-
-                        foreach (var item in tipProjektaComboBox.Items)
-                        {
-                            if (item.ToString() == tipProjekta)
-                            {
-                                tipProjektaComboBox.SelectedItem = item;
-                                break;
-                            }
-                        }
-
-                        foreach (var item in projekatComboBox.Items)
-                        {
-                            if (item.ToString() == row.Cells["projekatColumn"].Value.ToString())
-                            {
-                                projekatComboBox.SelectedItem = item;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ec)
-            {
-                MessageBox.Show(ec.Message);
+                projekatComboBox.SelectedItem = projekat.Naziv;
             }
 
             dodajToolStripButton.Enabled = false;
@@ -248,51 +124,40 @@ public partial class GrupeForma : Form
 
             nazivGrupeTextBox.Enabled = true;
             tipProjektaComboBox.Enabled = true;
+            projekatComboBox.Enabled = true;
+
+            nazivGrupeErrorLabel.Text = string.Empty;
+            tipProjektaErrorLabel.Text = string.Empty;
+            projekatErrorLabel.Text = string.Empty;
         }
     }
 
-    private void tipProjektaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    private async void tipProjektaComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (tipProjektaComboBox.SelectedIndex != -1)
         {
-            try
+            if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
             {
-                using (ISession? session = DataLayer.GetSession())
+                List<TeorijskiProjekat>? teorijskiProjekti = await DTOManager.VratiTeorijskeProjekteAsync();
+                if (teorijskiProjekti != null)
                 {
-                    if (session != null)
-                    {
-                        projekatComboBox.Items.Clear();
-                        IList<Projekat> projekti = session.QueryOver<Projekat>().List<Projekat>();
-
-                        if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(TeorijskiProjekat))
-                                {
-                                    projekatComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(PrakticniProjekat))
-                                {
-                                    projekatComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-
-                        projekatComboBox.Enabled = true;
-                    }
+                    projekatComboBox.Items.Clear();
+                    foreach (var tp in teorijskiProjekti)
+                        projekatComboBox.Items.Add(tp.Naziv);
                 }
             }
-            catch (Exception ec)
+            else
             {
-                MessageBox.Show(ec.Message);
+                List<PrakticniProjekat>? prakticniProjekti = await DTOManager.VratiPrakticneProjekteAsync();
+                if (prakticniProjekti != null)
+                {
+                    projekatComboBox.Items.Clear();
+                    foreach (var pp in prakticniProjekti)
+                        projekatComboBox.Items.Add(pp.Naziv);
+                }
             }
+
+            projekatComboBox.Enabled = true;
         }
         else
         {
@@ -301,7 +166,7 @@ public partial class GrupeForma : Form
         }
     }
 
-    private bool proveriUnos()
+    private bool ProveriUnos()
     {
         bool result = true;
 
@@ -322,53 +187,30 @@ public partial class GrupeForma : Form
         return result;
     }
 
-    private void izmeniToolStripButton_Click(object sender, EventArgs e)
+    private async void izmeniToolStripButton_Click(object sender, EventArgs e)
     {
-        try
+        dodajButtonClicked = false;
+        successStatusLabel.ForeColor = Color.Black;
+        successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjena postojeća grupa";
+
+        DataGridViewRow row = grupaDataGridView.SelectedRows[0];
+
+        Id = long.Parse(row.Cells["idColumn"].Value.ToString()!);
+        nazivGrupeTextBox.Text = row.Cells["nazivGrupeColumn"].Value.ToString();
+        string nazivProjekta = row.Cells["projekatColumn"].Value.ToString()!;
+
+        Projekat? projekat = await DTOManager.VratiProjekatPoNazivuAsync(nazivProjekta);
+        if (projekat != null)
         {
-            using (ISession? session = DataLayer.GetSession())
-            {
-                if (session != null)
-                {
-                    dodajButtonClicked = false;
-                    successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjena postojeća grupa";
+            string? tipProjekta;
+            if (projekat.GetType() == typeof(TeorijskiProjekat))
+                tipProjekta = "Teorijski";
+            else
+                tipProjekta = "Praktični";
 
-                    DataGridViewRow row = grupaDataGridView.SelectedRows[0];
+            tipProjektaComboBox.SelectedItem = tipProjekta;
 
-                    Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
-                    nazivGrupeTextBox.Text = row.Cells["nazivGrupeColumn"].Value.ToString();
-                    string nazivProjekta = row.Cells["projekatColumn"].Value.ToString()!;
-
-                    Projekat projekat = session.Query<Projekat>().First(p => p.Naziv == nazivProjekta);
-                    string? tipProjekta = null;
-                    if (projekat.GetType() == typeof(TeorijskiProjekat))
-                        tipProjekta = "Teorijski";
-                    else
-                        tipProjekta = "Praktični";
-
-                    foreach (var item in tipProjektaComboBox.Items)
-                    {
-                        if (item.ToString() == tipProjekta)
-                        {
-                            tipProjektaComboBox.SelectedItem = item;
-                            break;
-                        }
-                    }
-
-                    foreach (var item in projekatComboBox.Items)
-                    {
-                        if (item.ToString() == row.Cells["projekatColumn"].Value.ToString())
-                        {
-                            projekatComboBox.SelectedItem = item;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception ec)
-        {
-            MessageBox.Show(ec.Message);
+            projekatComboBox.SelectedItem = projekat.Naziv;
         }
 
         dodajToolStripButton.Enabled = false;
@@ -379,118 +221,88 @@ public partial class GrupeForma : Form
 
         nazivGrupeTextBox.Enabled = true;
         tipProjektaComboBox.Enabled = true;
+        projekatComboBox.Enabled = true;
+
+        nazivGrupeErrorLabel.Text = string.Empty;
+        tipProjektaErrorLabel.Text = string.Empty;
+        projekatErrorLabel.Text = string.Empty;
     }
 
-    private void sacuvajToolStripButton_Click(object sender, EventArgs e)
+    private async void sacuvajToolStripButton_Click(object sender, EventArgs e)
     {
-        bool result = proveriUnos();
+        bool result = ProveriUnos();
 
         if (result == true)
         {
-            try
+            bool postojiGrupa;
+            ProjekatBasic projekatBasic = (await DTOManager.VratiProjekatBasicPoNazivuAsync(projekatComboBox.SelectedItem!.ToString()!))!;
+            GrupaBasic grupa = new GrupaBasic
             {
-                ISession? session = DataLayer.GetSession();
-                if (session != null)
+                Id = Id,
+                Naziv = nazivGrupeTextBox.Text,
+                Projekat = projekatBasic
+            };
+
+            bool rez;
+            if (dodajButtonClicked == false)
+            {
+                GrupaBasic? grupaZaProveru = await DTOManager.VratiGrupaBasicAsync(Id);
+                if (grupaZaProveru!.Naziv != grupa.Naziv)
                 {
-                    if (dodajButtonClicked == false)
+                    rez = await DTOManager.PostojiGrupa(grupa.Naziv);
+                    if (rez == true)
                     {
-                        Grupa grupaZaAzuriranje = session.Load<Grupa>(Id);
+                        successStatusLabel.ForeColor = Color.Red;
+                        successStatusLabel.Text = "Grupa sa ovim nazivom već postoji";
 
-                        grupaZaAzuriranje.NazivGrupe = nazivGrupeTextBox.Text;
-
-                        string noviProjekatNaziv = projekatComboBox.SelectedItem!.ToString()!;
-
-                        if (grupaZaAzuriranje.Projekat.Naziv != noviProjekatNaziv)
-                        {
-                            Projekat stariProjekat = session.Query<Projekat>().First(p => p.Naziv == grupaZaAzuriranje.Projekat.Naziv);
-
-                            stariProjekat.Grupe.Remove(grupaZaAzuriranje);
-
-                            session.Update(stariProjekat);
-
-                            Projekat noviProjekat = session.Query<Projekat>().First(p => p.Naziv == noviProjekatNaziv);
-
-                            grupaZaAzuriranje.Projekat = noviProjekat;
-                            noviProjekat.Grupe.Add(grupaZaAzuriranje);
-
-                            session.Update(noviProjekat);
-                        }
-                        else
-                        {
-                            session.Update(grupaZaAzuriranje);
-                        }
-
-                        session.Flush();
-
-                        successStatusLabel.ForeColor = Color.Lime;
-                        successStatusLabel.Text = "Grupa je uspešno ažurirana";
                         timer1.Enabled = true;
                         timer1.Start();
+                        return;
                     }
-                    else
-                    {
-                        Grupa? grupa = session.Query<Grupa>().FirstOrDefault(g => g.NazivGrupe == nazivGrupeTextBox.Text);
+                }
 
-                        if (grupa == null)
-                        {
-                            string nazivProjekta = projekatComboBox.SelectedItem!.ToString()!;
-
-                            Projekat projekat = session.Query<Projekat>().First(p => p.Naziv == nazivProjekta);
-
-                            grupa = new Grupa
-                            {
-                                NazivGrupe = nazivGrupeTextBox.Text,
-                                Projekat = projekat
-                            };
-
-                            projekat.Grupe.Add(grupa);
-                            session.Update(projekat);
-                            session.Flush();
-
-                            successStatusLabel.ForeColor = Color.Lime;
-                            successStatusLabel.Text = "Nova grupa je uspešno sačuvana";
-                            timer1.Enabled = true;
-                            timer1.Start();
-                        }
-                        else
-                        {
-                            successStatusLabel.ForeColor = Color.Red;
-                            successStatusLabel.Text = "Grupa sa datim nazivom već postoji";
-                            timer1.Enabled = true;
-                            timer1.Start();
-                        }
-                    }
-
-                    grupaDataGridView.Rows.Clear();
-
-                    IList<Grupa> grupe = session.QueryOver<Grupa>().List<Grupa>();
-
-                    foreach (var g in grupe)
-                    {
-                        grupaDataGridView.Rows.Add(new string[]
-                        {
-                            g.Id.ToString(),
-                            g.NazivGrupe,
-                            g.Projekat.Naziv
-                        });
-                    }
-
-                    grupaDataGridView.Refresh();
-                    grupaDataGridView.ClearSelection();
-
-                    brojGrupaLabel.Text = session.Query<Grupa>().Count().ToString();
-
-                    session.Close();
+                rez = await DTOManager.IzmeniGrupaAsync(grupa);
+                if (rez == true)
+                {
+                    successStatusLabel.ForeColor = Color.Lime;
+                    successStatusLabel.Text = "Grupa uspešno ažuriran";
                 }
                 else
                 {
-                    MessageBox.Show("Greška prilikom otvaranja konekcije");
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Greška prilikom ažuriranja grupe";
                 }
             }
-            catch (Exception ec)
+            else
             {
-                MessageBox.Show(ec.Message);
+                postojiGrupa = await DTOManager.PostojiGrupa(grupa.Naziv);
+                if (postojiGrupa == true)
+                {
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Grupa sa ovim nazivom već postoji";
+
+                    timer1.Enabled = true;
+                    timer1.Start();
+                    return;
+                }
+
+                rez = await DTOManager.DodajGrupaAsync(grupa);
+                if (rez == true)
+                {
+                    successStatusLabel.ForeColor = Color.Lime;
+                    successStatusLabel.Text = "Grupa uspešno dodata";
+                }
+                else
+                {
+                    successStatusLabel.ForeColor = Color.Red;
+                    successStatusLabel.Text = "Greška prilikom dodavanja grupe";
+                }
             }
+
+            DodajGrupeDataGridView();
+
+            timer1.Enabled = true;
+            timer1.Start();
         }
     }
 
@@ -503,56 +315,22 @@ public partial class GrupeForma : Form
         timer1.Enabled = false;
     }
 
-    private void obrisiToolStripButton_Click(object sender, EventArgs e)
+    private async void obrisiToolStripButton_Click(object sender, EventArgs e)
     {
-        try
+
+        bool rez = await DTOManager.ObrisiGrupaAsync(Id);
+        if (rez == true)
         {
-            ISession? session = DataLayer.GetSession();
-            if (session != null)
-            {
-                Grupa grupa = session.Load<Grupa>(Id);
-
-                grupa.Projekat.Grupe.Remove(grupa);
-
-                session.Update(grupa.Projekat);
-                session.Delete(grupa);
-                session.Flush();
-
-                grupaDataGridView.Rows.Clear();
-
-                IList<Grupa> grupe = session.QueryOver<Grupa>().List<Grupa>();
-
-                foreach (var g in grupe)
-                {
-                    grupaDataGridView.Rows.Add(new string[]
-                    {
-                        g.Id.ToString(),
-                        g.NazivGrupe,
-                        g.Projekat.Naziv
-                    });
-                }
-
-                grupaDataGridView.Refresh();
-                grupaDataGridView.ClearSelection();
-
-                brojGrupaLabel.Text = session.Query<Grupa>().Count().ToString();
-
-                session.Close();
-
-                successStatusLabel.ForeColor = Color.Lime;
-                successStatusLabel.Text = "Grupa uspešno obrisan";
-                timer1.Enabled = true;
-                timer1.Start();
-            }
-            else
-            {
-                MessageBox.Show("Greška prilikom otvaranja konekcije");
-            }
+            DodajGrupeDataGridView();
         }
-        catch (Exception ec)
+        else
         {
-            MessageBox.Show(ec.Message);
+            successStatusLabel.ForeColor = Color.Red;
+            successStatusLabel.Text = "Greška prilikom brisanja grupe";
         }
+
+        timer1.Enabled = true;
+        timer1.Start();
 
         nazivGrupeTextBox.Text = string.Empty;
         tipProjektaComboBox.SelectedIndex = -1;
@@ -623,48 +401,32 @@ public partial class GrupeForma : Form
         }
     }
 
-    private void tipPretragaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    private async void tipPretragaComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (tipPretragaComboBox.SelectedIndex != -1)
         {
-            try
+            if (tipPretragaComboBox.SelectedItem!.ToString() == "Teorijski")
             {
-                using (ISession? session = DataLayer.GetSession())
+                List<TeorijskiProjekat>? teorijskiProjekti = await DTOManager.VratiTeorijskeProjekteAsync();
+                if (teorijskiProjekti != null)
                 {
-                    if (session != null)
-                    {
-                        IList<Projekat> projekti = session.QueryOver<Projekat>().List<Projekat>();
-
-                        projekatPretragaComboBox.Items.Clear();
-                        if (tipPretragaComboBox.SelectedItem!.ToString() == "Teorijski")
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(TeorijskiProjekat))
-                                {
-                                    projekatPretragaComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in projekti)
-                            {
-                                if (item.GetType() == typeof(PrakticniProjekat))
-                                {
-                                    projekatPretragaComboBox.Items.Add(item.Naziv);
-                                }
-                            }
-                        }
-
-                        projekatPretragaComboBox.Enabled = true;
-                    }
+                    projekatPretragaComboBox.Items.Clear();
+                    foreach (var tp in teorijskiProjekti)
+                        projekatPretragaComboBox.Items.Add(tp.Naziv);
                 }
             }
-            catch (Exception ec)
+            else
             {
-                MessageBox.Show(ec.Message);
+                List<PrakticniProjekat>? prakticniProjekti = await DTOManager.VratiPrakticneProjekteAsync();
+                if (prakticniProjekti != null)
+                {
+                    projekatPretragaComboBox.Items.Clear();
+                    foreach (var pp in prakticniProjekti)
+                        projekatPretragaComboBox.Items.Add(pp.Naziv);
+                }
             }
+
+            projekatPretragaComboBox.Enabled = true;
         }
         else
         {
@@ -696,7 +458,7 @@ public partial class GrupeForma : Form
         pretragaPanel.Visible = false;
     }
 
-    private void pretraziButton_Click(object sender, EventArgs e)
+    private async void pretraziButton_Click(object sender, EventArgs e)
     {
         try
         {
@@ -715,22 +477,29 @@ public partial class GrupeForma : Form
                     query = query.Where(g => g.Projekat.Naziv == projekatPretragaComboBox.SelectedItem.ToString());
                 }
 
-                grupaDataGridView.Rows.Clear();
+                IList<GrupaPregled> grupe = await query.Select(g => new GrupaPregled
+                {
+                    Id = g.Id,
+                    Naziv = g.NazivGrupe,
+                    Projekat = g.Projekat.Naziv
+                }).ToListAsync();
 
-                IList<Grupa> grupe = query.ToList();
+                grupaDataGridView.Rows.Clear();
 
                 foreach (var g in grupe)
                 {
                     grupaDataGridView.Rows.Add(new string[]
                     {
                         g.Id.ToString(),
-                        g.NazivGrupe,
-                        g.Projekat.Naziv
+                        g.Naziv,
+                        g.Projekat
                     });
                 }
 
                 grupaDataGridView.Refresh();
                 grupaDataGridView.ClearSelection();
+
+                brojGrupaLabel.Text = grupaDataGridView.RowCount.ToString();
 
                 session.Close();
             }
@@ -738,6 +507,60 @@ public partial class GrupeForma : Form
         catch (Exception ec)
         {
             MessageBox.Show(ec.Message);
+        }
+    }
+
+    private void DodajGrupeDataGridView()
+    {
+        List<GrupaPregled>? grupe = DTOManager.VratiGrupePregled();
+        if (grupe != null)
+        {
+            grupaDataGridView.Rows.Clear();
+
+            foreach (var g in grupe)
+            {
+                grupaDataGridView.Rows.Add(new string[]
+                { g.Id.ToString(), g.Naziv, g.Projekat });
+            }
+
+            grupaDataGridView.Refresh();
+            grupaDataGridView.ClearSelection();
+
+            brojGrupaLabel.Text = grupaDataGridView.RowCount.ToString();
+        }
+    }
+
+    private async void tipProjektaComboBox_SelectedValueChanged(object sender, EventArgs e)
+    {
+        if (tipProjektaComboBox.SelectedIndex != -1)
+        {
+            if (tipProjektaComboBox.SelectedItem!.ToString() == "Teorijski")
+            {
+                List<TeorijskiProjekat>? teorijskiProjekti = await DTOManager.VratiTeorijskeProjekteAsync();
+                if (teorijskiProjekti != null)
+                {
+                    projekatComboBox.Items.Clear();
+                    foreach (var tp in teorijskiProjekti)
+                        projekatComboBox.Items.Add(tp.Naziv);
+                }
+            }
+            else
+            {
+                List<PrakticniProjekat>? prakticniProjekti = await DTOManager.VratiPrakticneProjekteAsync();
+                if (prakticniProjekti != null)
+                {
+                    projekatComboBox.Items.Clear();
+                    foreach (var pp in prakticniProjekti)
+                        projekatComboBox.Items.Add(pp.Naziv);
+                }
+            }
+
+            projekatComboBox.Enabled = true;
+        }
+        else
+        {
+            projekatComboBox.SelectedIndex = -1;
+            projekatComboBox.Enabled = false;
         }
     }
 }

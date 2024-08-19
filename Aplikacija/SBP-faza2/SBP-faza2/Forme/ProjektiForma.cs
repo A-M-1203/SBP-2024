@@ -139,7 +139,7 @@ public partial class ProjektiForma : Form
             }
         }
 
-        List<ProjekatPregled>? projekti = DTOManager.VratiSveProjekte();
+        List<ProjekatPregled>? projekti = DTOManager.VratiSveProjektePregled();
         if (projekti != null)
         {
             projekatDataGridView.Rows.Clear();
@@ -571,7 +571,7 @@ public partial class ProjektiForma : Form
 
                     projekatDataGridView.Rows.Clear();
 
-                    List<ProjekatPregled>? projekti = DTOManager.VratiSveProjekte();
+                    List<ProjekatPregled>? projekti = DTOManager.VratiSveProjektePregled();
                     if (projekti != null)
                     {
                         foreach (var p in projekti)
@@ -618,7 +618,7 @@ public partial class ProjektiForma : Form
         bool rez = await DTOManager.ObrisiProjekatAsync(Id);
         if (rez == true)
         {
-            List<ProjekatPregled>? projekti = DTOManager.VratiSveProjekte();
+            List<ProjekatPregled>? projekti = DTOManager.VratiSveProjektePregled();
             if (projekti != null)
             {
                 projekatDataGridView.Rows.Clear();

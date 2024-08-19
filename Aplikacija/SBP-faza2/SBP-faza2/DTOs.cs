@@ -53,46 +53,6 @@ public class PredmetBasic
     }
 }
 
-public class PredmetNazivSifra
-{
-    public required int Id { get; set; }
-    public required string Naziv { get; set; }
-    public required string Sifra { get; set; }
-
-    public PredmetNazivSifra(int id, string naziv, string sifra)
-    {
-        Id = id;
-        Naziv = naziv;
-        Sifra = sifra;
-    }
-
-    public PredmetNazivSifra()
-    {
-        
-    }
-}
-
-public class PredmetNazivSifraSemestar
-{
-    public required int Id { get; set; }
-    public required string Naziv { get; set; }
-    public required string Sifra { get; set; }
-    public required string Semestar { get; set; }
-
-    public PredmetNazivSifraSemestar(int id, string naziv, string sifra, string semestar)
-    {
-        Id = id;
-        Naziv = naziv;
-        Sifra = sifra;
-        Semestar = semestar;
-    }
-
-    public PredmetNazivSifraSemestar()
-    {
-
-    }
-}
-
 #endregion
 
 #region Projekat
@@ -229,6 +189,48 @@ public class PrakticniProjekatPregled : ProjekatPregled
         string tip, string predmet, DateTime datumPocetka, DateTime? datumZavrsetka) 
         : base(id, naziv, skolskaGodina, grupni, rokZaZavrsetak, null, preporuceniProgramskiJezik, kratakOpis, brojIzvestaja, tip, predmet, datumPocetka, datumZavrsetka)
     {
+    }
+}
+
+#endregion
+
+#region Grupa
+
+public class GrupaBasic
+{
+    public long Id { get; init; }
+    public required string Naziv { get; set; }
+    public required ProjekatBasic Projekat { get; set; }
+
+    public GrupaBasic(long id, string naziv, ProjekatBasic projekat)
+    {
+        Id = id;
+        Naziv = naziv;
+        Projekat = projekat;
+    }
+
+    public GrupaBasic()
+    {
+
+    }
+}
+
+public class GrupaPregled
+{
+    public long Id { get; init; }
+    public required string Naziv { get; set; }
+    public required string Projekat { get; set; }
+
+    public GrupaPregled(long id, string naziv, string projekat)
+    {
+        Id = id;
+        Naziv = naziv;
+        Projekat = projekat;
+    }
+
+    public GrupaPregled()
+    {
+        
     }
 }
 
