@@ -121,4 +121,10 @@ public partial class Form1 : Form
         NastavniciForma nastavniciForma = new NastavniciForma();
         nastavniciForma.Show(this);
     }
+
+    private void knjigeButton_Click(object sender, EventArgs e)
+    {
+        KnjigeForma knjigeForma = new KnjigeForma();
+        knjigeForma.Show(this);
+    }
 }

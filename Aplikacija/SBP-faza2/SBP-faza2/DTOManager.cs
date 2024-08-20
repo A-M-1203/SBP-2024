@@ -1497,6 +1497,8 @@ public class DTOManager
                         Predmet = nas.Predmet.Naziv + " " + "(" + nas.Predmet.Sifra + ")"
                     });
                 }
+
+                session.Close();
             }
         }
         catch (Exception ex)
@@ -1532,6 +1534,8 @@ public class DTOManager
                         });
                     }
                 }
+
+                session.Close();
             }
         }
         catch (Exception ex)
@@ -1627,6 +1631,195 @@ public class DTOManager
         catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom brisanja nastavnika iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region Knjiga
+
+    public static async Task<KnjigaBasic?> VratiKnjigaBasicAsync(int id)
+    {
+        KnjigaBasic? knjiga = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Knjiga k = await session.LoadAsync<Knjiga>(id);
+                knjiga = new KnjigaBasic
+                {
+                    Id = k.Id,
+                    Naslov = k.Naslov,
+                    GodinaIzdanja = k.GodinaIzdanja,
+                    ISBN = k.ISBN,
+                    Izdavac = k.Izdavac
+                };
+
+                session.Close();
+            }
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja knjige iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return knjiga;
+    }
+
+    public static List<KnjigaBasic>? VratiKnjigeBasic()
+    {
+        List<KnjigaBasic>? k = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Knjiga> knjige = session.Query<Knjiga>();
+                k = new List<KnjigaBasic>();
+                foreach (var kn in knjige)
+                {
+                    k.Add(new KnjigaBasic
+                    {
+                        Id = kn.Id,
+                        Naslov = kn.Naslov,
+                        GodinaIzdanja = kn.GodinaIzdanja,
+                        ISBN = kn.ISBN,
+                        Izdavac = kn.Izdavac
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja knjige iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return k;
+    }
+
+    public static async Task<bool> PostojiKnjigaAsync(string isbn)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Knjiga? knjiga = await session.Query<Knjiga>()
+                    .FirstOrDefaultAsync(k => k.ISBN == isbn);
+                if (knjiga != null)
+                    return true;
+
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja knjige iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> IzmeniKnjiguAsync(KnjigaBasic knjiga)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Knjiga knjigaZaAzuriranje = await session.LoadAsync<Knjiga>(knjiga.Id);
+                knjigaZaAzuriranje.Naslov = knjiga.Naslov;
+                knjigaZaAzuriranje.GodinaIzdanja = knjiga.GodinaIzdanja;
+                knjigaZaAzuriranje.ISBN = knjiga.ISBN;
+                knjigaZaAzuriranje.Izdavac = knjiga.Izdavac;
+
+                await session.SaveOrUpdateAsync(knjigaZaAzuriranje);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja knjige u bazi.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajKnjiguAsync(KnjigaBasic knjiga)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Knjiga novaKnjiga = new Knjiga
+                {
+                    Naslov = knjiga.Naslov,
+                    GodinaIzdanja = knjiga.GodinaIzdanja,
+                    ISBN = knjiga.ISBN,
+                    Izdavac = knjiga.Izdavac
+                };
+
+                await session.SaveAsync(novaKnjiga);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom dodavanja knjige u bazu.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiKnjiguAsync(int id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Knjiga knjiga = await session.LoadAsync<Knjiga>(id);
+
+                await session.DeleteAsync(knjiga);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja knjige iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);

@@ -42,10 +42,7 @@ public partial class NastavniciForma : Form
 
         dodajToolStripButton.Enabled = true;
 
-        if (nastavnikDataGridView.SelectedRows.Count > 0)
-        {
-            izmeniToolStripButton.Enabled = true;
-        }
+        nastavnikDataGridView.ClearSelection();
 
         imePrezimeNastavnikaTextBox.Enabled = false;
         predmetComboBox.Enabled = false;
@@ -69,6 +66,7 @@ public partial class NastavniciForma : Form
         {
             izmeniToolStripButton.Enabled = false;
             obrisiToolStripButton.Enabled = false;
+            sacuvajToolStripButton.Enabled = false;
         }
 
         imePrezimeNastavnikaErrorLabel.Text = string.Empty;

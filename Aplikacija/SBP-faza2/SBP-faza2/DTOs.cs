@@ -277,3 +277,30 @@ public class NastavnikPregled
 }
 
 #endregion
+
+#region Knjiga
+
+public class KnjigaBasic
+{
+    public int Id { get; init; }
+    public required string Naslov { get; set; }
+    public required int GodinaIzdanja { get; set; }
+    public required string ISBN { get; set; }
+    public required string Izdavac { get; set; }
+
+    public KnjigaBasic(int id, string naslov, int godinaIzdanja, string iSBN, string izdavac)
+    {
+        Id = id;
+        Naslov = naslov;
+        GodinaIzdanja = godinaIzdanja;
+        ISBN = iSBN;
+        Izdavac = izdavac;
+    }
+
+    public KnjigaBasic()
+    {
+        
+    }
+}
+
+#endregion

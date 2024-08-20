@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            buttonStudenti = new Button();
-            buttonPredmeti = new Button();
             panel1 = new Panel();
+            knjigeButton = new Button();
+            nastavniciButton = new Button();
             grupeButton = new Button();
             projektiButton = new Button();
             predmetiButton = new Button();
@@ -44,39 +44,15 @@
             statusLabel = new Label();
             bazaLabel = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
-            nastavniciButton = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // buttonStudenti
-            // 
-            buttonStudenti.BackColor = SystemColors.ButtonFace;
-            buttonStudenti.Location = new Point(582, 367);
-            buttonStudenti.Margin = new Padding(4);
-            buttonStudenti.Name = "buttonStudenti";
-            buttonStudenti.Size = new Size(294, 41);
-            buttonStudenti.TabIndex = 1;
-            buttonStudenti.Text = "Studenti";
-            buttonStudenti.UseVisualStyleBackColor = false;
-            buttonStudenti.Click += buttonStudenti_Click;
-            // 
-            // buttonPredmeti
-            // 
-            buttonPredmeti.BackColor = SystemColors.ButtonFace;
-            buttonPredmeti.Location = new Point(582, 441);
-            buttonPredmeti.Margin = new Padding(4);
-            buttonPredmeti.Name = "buttonPredmeti";
-            buttonPredmeti.Size = new Size(294, 41);
-            buttonPredmeti.TabIndex = 3;
-            buttonPredmeti.Text = "Predmeti";
-            buttonPredmeti.UseVisualStyleBackColor = false;
-            buttonPredmeti.Click += buttonPredmeti_Click;
             // 
             // panel1
             // 
             panel1.BackColor = Color.Gainsboro;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(knjigeButton);
             panel1.Controls.Add(nastavniciButton);
             panel1.Controls.Add(grupeButton);
             panel1.Controls.Add(projektiButton);
@@ -87,8 +63,38 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(896, 61);
+            panel1.Size = new Size(1390, 61);
             panel1.TabIndex = 7;
+            // 
+            // knjigeButton
+            // 
+            knjigeButton.Cursor = Cursors.Hand;
+            knjigeButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            knjigeButton.Image = Properties.Resources.book_education_icon;
+            knjigeButton.Location = new Point(683, 11);
+            knjigeButton.Name = "knjigeButton";
+            knjigeButton.Size = new Size(134, 41);
+            knjigeButton.TabIndex = 7;
+            knjigeButton.Text = "Knjige";
+            knjigeButton.TextAlign = ContentAlignment.MiddleRight;
+            knjigeButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            knjigeButton.UseVisualStyleBackColor = true;
+            knjigeButton.Click += knjigeButton_Click;
+            // 
+            // nastavniciButton
+            // 
+            nastavniciButton.Cursor = Cursors.Hand;
+            nastavniciButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            nastavniciButton.Image = Properties.Resources.teacher_icon;
+            nastavniciButton.Location = new Point(543, 11);
+            nastavniciButton.Name = "nastavniciButton";
+            nastavniciButton.Size = new Size(134, 41);
+            nastavniciButton.TabIndex = 6;
+            nastavniciButton.Text = "Nastavnici";
+            nastavniciButton.TextAlign = ContentAlignment.MiddleRight;
+            nastavniciButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            nastavniciButton.UseVisualStyleBackColor = true;
+            nastavniciButton.Click += nastavniciButton_Click;
             // 
             // grupeButton
             // 
@@ -155,7 +161,7 @@
             closeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             closeButton.BackgroundImage = Properties.Resources.close_icon;
             closeButton.Cursor = Cursors.Hand;
-            closeButton.Location = new Point(859, 19);
+            closeButton.Location = new Point(1353, 19);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(24, 24);
             closeButton.TabIndex = 1;
@@ -167,7 +173,7 @@
             minButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             minButton.BackgroundImage = Properties.Resources.minimize_icon;
             minButton.Cursor = Cursors.Hand;
-            minButton.Location = new Point(829, 19);
+            minButton.Location = new Point(1323, 19);
             minButton.Name = "minButton";
             minButton.Size = new Size(24, 24);
             minButton.TabIndex = 0;
@@ -185,7 +191,7 @@
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 574);
             panel2.Name = "panel2";
-            panel2.Size = new Size(896, 45);
+            panel2.Size = new Size(1390, 45);
             panel2.TabIndex = 8;
             // 
             // detaljiLinkLabel
@@ -206,7 +212,7 @@
             dateTimeLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             dateTimeLabel.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             dateTimeLabel.ForeColor = SystemColors.ControlText;
-            dateTimeLabel.Location = new Point(581, 11);
+            dateTimeLabel.Location = new Point(1075, 11);
             dateTimeLabel.Name = "dateTimeLabel";
             dateTimeLabel.Size = new Size(302, 24);
             dateTimeLabel.TabIndex = 3;
@@ -241,31 +247,14 @@
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             // 
-            // nastavniciButton
-            // 
-            nastavniciButton.Cursor = Cursors.Hand;
-            nastavniciButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            nastavniciButton.Image = Properties.Resources.teacher_icon;
-            nastavniciButton.Location = new Point(543, 11);
-            nastavniciButton.Name = "nastavniciButton";
-            nastavniciButton.Size = new Size(134, 41);
-            nastavniciButton.TabIndex = 6;
-            nastavniciButton.Text = "Nastavnici";
-            nastavniciButton.TextAlign = ContentAlignment.MiddleRight;
-            nastavniciButton.TextImageRelation = TextImageRelation.ImageBeforeText;
-            nastavniciButton.UseVisualStyleBackColor = true;
-            nastavniciButton.Click += nastavniciButton_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkGray;
-            ClientSize = new Size(896, 619);
+            ClientSize = new Size(1390, 619);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Controls.Add(buttonPredmeti);
-            Controls.Add(buttonStudenti);
             Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
@@ -282,8 +271,6 @@
         }
 
         #endregion
-        private Button buttonStudenti;
-        private Button buttonPredmeti;
         private Panel panel1;
         private Panel panel2;
         private Button closeButton;
@@ -298,5 +285,6 @@
         private System.Windows.Forms.Timer timer1;
         private LinkLabel detaljiLinkLabel;
         private Button nastavniciButton;
+        private Button knjigeButton;
     }
 }
