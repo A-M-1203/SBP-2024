@@ -112,8 +112,15 @@ public partial class GrupeForma : Form
                     tipProjekta = "Praktični";
 
                 tipProjektaComboBox.SelectedItem = tipProjekta;
-
-                projekatComboBox.SelectedItem = projekat.Naziv;
+                foreach(var item in projekatComboBox.Items)
+                {
+                    if (item.ToString() == projekat.Naziv)
+                    {
+                        projekatComboBox.SelectedItem = projekat.Naziv;
+                        break;
+                    }
+                }
+                
             }
 
             dodajToolStripButton.Enabled = false;

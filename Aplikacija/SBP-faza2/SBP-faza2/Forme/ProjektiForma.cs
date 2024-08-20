@@ -39,6 +39,7 @@ public partial class ProjektiForma : Form
         grupniErrorLabel.Text = string.Empty;
         rokZaZavrsetakErrorLabel.Text = string.Empty;
         tipProjektaErrorLabel.Text = string.Empty;
+        preporuceniProgramskiJezikErrorLabel.Text = string.Empty;
         brojIzvestajaErrorLabel.Text = string.Empty;
         predmetErrorLabel.Text = string.Empty;
         maksimalanBrojStranaErrorLabel.Text = string.Empty;
@@ -94,6 +95,7 @@ public partial class ProjektiForma : Form
         grupniErrorLabel.Text = string.Empty;
         rokZaZavrsetakErrorLabel.Text = string.Empty;
         tipProjektaErrorLabel.Text = string.Empty;
+        preporuceniProgramskiJezikErrorLabel.Text = string.Empty;
         brojIzvestajaErrorLabel.Text = string.Empty;
         predmetErrorLabel.Text = string.Empty;
         maksimalanBrojStranaErrorLabel.Text = string.Empty;
@@ -120,6 +122,7 @@ public partial class ProjektiForma : Form
         grupniErrorLabel.Text = string.Empty;
         rokZaZavrsetakErrorLabel.Text = string.Empty;
         tipProjektaErrorLabel.Text = string.Empty;
+        preporuceniProgramskiJezikErrorLabel.Text = string.Empty;
         brojIzvestajaErrorLabel.Text = string.Empty;
         predmetErrorLabel.Text = string.Empty;
         maksimalanBrojStranaErrorLabel.Text = string.Empty;
@@ -139,27 +142,7 @@ public partial class ProjektiForma : Form
             }
         }
 
-        List<ProjekatPregled>? projekti = DTOManager.VratiSveProjektePregled();
-        if (projekti != null)
-        {
-            projekatDataGridView.Rows.Clear();
-
-            foreach (var p in projekti)
-            {
-                projekatDataGridView.Rows.Add(new string[]
-                {
-                    p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
-                    p.MaksimalanBrojStrana?.ToString() ?? string.Empty, p?.PreporuceniProgramskiJezik ?? string.Empty,
-                    p.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
-                    p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
-                });
-            }
-
-            projekatDataGridView.Refresh();
-            projekatDataGridView.ClearSelection();
-
-            brojProjekataLabel.Text = projekatDataGridView.RowCount.ToString();
-        }
+        DodajProjekteDataGridView();
     }
 
     private void skolskaGodinaTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -267,6 +250,7 @@ public partial class ProjektiForma : Form
             grupniErrorLabel.Text = string.Empty;
             rokZaZavrsetakErrorLabel.Text = string.Empty;
             tipProjektaErrorLabel.Text = string.Empty;
+            preporuceniProgramskiJezikErrorLabel.Text = string.Empty;
             brojIzvestajaErrorLabel.Text = string.Empty;
             predmetErrorLabel.Text = string.Empty;
             maksimalanBrojStranaErrorLabel.Text = string.Empty;
@@ -352,6 +336,13 @@ public partial class ProjektiForma : Form
             maksimalanBrojStranaErrorLabel.Text = "Tip projekta mora biti izabran";
         }
         else maksimalanBrojStranaErrorLabel.Text = string.Empty;
+
+        if (preporuceniProgramskiJezikComboBox.SelectedItem == null 
+            && preporuceniProgramskiJezikComboBox.Enabled == true)
+        {
+            result = false;
+            preporuceniProgramskiJezikErrorLabel.Text = "Programski jezik mora biti izabran";
+        }
 
         if (datumPocetkaDateTimePicker.Value < DateTime.Now && dodajButtonClicked == true)
         {
@@ -456,6 +447,7 @@ public partial class ProjektiForma : Form
         grupniErrorLabel.Text = string.Empty;
         rokZaZavrsetakErrorLabel.Text = string.Empty;
         tipProjektaErrorLabel.Text = string.Empty;
+        preporuceniProgramskiJezikErrorLabel.Text = string.Empty;
         brojIzvestajaErrorLabel.Text = string.Empty;
         predmetErrorLabel.Text = string.Empty;
         maksimalanBrojStranaErrorLabel.Text = string.Empty;
@@ -516,14 +508,14 @@ public partial class ProjektiForma : Form
                         Predmet = predmetBasic!,
                         Tip = "Praktični",
                         DatumPocetka = datumPocetkaDateTimePicker.Value,
-                        //DatumZavrsetka = datumZavrsetkaDateTimePicker.Enabled == true ? datumZavrsetkaDateTimePicker.Value : null
+                        DatumZavrsetka = datumZavrsetkaDateTimePicker.Enabled == true ? datumZavrsetkaDateTimePicker.Value : null
                     };
                 }
 
-                if (datumZavrsetkaDateTimePicker.Enabled == true)
-                    projekat.DatumZavrsetka = datumZavrsetkaDateTimePicker.Value;
-                else
-                    projekat.DatumZavrsetka = null;
+                //if (datumZavrsetkaDateTimePicker.Enabled == true)
+                //    projekat.DatumZavrsetka = datumZavrsetkaDateTimePicker.Value;
+                //else
+                //    projekat.DatumZavrsetka = null;
 
                 bool rez;
                 if (dodajButtonClicked == false)
@@ -594,6 +586,56 @@ public partial class ProjektiForma : Form
                     timer1.Enabled = true;
                     timer1.Start();
                 }
+
+                DodajProjekteDataGridView();
+
+                dodajButtonClicked = false;
+
+                odustaniToolStripButton.Enabled = false;
+                sacuvajToolStripButton.Enabled = false;
+
+                dodajToolStripButton.Enabled = true;
+
+                projekatDataGridView.ClearSelection();
+
+                nazivProjektaTextBox.Enabled = false;
+                skolskaGodinaTextBox.Enabled = false;
+                grupniComboBox.Enabled = false;
+                rokZaZavrsetakDateTimePicker.Enabled = false;
+                maksimalanBrojStranaNumericUpDown.Enabled = false;
+                preporuceniProgramskiJezikComboBox.Enabled = false;
+                brojIzvestajaNumericUpDown.Enabled = false;
+                predmetComboBox.Enabled = false;
+                tipProjektaComboBox.Enabled = false;
+                datumPocetkaDateTimePicker.Enabled = false;
+                datumZavrsetkaCheckBox.Checked = false;
+                kratakOpisTextBox.Enabled = false;
+
+                nazivProjektaTextBox.Text = string.Empty;
+                skolskaGodinaTextBox.Text = string.Empty;
+                grupniComboBox.SelectedIndex = -1;
+                rokZaZavrsetakDateTimePicker.Value = DateTime.Now.AddMonths(1).AddDays(2);
+                maksimalanBrojStranaNumericUpDown.Value = 0;
+                preporuceniProgramskiJezikComboBox.SelectedIndex = -1;
+                preporuceniProgramskiJezikComboBox.SelectedText = string.Empty;
+                brojIzvestajaNumericUpDown.Value = 0;
+                predmetComboBox.SelectedIndex = -1;
+                tipProjektaComboBox.SelectedIndex = -1;
+                datumPocetkaDateTimePicker.Value = DateTime.Now.AddDays(1);
+                datumZavrsetkaDateTimePicker.Value = rokZaZavrsetakDateTimePicker.Value;
+                kratakOpisTextBox.Text = string.Empty;
+
+                nazivProjektaErrorLabel.Text = string.Empty;
+                skolskaGodinaErrorLabel.Text = string.Empty;
+                grupniErrorLabel.Text = string.Empty;
+                rokZaZavrsetakErrorLabel.Text = string.Empty;
+                tipProjektaErrorLabel.Text = string.Empty;
+                preporuceniProgramskiJezikErrorLabel.Text = string.Empty;
+                brojIzvestajaErrorLabel.Text = string.Empty;
+                predmetErrorLabel.Text = string.Empty;
+                maksimalanBrojStranaErrorLabel.Text = string.Empty;
+                datumPocetkaErrorLabel.Text = string.Empty;
+                datumZavrsetkaErrorLabel.Text = string.Empty;
             }
         }
     }
@@ -681,6 +723,7 @@ public partial class ProjektiForma : Form
                 grupniErrorLabel.Text = string.Empty;
                 rokZaZavrsetakErrorLabel.Text = string.Empty;
                 tipProjektaErrorLabel.Text = string.Empty;
+                preporuceniProgramskiJezikErrorLabel.Text = string.Empty;
                 brojIzvestajaErrorLabel.Text = string.Empty;
                 predmetErrorLabel.Text = string.Empty;
                 maksimalanBrojStranaErrorLabel.Text = string.Empty;
@@ -1029,5 +1072,30 @@ public partial class ProjektiForma : Form
             datumZavrsetkaDateTimePicker.Enabled = true;
         else
             datumZavrsetkaDateTimePicker.Enabled = false;
+    }
+
+    private void DodajProjekteDataGridView()
+    {
+        List<ProjekatPregled>? projekti = DTOManager.VratiSveProjektePregled();
+        if (projekti != null)
+        {
+            projekatDataGridView.Rows.Clear();
+
+            foreach (var p in projekti)
+            {
+                projekatDataGridView.Rows.Add(new string[]
+                {
+                    p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
+                    p.MaksimalanBrojStrana?.ToString() ?? string.Empty, p?.PreporuceniProgramskiJezik ?? string.Empty,
+                    p?.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
+                    p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
+                });
+            }
+
+            projekatDataGridView.Refresh();
+            projekatDataGridView.ClearSelection();
+
+            brojProjekataLabel.Text = projekatDataGridView.RowCount.ToString();
+        }
     }
 }

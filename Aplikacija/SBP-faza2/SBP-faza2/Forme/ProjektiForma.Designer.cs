@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             projekatGroupBox = new GroupBox();
+            preporuceniProgramskiJezikErrorLabel = new Label();
             pretragaPanel = new Panel();
             izvestajiCheckBox = new CheckBox();
             maksStrCheckBox = new CheckBox();
@@ -139,7 +140,7 @@
             // 
             // projekatGroupBox
             // 
-            projekatGroupBox.Controls.Add(pretragaPanel);
+            projekatGroupBox.Controls.Add(preporuceniProgramskiJezikErrorLabel);
             projekatGroupBox.Controls.Add(brojProjekataLabel);
             projekatGroupBox.Controls.Add(ukupanBrojProjekataLabel);
             projekatGroupBox.Controls.Add(successStatusLabel);
@@ -185,6 +186,14 @@
             projekatGroupBox.TabStop = false;
             projekatGroupBox.Text = "Podaci";
             // 
+            // preporuceniProgramskiJezikErrorLabel
+            // 
+            preporuceniProgramskiJezikErrorLabel.ForeColor = Color.Red;
+            preporuceniProgramskiJezikErrorLabel.Location = new Point(6, 366);
+            preporuceniProgramskiJezikErrorLabel.Name = "preporuceniProgramskiJezikErrorLabel";
+            preporuceniProgramskiJezikErrorLabel.Size = new Size(497, 25);
+            preporuceniProgramskiJezikErrorLabel.TabIndex = 42;
+            // 
             // pretragaPanel
             // 
             pretragaPanel.BorderStyle = BorderStyle.FixedSingle;
@@ -219,7 +228,7 @@
             pretragaPanel.Controls.Add(rokZaZavrsetakPretragaLabel);
             pretragaPanel.Controls.Add(skolskaGodinaPretagaLabel);
             pretragaPanel.Controls.Add(nazivPretragaLabel);
-            pretragaPanel.Location = new Point(171, 0);
+            pretragaPanel.Location = new Point(183, 44);
             pretragaPanel.Name = "pretragaPanel";
             pretragaPanel.Size = new Size(881, 386);
             pretragaPanel.TabIndex = 40;
@@ -524,7 +533,7 @@
             // brojProjekataLabel
             // 
             brojProjekataLabel.AutoSize = true;
-            brojProjekataLabel.Location = new Point(281, 389);
+            brojProjekataLabel.Location = new Point(351, 391);
             brojProjekataLabel.Name = "brojProjekataLabel";
             brojProjekataLabel.Size = new Size(0, 24);
             brojProjekataLabel.TabIndex = 37;
@@ -532,7 +541,7 @@
             // ukupanBrojProjekataLabel
             // 
             ukupanBrojProjekataLabel.AutoSize = true;
-            ukupanBrojProjekataLabel.Location = new Point(57, 389);
+            ukupanBrojProjekataLabel.Location = new Point(57, 391);
             ukupanBrojProjekataLabel.Name = "ukupanBrojProjekataLabel";
             ukupanBrojProjekataLabel.Size = new Size(207, 24);
             ukupanBrojProjekataLabel.TabIndex = 36;
@@ -541,7 +550,7 @@
             // successStatusLabel
             // 
             successStatusLabel.ForeColor = SystemColors.ControlText;
-            successStatusLabel.Location = new Point(112, 422);
+            successStatusLabel.Location = new Point(114, 418);
             successStatusLabel.Name = "successStatusLabel";
             successStatusLabel.Size = new Size(423, 54);
             successStatusLabel.TabIndex = 35;
@@ -1110,6 +1119,7 @@
             BackColor = Color.DarkGray;
             ClientSize = new Size(1064, 728);
             Controls.Add(projekatDataGridView);
+            Controls.Add(pretragaPanel);
             Controls.Add(projekatToolStrip);
             Controls.Add(projekatGroupBox);
             Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -1237,5 +1247,6 @@
         private DataGridViewTextBoxColumn datumPocetkaColumn;
         private DataGridViewTextBoxColumn datumZavrsetkaColumn;
         private DataGridViewTextBoxColumn kratakOpisColumn;
+        private Label preporuceniProgramskiJezikErrorLabel;
     }
 }

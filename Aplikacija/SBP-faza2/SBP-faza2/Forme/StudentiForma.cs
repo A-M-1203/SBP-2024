@@ -279,7 +279,7 @@ public partial class StudentiForma : Form
                 StudentBasic? studentZaProveru = await DTOManager.VratiStudentBasicAsync(Id);
                 if (studentZaProveru!.BrojIndeksa != brojIndeksaTextBox.Text)
                 {
-                    rez = await DTOManager.PostojiIndeks(brojIndeksaTextBox.Text);
+                    rez = await DTOManager.PostojiIndeksAsync(brojIndeksaTextBox.Text);
                     if (rez == true)
                     {
                         successStatusLabel.ForeColor = Color.Red;
@@ -305,7 +305,7 @@ public partial class StudentiForma : Form
             }
             else
             {
-                postojiIndeks = await DTOManager.PostojiIndeks(brojIndeksaTextBox.Text);
+                postojiIndeks = await DTOManager.PostojiIndeksAsync(brojIndeksaTextBox.Text);
                 if (postojiIndeks == true)
                 {
                     successStatusLabel.ForeColor = Color.Red;

@@ -4,7 +4,7 @@
 #region Student
 public class StudentBasic
 {
-    public required long Id { get; set; }
+    public required long Id { get; init; }
     public required string LicnoIme { get; set; }
     public required string ImeRoditelja { get; set; }
     public required string Prezime { get; set; }
@@ -32,7 +32,7 @@ public class StudentBasic
 #region Predmet
 public class PredmetBasic
 {
-    public required long Id { get; set; }
+    public required long Id { get; init; }
     public required string Sifra { get; set; }
     public required string Naziv { get; set; }
     public required string Katedra { get; set; }
@@ -58,7 +58,7 @@ public class PredmetBasic
 #region Projekat
 public class ProjekatBasic
 {
-    public required long Id { get; set; }
+    public required long Id { get; init; }
     public required string Naziv { get; set; }
     public required string SkolskaGodina { get; set; }
     public required string Grupni { get; set; }
@@ -134,7 +134,7 @@ public class PrakticniProjekatBasic : ProjekatBasic
 
 public class ProjekatPregled
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
     public required string Naziv { get; set; }
     public required string SkolskaGodina { get; set; }
     public required string Grupni { get; set; }

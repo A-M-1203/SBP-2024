@@ -33,7 +33,7 @@ public class DTOManager
         return student;
     }
 
-    public static async Task<bool> PostojiIndeks(string indeks)
+    public static async Task<bool> PostojiIndeksAsync(string indeks)
     {
         try
         {
@@ -1000,7 +1000,7 @@ public class DTOManager
                     p.MaksimalanBrojStrana = projekat.MaksimalanBrojStrana;
                     p.Predmet = (((p.Predmet.Naziv != projekat.Predmet.Naziv)
                         || (p.Predmet.Sifra != projekat.Predmet.Sifra)) 
-                        ? await VratiPredmetAsync(projekat.Id) : p.Predmet)!;
+                        ? await VratiPredmetAsync(projekat.Predmet.Id) : p.Predmet)!;
                     p.DatumPocetka = projekat.DatumPocetka;
                     p.DatumZavrsetka = projekat.DatumZavrsetka;
                 }
@@ -1016,7 +1016,7 @@ public class DTOManager
                     p.BrojIzvestaja = projekat.BrojIzvestaja;
                     p.Predmet = (((p.Predmet.Naziv != projekat.Predmet.Naziv)
                         || (p.Predmet.Sifra != projekat.Predmet.Sifra))
-                        ? await VratiPredmetAsync(projekat.Id) : p.Predmet)!;
+                        ? await VratiPredmetAsync(projekat.Predmet.Id) : p.Predmet)!;
                     p.DatumPocetka = projekat.DatumPocetka;
                     p.DatumZavrsetka = projekat.DatumZavrsetka;
                 }
