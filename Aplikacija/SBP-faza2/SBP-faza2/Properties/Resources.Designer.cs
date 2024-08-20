@@ -213,6 +213,16 @@ namespace SBP_faza2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap teacher_icon {
+            get {
+                object obj = ResourceManager.GetObject("teacher_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap trash_can_icon {
             get {
                 object obj = ResourceManager.GetObject("trash_can_icon", resourceCulture);

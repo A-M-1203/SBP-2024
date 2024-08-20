@@ -44,6 +44,7 @@
             statusLabel = new Label();
             bazaLabel = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
+            nastavniciButton = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -76,6 +77,7 @@
             // 
             panel1.BackColor = Color.Gainsboro;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(nastavniciButton);
             panel1.Controls.Add(grupeButton);
             panel1.Controls.Add(projektiButton);
             panel1.Controls.Add(predmetiButton);
@@ -239,6 +241,21 @@
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             // 
+            // nastavniciButton
+            // 
+            nastavniciButton.Cursor = Cursors.Hand;
+            nastavniciButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            nastavniciButton.Image = Properties.Resources.teacher_icon;
+            nastavniciButton.Location = new Point(543, 11);
+            nastavniciButton.Name = "nastavniciButton";
+            nastavniciButton.Size = new Size(134, 41);
+            nastavniciButton.TabIndex = 6;
+            nastavniciButton.Text = "Nastavnici";
+            nastavniciButton.TextAlign = ContentAlignment.MiddleRight;
+            nastavniciButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            nastavniciButton.UseVisualStyleBackColor = true;
+            nastavniciButton.Click += nastavniciButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
@@ -280,5 +297,6 @@
         private Label dateTimeLabel;
         private System.Windows.Forms.Timer timer1;
         private LinkLabel detaljiLinkLabel;
+        private Button nastavniciButton;
     }
 }

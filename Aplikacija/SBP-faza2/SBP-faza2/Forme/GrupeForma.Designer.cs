@@ -43,7 +43,7 @@
             pretragaToolStripButton = new ToolStripButton();
             grupaGroupBox = new GroupBox();
             brojGrupaLabel = new Label();
-            ukupanBrojGrupaLabel = new Label();
+            brojPrikazanihGrupaLabel = new Label();
             successStatusLabel = new Label();
             projekatErrorLabel = new Label();
             tipProjektaErrorLabel = new Label();
@@ -175,7 +175,7 @@
             // grupaGroupBox
             // 
             grupaGroupBox.Controls.Add(brojGrupaLabel);
-            grupaGroupBox.Controls.Add(ukupanBrojGrupaLabel);
+            grupaGroupBox.Controls.Add(brojPrikazanihGrupaLabel);
             grupaGroupBox.Controls.Add(successStatusLabel);
             grupaGroupBox.Controls.Add(projekatErrorLabel);
             grupaGroupBox.Controls.Add(tipProjektaErrorLabel);
@@ -201,14 +201,14 @@
             brojGrupaLabel.Size = new Size(0, 24);
             brojGrupaLabel.TabIndex = 20;
             // 
-            // ukupanBrojGrupaLabel
+            // brojPrikazanihGrupaLabel
             // 
-            ukupanBrojGrupaLabel.AutoSize = true;
-            ukupanBrojGrupaLabel.Location = new Point(9, 231);
-            ukupanBrojGrupaLabel.Name = "ukupanBrojGrupaLabel";
-            ukupanBrojGrupaLabel.Size = new Size(175, 24);
-            ukupanBrojGrupaLabel.TabIndex = 19;
-            ukupanBrojGrupaLabel.Text = "Ukupan broj grupa:";
+            brojPrikazanihGrupaLabel.AutoSize = true;
+            brojPrikazanihGrupaLabel.Location = new Point(9, 231);
+            brojPrikazanihGrupaLabel.Name = "brojPrikazanihGrupaLabel";
+            brojPrikazanihGrupaLabel.Size = new Size(198, 24);
+            brojPrikazanihGrupaLabel.TabIndex = 19;
+            brojPrikazanihGrupaLabel.Text = "Broj prikazanih grupa:";
             // 
             // successStatusLabel
             // 
@@ -309,6 +309,7 @@
             grupaDataGridView.Columns.AddRange(new DataGridViewColumn[] { idColumn, nazivGrupeColumn, projekatColumn });
             grupaDataGridView.Dock = DockStyle.Right;
             grupaDataGridView.Location = new Point(545, 43);
+            grupaDataGridView.MultiSelect = false;
             grupaDataGridView.Name = "grupaDataGridView";
             grupaDataGridView.ReadOnly = true;
             grupaDataGridView.RowHeadersVisible = false;
@@ -516,7 +517,7 @@
         private DataGridViewTextBoxColumn projekatColumn;
         private Label successStatusLabel;
         private Label brojGrupaLabel;
-        private Label ukupanBrojGrupaLabel;
+        private Label brojPrikazanihGrupaLabel;
         private System.Windows.Forms.Timer timer1;
         private Panel pretragaPanel;
         private Label projekatPretragaLabel;

@@ -31,6 +31,44 @@
             components = new System.ComponentModel.Container();
             projekatGroupBox = new GroupBox();
             preporuceniProgramskiJezikErrorLabel = new Label();
+            brojProjekataLabel = new Label();
+            brojPrikazanihProjekataLabel = new Label();
+            successStatusLabel = new Label();
+            kratakOpisTextBox = new TextBox();
+            datumZavrsetkaErrorLabel = new Label();
+            datumZavrsetkaDateTimePicker = new DateTimePicker();
+            datumPocetkaErrorLabel = new Label();
+            datumPocetkaDateTimePicker = new DateTimePicker();
+            maksimalanBrojStranaErrorLabel = new Label();
+            predmetErrorLabel = new Label();
+            brojIzvestajaErrorLabel = new Label();
+            tipProjektaComboBox = new ComboBox();
+            predmetComboBox = new ComboBox();
+            brojIzvestajaNumericUpDown = new NumericUpDown();
+            tipProjektaErrorLabel = new Label();
+            preporuceniProgramskiJezikComboBox = new ComboBox();
+            maksimalanBrojStranaNumericUpDown = new NumericUpDown();
+            rokZaZavrsetakErrorLabel = new Label();
+            grupniErrorLabel = new Label();
+            rokZaZavrsetakDateTimePicker = new DateTimePicker();
+            grupniComboBox = new ComboBox();
+            nazivProjektaErrorLabel = new Label();
+            skolskaGodinaTextBox = new TextBox();
+            nazivProjektaTextBox = new TextBox();
+            predmetLabel = new Label();
+            datumZavrsetkaLabel = new Label();
+            datumPocetkaLabel = new Label();
+            tipProjektaLabel = new Label();
+            brojIzvestajaLabel = new Label();
+            preporuceniProgramskiJezikLabel = new Label();
+            maksimalanBrojStranaLabel = new Label();
+            rokZaZavrsetakLabel = new Label();
+            kratakOpisLabel = new Label();
+            grupniLabel = new Label();
+            skolskaGodinaLabel = new Label();
+            nazivProjektaLabel = new Label();
+            datumZavrsetkaCheckBox = new CheckBox();
+            skolskaGodinaErrorLabel = new Label();
             pretragaPanel = new Panel();
             izvestajiCheckBox = new CheckBox();
             maksStrCheckBox = new CheckBox();
@@ -63,44 +101,6 @@
             rokZaZavrsetakPretragaLabel = new Label();
             skolskaGodinaPretagaLabel = new Label();
             nazivPretragaLabel = new Label();
-            brojProjekataLabel = new Label();
-            ukupanBrojProjekataLabel = new Label();
-            successStatusLabel = new Label();
-            kratakOpisTextBox = new TextBox();
-            datumZavrsetkaErrorLabel = new Label();
-            datumZavrsetkaDateTimePicker = new DateTimePicker();
-            datumPocetkaErrorLabel = new Label();
-            datumPocetkaDateTimePicker = new DateTimePicker();
-            maksimalanBrojStranaErrorLabel = new Label();
-            predmetErrorLabel = new Label();
-            brojIzvestajaErrorLabel = new Label();
-            tipProjektaComboBox = new ComboBox();
-            predmetComboBox = new ComboBox();
-            brojIzvestajaNumericUpDown = new NumericUpDown();
-            tipProjektaErrorLabel = new Label();
-            preporuceniProgramskiJezikComboBox = new ComboBox();
-            maksimalanBrojStranaNumericUpDown = new NumericUpDown();
-            rokZaZavrsetakErrorLabel = new Label();
-            grupniErrorLabel = new Label();
-            rokZaZavrsetakDateTimePicker = new DateTimePicker();
-            grupniComboBox = new ComboBox();
-            skolskaGodinaErrorLabel = new Label();
-            nazivProjektaErrorLabel = new Label();
-            skolskaGodinaTextBox = new TextBox();
-            nazivProjektaTextBox = new TextBox();
-            predmetLabel = new Label();
-            datumZavrsetkaLabel = new Label();
-            datumPocetkaLabel = new Label();
-            tipProjektaLabel = new Label();
-            brojIzvestajaLabel = new Label();
-            preporuceniProgramskiJezikLabel = new Label();
-            maksimalanBrojStranaLabel = new Label();
-            rokZaZavrsetakLabel = new Label();
-            kratakOpisLabel = new Label();
-            grupniLabel = new Label();
-            skolskaGodinaLabel = new Label();
-            nazivProjektaLabel = new Label();
-            datumZavrsetkaCheckBox = new CheckBox();
             projekatToolStrip = new ToolStrip();
             dodajToolStripButton = new ToolStripButton();
             toolStripButton2 = new ToolStripSeparator();
@@ -129,11 +129,11 @@
             kratakOpisColumn = new DataGridViewTextBoxColumn();
             timer1 = new System.Windows.Forms.Timer(components);
             projekatGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)maksimalanBrojStranaNumericUpDown).BeginInit();
             pretragaPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)izvestajiPretraziNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)maksStrPretraziNumericUpDown).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)maksimalanBrojStranaNumericUpDown).BeginInit();
             projekatToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)projekatDataGridView).BeginInit();
             SuspendLayout();
@@ -142,7 +142,7 @@
             // 
             projekatGroupBox.Controls.Add(preporuceniProgramskiJezikErrorLabel);
             projekatGroupBox.Controls.Add(brojProjekataLabel);
-            projekatGroupBox.Controls.Add(ukupanBrojProjekataLabel);
+            projekatGroupBox.Controls.Add(brojPrikazanihProjekataLabel);
             projekatGroupBox.Controls.Add(successStatusLabel);
             projekatGroupBox.Controls.Add(kratakOpisTextBox);
             projekatGroupBox.Controls.Add(datumZavrsetkaErrorLabel);
@@ -162,7 +162,6 @@
             projekatGroupBox.Controls.Add(grupniErrorLabel);
             projekatGroupBox.Controls.Add(rokZaZavrsetakDateTimePicker);
             projekatGroupBox.Controls.Add(grupniComboBox);
-            projekatGroupBox.Controls.Add(skolskaGodinaErrorLabel);
             projekatGroupBox.Controls.Add(nazivProjektaErrorLabel);
             projekatGroupBox.Controls.Add(skolskaGodinaTextBox);
             projekatGroupBox.Controls.Add(nazivProjektaTextBox);
@@ -179,6 +178,7 @@
             projekatGroupBox.Controls.Add(skolskaGodinaLabel);
             projekatGroupBox.Controls.Add(nazivProjektaLabel);
             projekatGroupBox.Controls.Add(datumZavrsetkaCheckBox);
+            projekatGroupBox.Controls.Add(skolskaGodinaErrorLabel);
             projekatGroupBox.Location = new Point(12, 46);
             projekatGroupBox.Name = "projekatGroupBox";
             projekatGroupBox.Size = new Size(1042, 482);
@@ -193,6 +193,347 @@
             preporuceniProgramskiJezikErrorLabel.Name = "preporuceniProgramskiJezikErrorLabel";
             preporuceniProgramskiJezikErrorLabel.Size = new Size(497, 25);
             preporuceniProgramskiJezikErrorLabel.TabIndex = 42;
+            // 
+            // brojProjekataLabel
+            // 
+            brojProjekataLabel.AutoSize = true;
+            brojProjekataLabel.Location = new Point(351, 391);
+            brojProjekataLabel.Name = "brojProjekataLabel";
+            brojProjekataLabel.Size = new Size(0, 24);
+            brojProjekataLabel.TabIndex = 37;
+            // 
+            // brojPrikazanihProjekataLabel
+            // 
+            brojPrikazanihProjekataLabel.AutoSize = true;
+            brojPrikazanihProjekataLabel.Location = new Point(57, 391);
+            brojPrikazanihProjekataLabel.Name = "brojPrikazanihProjekataLabel";
+            brojPrikazanihProjekataLabel.Size = new Size(230, 24);
+            brojPrikazanihProjekataLabel.TabIndex = 36;
+            brojPrikazanihProjekataLabel.Text = "Broj prikazanih projekata:";
+            // 
+            // successStatusLabel
+            // 
+            successStatusLabel.ForeColor = SystemColors.ControlText;
+            successStatusLabel.Location = new Point(114, 418);
+            successStatusLabel.Name = "successStatusLabel";
+            successStatusLabel.Size = new Size(423, 54);
+            successStatusLabel.TabIndex = 35;
+            successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
+            successStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // kratakOpisTextBox
+            // 
+            kratakOpisTextBox.Enabled = false;
+            kratakOpisTextBox.Location = new Point(695, 334);
+            kratakOpisTextBox.Multiline = true;
+            kratakOpisTextBox.Name = "kratakOpisTextBox";
+            kratakOpisTextBox.ScrollBars = ScrollBars.Vertical;
+            kratakOpisTextBox.Size = new Size(341, 142);
+            kratakOpisTextBox.TabIndex = 34;
+            // 
+            // datumZavrsetkaErrorLabel
+            // 
+            datumZavrsetkaErrorLabel.ForeColor = Color.Red;
+            datumZavrsetkaErrorLabel.Location = new Point(509, 306);
+            datumZavrsetkaErrorLabel.Name = "datumZavrsetkaErrorLabel";
+            datumZavrsetkaErrorLabel.Size = new Size(527, 25);
+            datumZavrsetkaErrorLabel.TabIndex = 33;
+            // 
+            // datumZavrsetkaDateTimePicker
+            // 
+            datumZavrsetkaDateTimePicker.Enabled = false;
+            datumZavrsetkaDateTimePicker.Format = DateTimePickerFormat.Short;
+            datumZavrsetkaDateTimePicker.Location = new Point(883, 267);
+            datumZavrsetkaDateTimePicker.Name = "datumZavrsetkaDateTimePicker";
+            datumZavrsetkaDateTimePicker.Size = new Size(153, 32);
+            datumZavrsetkaDateTimePicker.TabIndex = 32;
+            // 
+            // datumPocetkaErrorLabel
+            // 
+            datumPocetkaErrorLabel.ForeColor = Color.Red;
+            datumPocetkaErrorLabel.Location = new Point(530, 243);
+            datumPocetkaErrorLabel.Name = "datumPocetkaErrorLabel";
+            datumPocetkaErrorLabel.Size = new Size(506, 25);
+            datumPocetkaErrorLabel.TabIndex = 31;
+            // 
+            // datumPocetkaDateTimePicker
+            // 
+            datumPocetkaDateTimePicker.Enabled = false;
+            datumPocetkaDateTimePicker.Format = DateTimePickerFormat.Short;
+            datumPocetkaDateTimePicker.Location = new Point(883, 208);
+            datumPocetkaDateTimePicker.Name = "datumPocetkaDateTimePicker";
+            datumPocetkaDateTimePicker.Size = new Size(153, 32);
+            datumPocetkaDateTimePicker.TabIndex = 30;
+            // 
+            // maksimalanBrojStranaErrorLabel
+            // 
+            maksimalanBrojStranaErrorLabel.ForeColor = Color.Red;
+            maksimalanBrojStranaErrorLabel.Location = new Point(530, 180);
+            maksimalanBrojStranaErrorLabel.Name = "maksimalanBrojStranaErrorLabel";
+            maksimalanBrojStranaErrorLabel.Size = new Size(506, 25);
+            maksimalanBrojStranaErrorLabel.TabIndex = 29;
+            // 
+            // predmetErrorLabel
+            // 
+            predmetErrorLabel.ForeColor = Color.Red;
+            predmetErrorLabel.Location = new Point(530, 118);
+            predmetErrorLabel.Name = "predmetErrorLabel";
+            predmetErrorLabel.Size = new Size(506, 25);
+            predmetErrorLabel.TabIndex = 28;
+            // 
+            // brojIzvestajaErrorLabel
+            // 
+            brojIzvestajaErrorLabel.ForeColor = Color.Red;
+            brojIzvestajaErrorLabel.Location = new Point(530, 55);
+            brojIzvestajaErrorLabel.Name = "brojIzvestajaErrorLabel";
+            brojIzvestajaErrorLabel.Size = new Size(506, 25);
+            brojIzvestajaErrorLabel.TabIndex = 27;
+            // 
+            // tipProjektaComboBox
+            // 
+            tipProjektaComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            tipProjektaComboBox.Enabled = false;
+            tipProjektaComboBox.FormattingEnabled = true;
+            tipProjektaComboBox.Items.AddRange(new object[] { "Teorijski", "Praktični" });
+            tipProjektaComboBox.Location = new Point(281, 270);
+            tipProjektaComboBox.Name = "tipProjektaComboBox";
+            tipProjektaComboBox.Size = new Size(206, 32);
+            tipProjektaComboBox.TabIndex = 26;
+            tipProjektaComboBox.SelectedIndexChanged += tipProjektaComboBox_SelectedIndexChanged;
+            tipProjektaComboBox.SelectionChangeCommitted += tipProjektaComboBox_SelectionChangeCommitted;
+            // 
+            // predmetComboBox
+            // 
+            predmetComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            predmetComboBox.FormattingEnabled = true;
+            predmetComboBox.Location = new Point(695, 83);
+            predmetComboBox.Name = "predmetComboBox";
+            predmetComboBox.Size = new Size(341, 32);
+            predmetComboBox.TabIndex = 25;
+            // 
+            // brojIzvestajaNumericUpDown
+            // 
+            brojIzvestajaNumericUpDown.Enabled = false;
+            brojIzvestajaNumericUpDown.Location = new Point(944, 20);
+            brojIzvestajaNumericUpDown.Name = "brojIzvestajaNumericUpDown";
+            brojIzvestajaNumericUpDown.Size = new Size(92, 32);
+            brojIzvestajaNumericUpDown.TabIndex = 24;
+            // 
+            // tipProjektaErrorLabel
+            // 
+            tipProjektaErrorLabel.ForeColor = Color.Red;
+            tipProjektaErrorLabel.Location = new Point(6, 306);
+            tipProjektaErrorLabel.Name = "tipProjektaErrorLabel";
+            tipProjektaErrorLabel.Size = new Size(497, 25);
+            tipProjektaErrorLabel.TabIndex = 23;
+            // 
+            // preporuceniProgramskiJezikComboBox
+            // 
+            preporuceniProgramskiJezikComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            preporuceniProgramskiJezikComboBox.Enabled = false;
+            preporuceniProgramskiJezikComboBox.FormattingEnabled = true;
+            preporuceniProgramskiJezikComboBox.Items.AddRange(new object[] { "C", "C++", "C#", "Java", "JavaScript", "Python", "Scala", "Rust", "Kotlin", "Swift", "GO", "PHP" });
+            preporuceniProgramskiJezikComboBox.Location = new Point(281, 334);
+            preporuceniProgramskiJezikComboBox.Name = "preporuceniProgramskiJezikComboBox";
+            preporuceniProgramskiJezikComboBox.Size = new Size(206, 32);
+            preporuceniProgramskiJezikComboBox.TabIndex = 22;
+            // 
+            // maksimalanBrojStranaNumericUpDown
+            // 
+            maksimalanBrojStranaNumericUpDown.Enabled = false;
+            maksimalanBrojStranaNumericUpDown.Location = new Point(944, 144);
+            maksimalanBrojStranaNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            maksimalanBrojStranaNumericUpDown.Name = "maksimalanBrojStranaNumericUpDown";
+            maksimalanBrojStranaNumericUpDown.Size = new Size(92, 32);
+            maksimalanBrojStranaNumericUpDown.TabIndex = 21;
+            // 
+            // rokZaZavrsetakErrorLabel
+            // 
+            rokZaZavrsetakErrorLabel.ForeColor = Color.Red;
+            rokZaZavrsetakErrorLabel.Location = new Point(6, 243);
+            rokZaZavrsetakErrorLabel.Name = "rokZaZavrsetakErrorLabel";
+            rokZaZavrsetakErrorLabel.Size = new Size(492, 25);
+            rokZaZavrsetakErrorLabel.TabIndex = 20;
+            // 
+            // grupniErrorLabel
+            // 
+            grupniErrorLabel.ForeColor = Color.Red;
+            grupniErrorLabel.Location = new Point(6, 180);
+            grupniErrorLabel.Name = "grupniErrorLabel";
+            grupniErrorLabel.Size = new Size(497, 25);
+            grupniErrorLabel.TabIndex = 19;
+            // 
+            // rokZaZavrsetakDateTimePicker
+            // 
+            rokZaZavrsetakDateTimePicker.Enabled = false;
+            rokZaZavrsetakDateTimePicker.Format = DateTimePickerFormat.Short;
+            rokZaZavrsetakDateTimePicker.Location = new Point(281, 208);
+            rokZaZavrsetakDateTimePicker.Name = "rokZaZavrsetakDateTimePicker";
+            rokZaZavrsetakDateTimePicker.Size = new Size(152, 32);
+            rokZaZavrsetakDateTimePicker.TabIndex = 18;
+            // 
+            // grupniComboBox
+            // 
+            grupniComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            grupniComboBox.Enabled = false;
+            grupniComboBox.FormattingEnabled = true;
+            grupniComboBox.Items.AddRange(new object[] { "Da", "Ne" });
+            grupniComboBox.Location = new Point(281, 144);
+            grupniComboBox.Name = "grupniComboBox";
+            grupniComboBox.Size = new Size(92, 32);
+            grupniComboBox.TabIndex = 16;
+            // 
+            // nazivProjektaErrorLabel
+            // 
+            nazivProjektaErrorLabel.ForeColor = Color.Red;
+            nazivProjektaErrorLabel.Location = new Point(6, 55);
+            nazivProjektaErrorLabel.Name = "nazivProjektaErrorLabel";
+            nazivProjektaErrorLabel.Size = new Size(497, 25);
+            nazivProjektaErrorLabel.TabIndex = 14;
+            // 
+            // skolskaGodinaTextBox
+            // 
+            skolskaGodinaTextBox.Enabled = false;
+            skolskaGodinaTextBox.Location = new Point(281, 83);
+            skolskaGodinaTextBox.MaxLength = 9;
+            skolskaGodinaTextBox.Name = "skolskaGodinaTextBox";
+            skolskaGodinaTextBox.Size = new Size(206, 32);
+            skolskaGodinaTextBox.TabIndex = 13;
+            skolskaGodinaTextBox.KeyPress += skolskaGodinaTextBox_KeyPress;
+            // 
+            // nazivProjektaTextBox
+            // 
+            nazivProjektaTextBox.Enabled = false;
+            nazivProjektaTextBox.Location = new Point(281, 20);
+            nazivProjektaTextBox.Name = "nazivProjektaTextBox";
+            nazivProjektaTextBox.Size = new Size(206, 32);
+            nazivProjektaTextBox.TabIndex = 12;
+            // 
+            // predmetLabel
+            // 
+            predmetLabel.AutoSize = true;
+            predmetLabel.Location = new Point(569, 86);
+            predmetLabel.Name = "predmetLabel";
+            predmetLabel.Size = new Size(96, 24);
+            predmetLabel.TabIndex = 11;
+            predmetLabel.Text = "Predmet*";
+            // 
+            // datumZavrsetkaLabel
+            // 
+            datumZavrsetkaLabel.AutoSize = true;
+            datumZavrsetkaLabel.Location = new Point(509, 273);
+            datumZavrsetkaLabel.Name = "datumZavrsetkaLabel";
+            datumZavrsetkaLabel.Size = new Size(156, 24);
+            datumZavrsetkaLabel.TabIndex = 10;
+            datumZavrsetkaLabel.Text = "Datum završetka";
+            // 
+            // datumPocetkaLabel
+            // 
+            datumPocetkaLabel.AutoSize = true;
+            datumPocetkaLabel.Location = new Point(511, 214);
+            datumPocetkaLabel.Name = "datumPocetkaLabel";
+            datumPocetkaLabel.Size = new Size(154, 24);
+            datumPocetkaLabel.TabIndex = 9;
+            datumPocetkaLabel.Text = "Datum početka*";
+            // 
+            // tipProjektaLabel
+            // 
+            tipProjektaLabel.AutoSize = true;
+            tipProjektaLabel.Location = new Point(140, 273);
+            tipProjektaLabel.Name = "tipProjektaLabel";
+            tipProjektaLabel.Size = new Size(124, 24);
+            tipProjektaLabel.TabIndex = 8;
+            tipProjektaLabel.Text = "Tip projekta*";
+            // 
+            // brojIzvestajaLabel
+            // 
+            brojIzvestajaLabel.AutoSize = true;
+            brojIzvestajaLabel.Location = new Point(530, 23);
+            brojIzvestajaLabel.Name = "brojIzvestajaLabel";
+            brojIzvestajaLabel.Size = new Size(135, 24);
+            brojIzvestajaLabel.TabIndex = 7;
+            brojIzvestajaLabel.Text = "Broj izveštaja*";
+            // 
+            // preporuceniProgramskiJezikLabel
+            // 
+            preporuceniProgramskiJezikLabel.AutoSize = true;
+            preporuceniProgramskiJezikLabel.Location = new Point(6, 337);
+            preporuceniProgramskiJezikLabel.Name = "preporuceniProgramskiJezikLabel";
+            preporuceniProgramskiJezikLabel.Size = new Size(258, 24);
+            preporuceniProgramskiJezikLabel.TabIndex = 6;
+            preporuceniProgramskiJezikLabel.Text = "Preporučeni programski jezik";
+            // 
+            // maksimalanBrojStranaLabel
+            // 
+            maksimalanBrojStranaLabel.AutoSize = true;
+            maksimalanBrojStranaLabel.Location = new Point(558, 147);
+            maksimalanBrojStranaLabel.Name = "maksimalanBrojStranaLabel";
+            maksimalanBrojStranaLabel.Size = new Size(103, 24);
+            maksimalanBrojStranaLabel.TabIndex = 5;
+            maksimalanBrojStranaLabel.Text = "Broj strana";
+            // 
+            // rokZaZavrsetakLabel
+            // 
+            rokZaZavrsetakLabel.AutoSize = true;
+            rokZaZavrsetakLabel.Location = new Point(100, 214);
+            rokZaZavrsetakLabel.Name = "rokZaZavrsetakLabel";
+            rokZaZavrsetakLabel.Size = new Size(164, 24);
+            rokZaZavrsetakLabel.TabIndex = 4;
+            rokZaZavrsetakLabel.Text = "Rok za zavrsetak*";
+            // 
+            // kratakOpisLabel
+            // 
+            kratakOpisLabel.AutoSize = true;
+            kratakOpisLabel.Location = new Point(558, 337);
+            kratakOpisLabel.Name = "kratakOpisLabel";
+            kratakOpisLabel.Size = new Size(107, 24);
+            kratakOpisLabel.TabIndex = 3;
+            kratakOpisLabel.Text = "Kratak opis";
+            // 
+            // grupniLabel
+            // 
+            grupniLabel.AutoSize = true;
+            grupniLabel.Location = new Point(185, 147);
+            grupniLabel.Name = "grupniLabel";
+            grupniLabel.Size = new Size(79, 24);
+            grupniLabel.TabIndex = 2;
+            grupniLabel.Text = "Grupni*";
+            // 
+            // skolskaGodinaLabel
+            // 
+            skolskaGodinaLabel.AutoSize = true;
+            skolskaGodinaLabel.Location = new Point(114, 86);
+            skolskaGodinaLabel.Name = "skolskaGodinaLabel";
+            skolskaGodinaLabel.Size = new Size(150, 24);
+            skolskaGodinaLabel.TabIndex = 1;
+            skolskaGodinaLabel.Text = "Školska godina*";
+            // 
+            // nazivProjektaLabel
+            // 
+            nazivProjektaLabel.AutoSize = true;
+            nazivProjektaLabel.Location = new Point(118, 23);
+            nazivProjektaLabel.Name = "nazivProjektaLabel";
+            nazivProjektaLabel.Size = new Size(146, 24);
+            nazivProjektaLabel.TabIndex = 0;
+            nazivProjektaLabel.Text = "Naziv projekta*";
+            // 
+            // datumZavrsetkaCheckBox
+            // 
+            datumZavrsetkaCheckBox.AutoSize = true;
+            datumZavrsetkaCheckBox.Location = new Point(671, 278);
+            datumZavrsetkaCheckBox.Name = "datumZavrsetkaCheckBox";
+            datumZavrsetkaCheckBox.Size = new Size(18, 17);
+            datumZavrsetkaCheckBox.TabIndex = 41;
+            datumZavrsetkaCheckBox.UseVisualStyleBackColor = true;
+            datumZavrsetkaCheckBox.CheckedChanged += datumZavrsetkaCheckBox_CheckedChanged;
+            // 
+            // skolskaGodinaErrorLabel
+            // 
+            skolskaGodinaErrorLabel.ForeColor = Color.Red;
+            skolskaGodinaErrorLabel.Location = new Point(6, 118);
+            skolskaGodinaErrorLabel.Name = "skolskaGodinaErrorLabel";
+            skolskaGodinaErrorLabel.Size = new Size(497, 25);
+            skolskaGodinaErrorLabel.TabIndex = 15;
             // 
             // pretragaPanel
             // 
@@ -530,347 +871,6 @@
             nazivPretragaLabel.TabIndex = 0;
             nazivPretragaLabel.Text = "Naziv";
             // 
-            // brojProjekataLabel
-            // 
-            brojProjekataLabel.AutoSize = true;
-            brojProjekataLabel.Location = new Point(351, 391);
-            brojProjekataLabel.Name = "brojProjekataLabel";
-            brojProjekataLabel.Size = new Size(0, 24);
-            brojProjekataLabel.TabIndex = 37;
-            // 
-            // ukupanBrojProjekataLabel
-            // 
-            ukupanBrojProjekataLabel.AutoSize = true;
-            ukupanBrojProjekataLabel.Location = new Point(57, 391);
-            ukupanBrojProjekataLabel.Name = "ukupanBrojProjekataLabel";
-            ukupanBrojProjekataLabel.Size = new Size(207, 24);
-            ukupanBrojProjekataLabel.TabIndex = 36;
-            ukupanBrojProjekataLabel.Text = "Ukupan broj projekata:";
-            // 
-            // successStatusLabel
-            // 
-            successStatusLabel.ForeColor = SystemColors.ControlText;
-            successStatusLabel.Location = new Point(114, 418);
-            successStatusLabel.Name = "successStatusLabel";
-            successStatusLabel.Size = new Size(423, 54);
-            successStatusLabel.TabIndex = 35;
-            successStatusLabel.Text = "Polja označena zvezdicom su obavezna";
-            successStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // kratakOpisTextBox
-            // 
-            kratakOpisTextBox.Enabled = false;
-            kratakOpisTextBox.Location = new Point(695, 334);
-            kratakOpisTextBox.Multiline = true;
-            kratakOpisTextBox.Name = "kratakOpisTextBox";
-            kratakOpisTextBox.ScrollBars = ScrollBars.Vertical;
-            kratakOpisTextBox.Size = new Size(341, 142);
-            kratakOpisTextBox.TabIndex = 34;
-            // 
-            // datumZavrsetkaErrorLabel
-            // 
-            datumZavrsetkaErrorLabel.ForeColor = Color.Red;
-            datumZavrsetkaErrorLabel.Location = new Point(509, 306);
-            datumZavrsetkaErrorLabel.Name = "datumZavrsetkaErrorLabel";
-            datumZavrsetkaErrorLabel.Size = new Size(527, 25);
-            datumZavrsetkaErrorLabel.TabIndex = 33;
-            // 
-            // datumZavrsetkaDateTimePicker
-            // 
-            datumZavrsetkaDateTimePicker.Enabled = false;
-            datumZavrsetkaDateTimePicker.Format = DateTimePickerFormat.Short;
-            datumZavrsetkaDateTimePicker.Location = new Point(883, 267);
-            datumZavrsetkaDateTimePicker.Name = "datumZavrsetkaDateTimePicker";
-            datumZavrsetkaDateTimePicker.Size = new Size(153, 32);
-            datumZavrsetkaDateTimePicker.TabIndex = 32;
-            // 
-            // datumPocetkaErrorLabel
-            // 
-            datumPocetkaErrorLabel.ForeColor = Color.Red;
-            datumPocetkaErrorLabel.Location = new Point(530, 243);
-            datumPocetkaErrorLabel.Name = "datumPocetkaErrorLabel";
-            datumPocetkaErrorLabel.Size = new Size(506, 25);
-            datumPocetkaErrorLabel.TabIndex = 31;
-            // 
-            // datumPocetkaDateTimePicker
-            // 
-            datumPocetkaDateTimePicker.Enabled = false;
-            datumPocetkaDateTimePicker.Format = DateTimePickerFormat.Short;
-            datumPocetkaDateTimePicker.Location = new Point(883, 208);
-            datumPocetkaDateTimePicker.Name = "datumPocetkaDateTimePicker";
-            datumPocetkaDateTimePicker.Size = new Size(153, 32);
-            datumPocetkaDateTimePicker.TabIndex = 30;
-            // 
-            // maksimalanBrojStranaErrorLabel
-            // 
-            maksimalanBrojStranaErrorLabel.ForeColor = Color.Red;
-            maksimalanBrojStranaErrorLabel.Location = new Point(530, 180);
-            maksimalanBrojStranaErrorLabel.Name = "maksimalanBrojStranaErrorLabel";
-            maksimalanBrojStranaErrorLabel.Size = new Size(506, 25);
-            maksimalanBrojStranaErrorLabel.TabIndex = 29;
-            // 
-            // predmetErrorLabel
-            // 
-            predmetErrorLabel.ForeColor = Color.Red;
-            predmetErrorLabel.Location = new Point(530, 118);
-            predmetErrorLabel.Name = "predmetErrorLabel";
-            predmetErrorLabel.Size = new Size(506, 25);
-            predmetErrorLabel.TabIndex = 28;
-            // 
-            // brojIzvestajaErrorLabel
-            // 
-            brojIzvestajaErrorLabel.ForeColor = Color.Red;
-            brojIzvestajaErrorLabel.Location = new Point(530, 55);
-            brojIzvestajaErrorLabel.Name = "brojIzvestajaErrorLabel";
-            brojIzvestajaErrorLabel.Size = new Size(506, 25);
-            brojIzvestajaErrorLabel.TabIndex = 27;
-            // 
-            // tipProjektaComboBox
-            // 
-            tipProjektaComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            tipProjektaComboBox.Enabled = false;
-            tipProjektaComboBox.FormattingEnabled = true;
-            tipProjektaComboBox.Items.AddRange(new object[] { "Teorijski", "Praktični" });
-            tipProjektaComboBox.Location = new Point(281, 270);
-            tipProjektaComboBox.Name = "tipProjektaComboBox";
-            tipProjektaComboBox.Size = new Size(206, 32);
-            tipProjektaComboBox.TabIndex = 26;
-            tipProjektaComboBox.SelectedIndexChanged += tipProjektaComboBox_SelectedIndexChanged;
-            tipProjektaComboBox.SelectionChangeCommitted += tipProjektaComboBox_SelectionChangeCommitted;
-            // 
-            // predmetComboBox
-            // 
-            predmetComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            predmetComboBox.FormattingEnabled = true;
-            predmetComboBox.Location = new Point(695, 83);
-            predmetComboBox.Name = "predmetComboBox";
-            predmetComboBox.Size = new Size(341, 32);
-            predmetComboBox.TabIndex = 25;
-            // 
-            // brojIzvestajaNumericUpDown
-            // 
-            brojIzvestajaNumericUpDown.Enabled = false;
-            brojIzvestajaNumericUpDown.Location = new Point(944, 20);
-            brojIzvestajaNumericUpDown.Name = "brojIzvestajaNumericUpDown";
-            brojIzvestajaNumericUpDown.Size = new Size(92, 32);
-            brojIzvestajaNumericUpDown.TabIndex = 24;
-            // 
-            // tipProjektaErrorLabel
-            // 
-            tipProjektaErrorLabel.ForeColor = Color.Red;
-            tipProjektaErrorLabel.Location = new Point(6, 306);
-            tipProjektaErrorLabel.Name = "tipProjektaErrorLabel";
-            tipProjektaErrorLabel.Size = new Size(497, 25);
-            tipProjektaErrorLabel.TabIndex = 23;
-            // 
-            // preporuceniProgramskiJezikComboBox
-            // 
-            preporuceniProgramskiJezikComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            preporuceniProgramskiJezikComboBox.Enabled = false;
-            preporuceniProgramskiJezikComboBox.FormattingEnabled = true;
-            preporuceniProgramskiJezikComboBox.Items.AddRange(new object[] { "C", "C++", "C#", "Java", "JavaScript", "Python", "Scala", "Rust", "Kotlin", "Swift", "GO", "PHP" });
-            preporuceniProgramskiJezikComboBox.Location = new Point(281, 334);
-            preporuceniProgramskiJezikComboBox.Name = "preporuceniProgramskiJezikComboBox";
-            preporuceniProgramskiJezikComboBox.Size = new Size(206, 32);
-            preporuceniProgramskiJezikComboBox.TabIndex = 22;
-            // 
-            // maksimalanBrojStranaNumericUpDown
-            // 
-            maksimalanBrojStranaNumericUpDown.Enabled = false;
-            maksimalanBrojStranaNumericUpDown.Location = new Point(944, 144);
-            maksimalanBrojStranaNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            maksimalanBrojStranaNumericUpDown.Name = "maksimalanBrojStranaNumericUpDown";
-            maksimalanBrojStranaNumericUpDown.Size = new Size(92, 32);
-            maksimalanBrojStranaNumericUpDown.TabIndex = 21;
-            // 
-            // rokZaZavrsetakErrorLabel
-            // 
-            rokZaZavrsetakErrorLabel.ForeColor = Color.Red;
-            rokZaZavrsetakErrorLabel.Location = new Point(6, 243);
-            rokZaZavrsetakErrorLabel.Name = "rokZaZavrsetakErrorLabel";
-            rokZaZavrsetakErrorLabel.Size = new Size(492, 25);
-            rokZaZavrsetakErrorLabel.TabIndex = 20;
-            // 
-            // grupniErrorLabel
-            // 
-            grupniErrorLabel.ForeColor = Color.Red;
-            grupniErrorLabel.Location = new Point(6, 180);
-            grupniErrorLabel.Name = "grupniErrorLabel";
-            grupniErrorLabel.Size = new Size(497, 25);
-            grupniErrorLabel.TabIndex = 19;
-            // 
-            // rokZaZavrsetakDateTimePicker
-            // 
-            rokZaZavrsetakDateTimePicker.Enabled = false;
-            rokZaZavrsetakDateTimePicker.Format = DateTimePickerFormat.Short;
-            rokZaZavrsetakDateTimePicker.Location = new Point(281, 208);
-            rokZaZavrsetakDateTimePicker.Name = "rokZaZavrsetakDateTimePicker";
-            rokZaZavrsetakDateTimePicker.Size = new Size(152, 32);
-            rokZaZavrsetakDateTimePicker.TabIndex = 18;
-            // 
-            // grupniComboBox
-            // 
-            grupniComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            grupniComboBox.Enabled = false;
-            grupniComboBox.FormattingEnabled = true;
-            grupniComboBox.Items.AddRange(new object[] { "Da", "Ne" });
-            grupniComboBox.Location = new Point(281, 144);
-            grupniComboBox.Name = "grupniComboBox";
-            grupniComboBox.Size = new Size(92, 32);
-            grupniComboBox.TabIndex = 16;
-            // 
-            // skolskaGodinaErrorLabel
-            // 
-            skolskaGodinaErrorLabel.ForeColor = Color.Red;
-            skolskaGodinaErrorLabel.Location = new Point(6, 118);
-            skolskaGodinaErrorLabel.Name = "skolskaGodinaErrorLabel";
-            skolskaGodinaErrorLabel.Size = new Size(497, 25);
-            skolskaGodinaErrorLabel.TabIndex = 15;
-            // 
-            // nazivProjektaErrorLabel
-            // 
-            nazivProjektaErrorLabel.ForeColor = Color.Red;
-            nazivProjektaErrorLabel.Location = new Point(6, 55);
-            nazivProjektaErrorLabel.Name = "nazivProjektaErrorLabel";
-            nazivProjektaErrorLabel.Size = new Size(497, 25);
-            nazivProjektaErrorLabel.TabIndex = 14;
-            // 
-            // skolskaGodinaTextBox
-            // 
-            skolskaGodinaTextBox.Enabled = false;
-            skolskaGodinaTextBox.Location = new Point(281, 83);
-            skolskaGodinaTextBox.MaxLength = 9;
-            skolskaGodinaTextBox.Name = "skolskaGodinaTextBox";
-            skolskaGodinaTextBox.Size = new Size(206, 32);
-            skolskaGodinaTextBox.TabIndex = 13;
-            skolskaGodinaTextBox.KeyPress += skolskaGodinaTextBox_KeyPress;
-            // 
-            // nazivProjektaTextBox
-            // 
-            nazivProjektaTextBox.Enabled = false;
-            nazivProjektaTextBox.Location = new Point(281, 20);
-            nazivProjektaTextBox.Name = "nazivProjektaTextBox";
-            nazivProjektaTextBox.Size = new Size(206, 32);
-            nazivProjektaTextBox.TabIndex = 12;
-            // 
-            // predmetLabel
-            // 
-            predmetLabel.AutoSize = true;
-            predmetLabel.Location = new Point(569, 86);
-            predmetLabel.Name = "predmetLabel";
-            predmetLabel.Size = new Size(96, 24);
-            predmetLabel.TabIndex = 11;
-            predmetLabel.Text = "Predmet*";
-            // 
-            // datumZavrsetkaLabel
-            // 
-            datumZavrsetkaLabel.AutoSize = true;
-            datumZavrsetkaLabel.Location = new Point(509, 273);
-            datumZavrsetkaLabel.Name = "datumZavrsetkaLabel";
-            datumZavrsetkaLabel.Size = new Size(156, 24);
-            datumZavrsetkaLabel.TabIndex = 10;
-            datumZavrsetkaLabel.Text = "Datum završetka";
-            // 
-            // datumPocetkaLabel
-            // 
-            datumPocetkaLabel.AutoSize = true;
-            datumPocetkaLabel.Location = new Point(511, 214);
-            datumPocetkaLabel.Name = "datumPocetkaLabel";
-            datumPocetkaLabel.Size = new Size(154, 24);
-            datumPocetkaLabel.TabIndex = 9;
-            datumPocetkaLabel.Text = "Datum početka*";
-            // 
-            // tipProjektaLabel
-            // 
-            tipProjektaLabel.AutoSize = true;
-            tipProjektaLabel.Location = new Point(140, 273);
-            tipProjektaLabel.Name = "tipProjektaLabel";
-            tipProjektaLabel.Size = new Size(124, 24);
-            tipProjektaLabel.TabIndex = 8;
-            tipProjektaLabel.Text = "Tip projekta*";
-            // 
-            // brojIzvestajaLabel
-            // 
-            brojIzvestajaLabel.AutoSize = true;
-            brojIzvestajaLabel.Location = new Point(530, 23);
-            brojIzvestajaLabel.Name = "brojIzvestajaLabel";
-            brojIzvestajaLabel.Size = new Size(135, 24);
-            brojIzvestajaLabel.TabIndex = 7;
-            brojIzvestajaLabel.Text = "Broj izveštaja*";
-            // 
-            // preporuceniProgramskiJezikLabel
-            // 
-            preporuceniProgramskiJezikLabel.AutoSize = true;
-            preporuceniProgramskiJezikLabel.Location = new Point(6, 337);
-            preporuceniProgramskiJezikLabel.Name = "preporuceniProgramskiJezikLabel";
-            preporuceniProgramskiJezikLabel.Size = new Size(258, 24);
-            preporuceniProgramskiJezikLabel.TabIndex = 6;
-            preporuceniProgramskiJezikLabel.Text = "Preporučeni programski jezik";
-            // 
-            // maksimalanBrojStranaLabel
-            // 
-            maksimalanBrojStranaLabel.AutoSize = true;
-            maksimalanBrojStranaLabel.Location = new Point(558, 147);
-            maksimalanBrojStranaLabel.Name = "maksimalanBrojStranaLabel";
-            maksimalanBrojStranaLabel.Size = new Size(103, 24);
-            maksimalanBrojStranaLabel.TabIndex = 5;
-            maksimalanBrojStranaLabel.Text = "Broj strana";
-            // 
-            // rokZaZavrsetakLabel
-            // 
-            rokZaZavrsetakLabel.AutoSize = true;
-            rokZaZavrsetakLabel.Location = new Point(100, 214);
-            rokZaZavrsetakLabel.Name = "rokZaZavrsetakLabel";
-            rokZaZavrsetakLabel.Size = new Size(164, 24);
-            rokZaZavrsetakLabel.TabIndex = 4;
-            rokZaZavrsetakLabel.Text = "Rok za zavrsetak*";
-            // 
-            // kratakOpisLabel
-            // 
-            kratakOpisLabel.AutoSize = true;
-            kratakOpisLabel.Location = new Point(558, 337);
-            kratakOpisLabel.Name = "kratakOpisLabel";
-            kratakOpisLabel.Size = new Size(107, 24);
-            kratakOpisLabel.TabIndex = 3;
-            kratakOpisLabel.Text = "Kratak opis";
-            // 
-            // grupniLabel
-            // 
-            grupniLabel.AutoSize = true;
-            grupniLabel.Location = new Point(185, 147);
-            grupniLabel.Name = "grupniLabel";
-            grupniLabel.Size = new Size(79, 24);
-            grupniLabel.TabIndex = 2;
-            grupniLabel.Text = "Grupni*";
-            // 
-            // skolskaGodinaLabel
-            // 
-            skolskaGodinaLabel.AutoSize = true;
-            skolskaGodinaLabel.Location = new Point(114, 86);
-            skolskaGodinaLabel.Name = "skolskaGodinaLabel";
-            skolskaGodinaLabel.Size = new Size(150, 24);
-            skolskaGodinaLabel.TabIndex = 1;
-            skolskaGodinaLabel.Text = "Školska godina*";
-            // 
-            // nazivProjektaLabel
-            // 
-            nazivProjektaLabel.AutoSize = true;
-            nazivProjektaLabel.Location = new Point(118, 23);
-            nazivProjektaLabel.Name = "nazivProjektaLabel";
-            nazivProjektaLabel.Size = new Size(146, 24);
-            nazivProjektaLabel.TabIndex = 0;
-            nazivProjektaLabel.Text = "Naziv projekta*";
-            // 
-            // datumZavrsetkaCheckBox
-            // 
-            datumZavrsetkaCheckBox.AutoSize = true;
-            datumZavrsetkaCheckBox.Location = new Point(671, 278);
-            datumZavrsetkaCheckBox.Name = "datumZavrsetkaCheckBox";
-            datumZavrsetkaCheckBox.Size = new Size(18, 17);
-            datumZavrsetkaCheckBox.TabIndex = 41;
-            datumZavrsetkaCheckBox.UseVisualStyleBackColor = true;
-            datumZavrsetkaCheckBox.CheckedChanged += datumZavrsetkaCheckBox_CheckedChanged;
-            // 
             // projekatToolStrip
             // 
             projekatToolStrip.AutoSize = false;
@@ -1134,12 +1134,12 @@
             Load += ProjektiForma_Load;
             projekatGroupBox.ResumeLayout(false);
             projekatGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)maksimalanBrojStranaNumericUpDown).EndInit();
             pretragaPanel.ResumeLayout(false);
             pretragaPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)izvestajiPretraziNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)maksStrPretraziNumericUpDown).EndInit();
-            ((System.ComponentModel.ISupportInitialize)brojIzvestajaNumericUpDown).EndInit();
-            ((System.ComponentModel.ISupportInitialize)maksimalanBrojStranaNumericUpDown).EndInit();
             projekatToolStrip.ResumeLayout(false);
             projekatToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)projekatDataGridView).EndInit();
@@ -1197,7 +1197,7 @@
         private Label predmetErrorLabel;
         private Label brojIzvestajaErrorLabel;
         private Label successStatusLabel;
-        private Label ukupanBrojProjekataLabel;
+        private Label brojPrikazanihProjekataLabel;
         private Label brojProjekataLabel;
         private System.Windows.Forms.Timer timer1;
         private Panel pretragaPanel;

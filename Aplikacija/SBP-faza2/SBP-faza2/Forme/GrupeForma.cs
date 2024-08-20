@@ -272,7 +272,7 @@ public partial class GrupeForma : Form
                 if (rez == true)
                 {
                     successStatusLabel.ForeColor = Color.Lime;
-                    successStatusLabel.Text = "Grupa uspešno ažuriran";
+                    successStatusLabel.Text = "Grupa uspešno ažurirana";
                 }
                 else
                 {
@@ -328,6 +328,8 @@ public partial class GrupeForma : Form
         bool rez = await DTOManager.ObrisiGrupaAsync(Id);
         if (rez == true)
         {
+            successStatusLabel.ForeColor = Color.Lime;
+            successStatusLabel.Text = "Grupa uspešno obrisana";
             DodajGrupeDataGridView();
         }
         else

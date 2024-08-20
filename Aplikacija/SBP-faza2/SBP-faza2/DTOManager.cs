@@ -1021,7 +1021,6 @@ public class DTOManager
                     p.DatumZavrsetka = projekat.DatumZavrsetka;
                 }
 
-                //await session.SaveOrUpdateAsync(p.Predmet);
                 await session.SaveOrUpdateAsync(p);
                 await session.FlushAsync();
                 session.Close();
@@ -1031,7 +1030,7 @@ public class DTOManager
         }
         catch(Exception ex)
         {
-            MessageBox.Show("Greška prilikom ažuriranja projekta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+            MessageBox.Show("Greška prilikom ažuriranja projekta u bazi.\nDetalji:\n" + ex.FormatExceptionMessage(),
                "Greška",
                MessageBoxButtons.OK,
                MessageBoxIcon.Error);
@@ -1082,7 +1081,6 @@ public class DTOManager
                         };
                     }
 
-                    //await session.SaveAsync(p.Predmet);
                     await session.SaveAsync(p);
                     await session.FlushAsync();
                     session.Close();
@@ -1301,7 +1299,7 @@ public class DTOManager
             {
                 Grupa g = await session.LoadAsync<Grupa>(grupa.Id);
 
-                g.NazivGrupe = grupa.Naziv;
+                g.NazivGrupe = grupa.Naziv.Trim();
                 if (g.Projekat.Id != grupa.Projekat.Id)
                 {
                     Projekat p = await session.LoadAsync<Projekat>(grupa.Projekat.Id);
@@ -1337,7 +1335,7 @@ public class DTOManager
 
                 Grupa g = new Grupa
                 {
-                    NazivGrupe = grupa.Naziv,
+                    NazivGrupe = grupa.Naziv.Trim(),
                     Projekat = p
                 };
 
@@ -1401,6 +1399,234 @@ public class DTOManager
         catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom pribavljanja grupe.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region Nastavnik
+
+    public static async Task<NastavnikBasic?> VratiNastavnikBasicAsync(int id)
+    {
+        NastavnikBasic? nastavnik = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Nastavnik n = await session.LoadAsync<Nastavnik>(id);
+                PredmetBasic p = (await DTOManager.VratiPredmetBasicAsync(n.Predmet.Id))!;
+                nastavnik = new NastavnikBasic
+                {
+                    Id = n.Id,
+                    ImePrezime = n.ImeNastavnika,
+                    Predmet = p
+                };
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja nastavnika iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return nastavnik;
+    }
+
+    public static async Task<List<NastavnikBasic>?> VratiNastavnikeBasicAsync()
+    {
+        List<NastavnikBasic>? n = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                n = new List<NastavnikBasic>();
+                IEnumerable<Nastavnik> nastavnici = session.Query<Nastavnik>();
+                foreach (var nas in nastavnici)
+                {
+                    PredmetBasic p = (await DTOManager.VratiPredmetBasicAsync(nas.Predmet.Id))!;
+                    n.Add(new NastavnikBasic
+                    {
+                        Id = nas.Id,
+                        ImePrezime = nas.ImeNastavnika,
+                        Predmet = p
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja nastavnika iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return n;
+    }
+
+    public static List<NastavnikPregled>? VratiNastavnikePregled()
+    {
+        List<NastavnikPregled>? n = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                n = new List<NastavnikPregled>();
+                IEnumerable<Nastavnik> nastavnici = session.Query<Nastavnik>();
+
+                foreach (var nas in nastavnici)
+                {
+                    n.Add(new NastavnikPregled
+                    {
+                        Id = nas.Id,
+                        ImePrezime = nas.ImeNastavnika,
+                        Predmet = nas.Predmet.Naziv + " " + "(" + nas.Predmet.Sifra + ")"
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja nastavnika iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return n;
+    }
+
+    public static List<NastavnikPregled>? VratiNastavnikePoPredmetu(string nazivPredmeta, string sifraPredmeta)
+    {
+        List<NastavnikPregled>? n = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                n = new List<NastavnikPregled>();
+                IEnumerable<Nastavnik> nastavnici = session.Query<Nastavnik>();
+                foreach (var nas in nastavnici)
+                {
+                    if (nas.Predmet.Naziv == nazivPredmeta && nas.Predmet.Sifra == sifraPredmeta)
+                    {
+                        n.Add(new NastavnikPregled
+                        {
+                            Id = nas.Id,
+                            ImePrezime = nas.ImeNastavnika,
+                            Predmet = nas.Predmet.Naziv + " " + "(" + nas.Predmet.Sifra + ")"
+                        });
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavlajnja nastavnika iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return n;
+    }
+
+    public static async Task<bool> IzmeniNastavnikaAsync(NastavnikBasic nastavnik)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Nastavnik nastavnikZaAzuriranje = await session.LoadAsync<Nastavnik>(nastavnik.Id);
+                nastavnikZaAzuriranje.ImeNastavnika = PrvoSlovoVeliko(nastavnik.ImePrezime.Trim());
+                if (nastavnikZaAzuriranje.Predmet.Id != nastavnik.Predmet.Id)
+                {
+                    nastavnikZaAzuriranje.Predmet = await session.LoadAsync<Predmet>(nastavnik.Predmet.Id);
+                }
+
+                await session.SaveOrUpdateAsync(nastavnikZaAzuriranje);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja nastavnika u bazi.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajNastavnikAsync(NastavnikBasic nastavnik)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Nastavnik noviNastavnik = new Nastavnik
+                {
+                    ImeNastavnika = PrvoSlovoVeliko(nastavnik.ImePrezime.Trim()),
+                    Predmet = await session.LoadAsync<Predmet>(nastavnik.Predmet.Id)
+                };
+
+                await session.SaveAsync(noviNastavnik);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom dodavanja nastavnika u bazu.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiNastavnikAsync(int id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Nastavnik nastavnik = await session.LoadAsync<Nastavnik>(id);
+
+                await session.DeleteAsync(nastavnik);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja nastavnika iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);

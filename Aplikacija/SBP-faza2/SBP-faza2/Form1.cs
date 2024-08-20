@@ -115,4 +115,10 @@ public partial class Form1 : Form
         GrupeForma grupeForma = new GrupeForma();
         grupeForma.Show(this);
     }
+
+    private void nastavniciButton_Click(object sender, EventArgs e)
+    {
+        NastavniciForma nastavniciForma = new NastavniciForma();
+        nastavniciForma.Show(this);
+    }
 }

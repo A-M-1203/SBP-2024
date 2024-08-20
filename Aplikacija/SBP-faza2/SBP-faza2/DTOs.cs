@@ -235,3 +235,45 @@ public class GrupaPregled
 }
 
 #endregion
+
+#region Nastavnik
+
+public class NastavnikBasic
+{
+    public int Id { get; init; }
+    public required string ImePrezime { get; set; }
+    public required PredmetBasic Predmet { get; set; }
+
+    public NastavnikBasic(int id, string imePrezime, PredmetBasic predmet)
+    {
+        Id = id;
+        ImePrezime = imePrezime;
+        Predmet = predmet;
+    }
+
+    public NastavnikBasic()
+    {
+        
+    }
+}
+
+public class NastavnikPregled
+{
+    public int Id { get; init; }
+    public required string ImePrezime { get; set; }
+    public required string Predmet { get; set; }
+
+    public NastavnikPregled(int id, string imePrezime, string predmet)
+    {
+        Id = id;
+        ImePrezime = imePrezime;
+        Predmet = predmet;
+    }
+
+    public NastavnikPregled()
+    {
+        
+    }
+}
+
+#endregion
