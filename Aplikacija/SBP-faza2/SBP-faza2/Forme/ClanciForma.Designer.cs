@@ -266,7 +266,7 @@
             // issnMaskedTextBox
             // 
             issnMaskedTextBox.Enabled = false;
-            issnMaskedTextBox.Location = new Point(364, 288);
+            issnMaskedTextBox.Location = new Point(159, 288);
             issnMaskedTextBox.Mask = "0000-0000";
             issnMaskedTextBox.Name = "issnMaskedTextBox";
             issnMaskedTextBox.Size = new Size(103, 32);
@@ -276,7 +276,8 @@
             // brojCasopisaTextBox
             // 
             brojCasopisaTextBox.Enabled = false;
-            brojCasopisaTextBox.Location = new Point(364, 226);
+            brojCasopisaTextBox.Location = new Point(159, 226);
+            brojCasopisaTextBox.MaxLength = 5;
             brojCasopisaTextBox.Name = "brojCasopisaTextBox";
             brojCasopisaTextBox.Size = new Size(103, 32);
             brojCasopisaTextBox.TabIndex = 8;
@@ -292,7 +293,8 @@
             // godinaIzdanjaTextBox
             // 
             godinaIzdanjaTextBox.Enabled = false;
-            godinaIzdanjaTextBox.Location = new Point(364, 103);
+            godinaIzdanjaTextBox.Location = new Point(159, 103);
+            godinaIzdanjaTextBox.MaxLength = 4;
             godinaIzdanjaTextBox.Name = "godinaIzdanjaTextBox";
             godinaIzdanjaTextBox.Size = new Size(103, 32);
             godinaIzdanjaTextBox.TabIndex = 6;

@@ -133,4 +133,10 @@ public partial class Form1 : Form
         ClanciForma clanciForma = new ClanciForma();
         clanciForma.Show(this);
     }
+
+    private void radoviButton_Click(object sender, EventArgs e)
+    {
+        RadoviForma radoviForma = new RadoviForma();
+        radoviForma.Show(this);
+    }
 }

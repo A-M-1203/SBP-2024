@@ -318,3 +318,16 @@ public class ClanakBasic
 }
 
 #endregion
+
+#region Rad
+
+public class RadBasic
+{
+    public int Id { get; set; }
+    public required string Naslov { get; set; }
+    public required int GodinaIzdanja { get; set; }
+    public string? NazivKonferencije { get; set; }
+    public string? URL { get; set; }
+}
+
+#endregion

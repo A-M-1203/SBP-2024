@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            clanciButton = new Button();
             knjigeButton = new Button();
             nastavniciButton = new Button();
             grupeButton = new Button();
@@ -44,7 +45,7 @@
             statusLabel = new Label();
             bazaLabel = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
-            clanciButton = new Button();
+            radoviButton = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -53,6 +54,7 @@
             // 
             panel1.BackColor = Color.Gainsboro;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(radoviButton);
             panel1.Controls.Add(clanciButton);
             panel1.Controls.Add(knjigeButton);
             panel1.Controls.Add(nastavniciButton);
@@ -67,6 +69,21 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1390, 61);
             panel1.TabIndex = 7;
+            // 
+            // clanciButton
+            // 
+            clanciButton.Cursor = Cursors.Hand;
+            clanciButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            clanciButton.Image = Properties.Resources.article_con;
+            clanciButton.Location = new Point(837, 11);
+            clanciButton.Name = "clanciButton";
+            clanciButton.Size = new Size(133, 41);
+            clanciButton.TabIndex = 8;
+            clanciButton.Text = "Članci";
+            clanciButton.TextAlign = ContentAlignment.MiddleRight;
+            clanciButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            clanciButton.UseVisualStyleBackColor = true;
+            clanciButton.Click += clanciButton_Click;
             // 
             // knjigeButton
             // 
@@ -249,20 +266,20 @@
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             // 
-            // clanciButton
+            // radoviButton
             // 
-            clanciButton.Cursor = Cursors.Hand;
-            clanciButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            clanciButton.Image = Properties.Resources.article_con;
-            clanciButton.Location = new Point(837, 11);
-            clanciButton.Name = "clanciButton";
-            clanciButton.Size = new Size(133, 41);
-            clanciButton.TabIndex = 8;
-            clanciButton.Text = "Članci";
-            clanciButton.TextAlign = ContentAlignment.MiddleRight;
-            clanciButton.TextImageRelation = TextImageRelation.ImageBeforeText;
-            clanciButton.UseVisualStyleBackColor = true;
-            clanciButton.Click += clanciButton_Click;
+            radoviButton.Cursor = Cursors.Hand;
+            radoviButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            radoviButton.Image = Properties.Resources.paper_icon;
+            radoviButton.Location = new Point(976, 11);
+            radoviButton.Name = "radoviButton";
+            radoviButton.Size = new Size(133, 41);
+            radoviButton.TabIndex = 9;
+            radoviButton.Text = "Radovi";
+            radoviButton.TextAlign = ContentAlignment.MiddleRight;
+            radoviButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            radoviButton.UseVisualStyleBackColor = true;
+            radoviButton.Click += radoviButton_Click;
             // 
             // Form1
             // 
@@ -304,5 +321,6 @@
         private Button nastavniciButton;
         private Button knjigeButton;
         private Button clanciButton;
+        private Button radoviButton;
     }
 }

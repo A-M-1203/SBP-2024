@@ -2,6 +2,7 @@
 using NHibernate.Linq;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
+using System.Windows.Forms;
 
 namespace SBP_faza2;
 
@@ -2024,4 +2025,197 @@ public class DTOManager
     }
 
     #endregion
+
+    #region Rad
+
+    public static async Task<RadBasic?> VratiRadBasicAsync(int id)
+    {
+        RadBasic? rad = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Rad r = await session.LoadAsync<Rad>(id);
+                rad = new RadBasic
+                {
+                    Id = r.Id,
+                    Naslov = r.Naslov,
+                    GodinaIzdanja = r.GodinaIzdanja,
+                    NazivKonferencije = r.NazivKonferencije,
+                    URL = r.URL
+                };
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja rada iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return rad;
+    }
+
+    public static List<RadBasic>? VratiRadoveBasic()
+    {
+        List<RadBasic>? r = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Rad> radovi = session.Query<Rad>();
+                r = new List<RadBasic>();
+                foreach (var rad in radovi)
+                {
+                    r.Add(new RadBasic
+                    {
+                        Id = rad.Id,
+                        Naslov = rad.Naslov,
+                        GodinaIzdanja = rad.GodinaIzdanja,
+                        NazivKonferencije = rad.NazivKonferencije,
+                        URL = rad.URL
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja radova iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return r;
+    }
+
+    public static async Task<bool> PostojiRadAsync(string naslov, int godinaIzdanja)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Rad? rad = await session.Query<Rad>()
+                    .FirstOrDefaultAsync(r => r.Naslov == naslov && r.GodinaIzdanja == godinaIzdanja);
+
+                session.Close();
+
+                if (rad != null)
+                    return true;
+
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja radova iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> IzmeniRadAsync(RadBasic rad)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Rad radZaAzuriranje = await session.LoadAsync<Rad>(rad.Id);
+                radZaAzuriranje.Naslov = rad.Naslov;
+                radZaAzuriranje.GodinaIzdanja = rad.GodinaIzdanja;
+                radZaAzuriranje.NazivKonferencije = rad.NazivKonferencije;
+                radZaAzuriranje.URL = rad.URL;
+
+                await session.SaveOrUpdateAsync(radZaAzuriranje);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja rada u bazi.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajRadAsync(RadBasic rad)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Rad noviRad = new Rad
+                {
+                    Naslov = rad.Naslov,
+                    GodinaIzdanja = rad.GodinaIzdanja,
+                    NazivKonferencije = rad.NazivKonferencije,
+                    URL = rad.URL
+                };
+
+                await session.SaveAsync(noviRad);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom dodavanja rada u bazu.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiRadAsync(int id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Rad rad = await session.LoadAsync<Rad>(id);
+
+                await session.DeleteAsync(rad);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja rada iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    #endregion
+
 }
