@@ -99,7 +99,9 @@ namespace SBP_faza2.Forme.PredmetiForme
                         };
 
                         if (listBoxProjekti.SelectedItem != null)
+#pragma warning disable CS8604 // Possible null reference argument.
                             noviPredmet.Projekti.Add(listBoxProjekti.SelectedItem as Projekat);
+#pragma warning restore CS8604 // Possible null reference argument.
 
                         session.Save(noviPredmet);
                         session.Flush();

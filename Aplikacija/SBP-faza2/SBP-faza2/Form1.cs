@@ -127,4 +127,10 @@ public partial class Form1 : Form
         KnjigeForma knjigeForma = new KnjigeForma();
         knjigeForma.Show(this);
     }
+
+    private void clanciButton_Click(object sender, EventArgs e)
+    {
+        ClanciForma clanciForma = new ClanciForma();
+        clanciForma.Show(this);
+    }
 }

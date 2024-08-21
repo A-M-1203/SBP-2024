@@ -182,11 +182,21 @@
         }
 
         #endregion
+#pragma warning disable CS0169 // The field 'DodajKnjiguForm.numericUpDownBrojIzvestaja' is never used
         private NumericUpDown numericUpDownBrojIzvestaja;
+#pragma warning restore CS0169 // The field 'DodajKnjiguForm.numericUpDownBrojIzvestaja' is never used
+#pragma warning disable CS0169 // The field 'DodajKnjiguForm.labelBrojIzvestaja' is never used
         private Label labelBrojIzvestaja;
+#pragma warning restore CS0169 // The field 'DodajKnjiguForm.labelBrojIzvestaja' is never used
+#pragma warning disable CS0169 // The field 'DodajKnjiguForm.labelPreporuceniProgJezik' is never used
         private Label labelPreporuceniProgJezik;
+#pragma warning restore CS0169 // The field 'DodajKnjiguForm.labelPreporuceniProgJezik' is never used
+#pragma warning disable CS0169 // The field 'DodajKnjiguForm.comboBox2' is never used
         private ComboBox comboBox2;
+#pragma warning restore CS0169 // The field 'DodajKnjiguForm.comboBox2' is never used
+#pragma warning disable CS0169 // The field 'DodajKnjiguForm.labelPredmet' is never used
         private Label labelPredmet;
+#pragma warning restore CS0169 // The field 'DodajKnjiguForm.labelPredmet' is never used
         private Button buttonDodajKnjigu;
         private GroupBox groupBoxKnjigaPodaci;
         private ListBox listBox1;

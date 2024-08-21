@@ -44,6 +44,7 @@
             statusLabel = new Label();
             bazaLabel = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
+            clanciButton = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -52,6 +53,7 @@
             // 
             panel1.BackColor = Color.Gainsboro;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(clanciButton);
             panel1.Controls.Add(knjigeButton);
             panel1.Controls.Add(nastavniciButton);
             panel1.Controls.Add(grupeButton);
@@ -71,9 +73,9 @@
             knjigeButton.Cursor = Cursors.Hand;
             knjigeButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             knjigeButton.Image = Properties.Resources.book_education_icon;
-            knjigeButton.Location = new Point(683, 11);
+            knjigeButton.Location = new Point(698, 11);
             knjigeButton.Name = "knjigeButton";
-            knjigeButton.Size = new Size(134, 41);
+            knjigeButton.Size = new Size(133, 41);
             knjigeButton.TabIndex = 7;
             knjigeButton.Text = "Knjige";
             knjigeButton.TextAlign = ContentAlignment.MiddleRight;
@@ -86,9 +88,9 @@
             nastavniciButton.Cursor = Cursors.Hand;
             nastavniciButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nastavniciButton.Image = Properties.Resources.teacher_icon;
-            nastavniciButton.Location = new Point(543, 11);
+            nastavniciButton.Location = new Point(559, 11);
             nastavniciButton.Name = "nastavniciButton";
-            nastavniciButton.Size = new Size(134, 41);
+            nastavniciButton.Size = new Size(133, 41);
             nastavniciButton.TabIndex = 6;
             nastavniciButton.Text = "Nastavnici";
             nastavniciButton.TextAlign = ContentAlignment.MiddleRight;
@@ -101,9 +103,9 @@
             grupeButton.Cursor = Cursors.Hand;
             grupeButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             grupeButton.Image = Properties.Resources.group_icon;
-            grupeButton.Location = new Point(410, 11);
+            grupeButton.Location = new Point(420, 11);
             grupeButton.Name = "grupeButton";
-            grupeButton.Size = new Size(127, 41);
+            grupeButton.Size = new Size(133, 41);
             grupeButton.TabIndex = 5;
             grupeButton.Text = "Grupe";
             grupeButton.TextAlign = ContentAlignment.MiddleRight;
@@ -116,9 +118,9 @@
             projektiButton.Cursor = Cursors.Hand;
             projektiButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             projektiButton.Image = Properties.Resources.project_icon;
-            projektiButton.Location = new Point(277, 11);
+            projektiButton.Location = new Point(281, 11);
             projektiButton.Name = "projektiButton";
-            projektiButton.Size = new Size(127, 41);
+            projektiButton.Size = new Size(133, 41);
             projektiButton.TabIndex = 4;
             projektiButton.Text = "Projekti";
             projektiButton.TextAlign = ContentAlignment.MiddleRight;
@@ -131,9 +133,9 @@
             predmetiButton.Cursor = Cursors.Hand;
             predmetiButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             predmetiButton.Image = Properties.Resources.book_icon;
-            predmetiButton.Location = new Point(144, 11);
+            predmetiButton.Location = new Point(142, 11);
             predmetiButton.Name = "predmetiButton";
-            predmetiButton.Size = new Size(127, 41);
+            predmetiButton.Size = new Size(133, 41);
             predmetiButton.TabIndex = 3;
             predmetiButton.Text = "Predmeti";
             predmetiButton.TextAlign = ContentAlignment.MiddleRight;
@@ -146,9 +148,9 @@
             studentiButton.Cursor = Cursors.Hand;
             studentiButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             studentiButton.Image = Properties.Resources.student_icon;
-            studentiButton.Location = new Point(11, 11);
+            studentiButton.Location = new Point(3, 11);
             studentiButton.Name = "studentiButton";
-            studentiButton.Size = new Size(127, 41);
+            studentiButton.Size = new Size(133, 41);
             studentiButton.TabIndex = 2;
             studentiButton.Text = "Studenti";
             studentiButton.TextAlign = ContentAlignment.MiddleRight;
@@ -247,6 +249,21 @@
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             // 
+            // clanciButton
+            // 
+            clanciButton.Cursor = Cursors.Hand;
+            clanciButton.Font = new Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            clanciButton.Image = Properties.Resources.article_con;
+            clanciButton.Location = new Point(837, 11);
+            clanciButton.Name = "clanciButton";
+            clanciButton.Size = new Size(133, 41);
+            clanciButton.TabIndex = 8;
+            clanciButton.Text = "Članci";
+            clanciButton.TextAlign = ContentAlignment.MiddleRight;
+            clanciButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+            clanciButton.UseVisualStyleBackColor = true;
+            clanciButton.Click += clanciButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
@@ -286,5 +303,6 @@
         private LinkLabel detaljiLinkLabel;
         private Button nastavniciButton;
         private Button knjigeButton;
+        private Button clanciButton;
     }
 }

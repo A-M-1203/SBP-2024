@@ -1720,6 +1720,8 @@ public class DTOManager
             {
                 Knjiga? knjiga = await session.Query<Knjiga>()
                     .FirstOrDefaultAsync(k => k.ISBN == isbn);
+
+                session.Close();
                 if (knjiga != null)
                     return true;
 
@@ -1820,6 +1822,199 @@ public class DTOManager
         catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom brisanja knjige iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region Clanak
+
+    public static async Task<ClanakBasic?> VratiClanakBasicAsync(int id)
+    {
+        ClanakBasic? clanak = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Clanak c = await session.LoadAsync<Clanak>(id);
+                clanak = new ClanakBasic
+                {
+                    Id = c.Id,
+                    Naslov = c.Naslov,
+                    GodinaIzdanja = c.GodinaIzdanja,
+                    NazivCasopisa = c.NazivCasopisa,
+                    BrojCasopisa = c.BrojCasopisa,
+                    ISSN = c.ISSN
+                };
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja clanka iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return clanak;
+    }
+
+    public static List<ClanakBasic>? VratiClankeBasic()
+    {
+        List<ClanakBasic>? c = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Clanak> clanci = session.Query<Clanak>();
+                c = new List<ClanakBasic>();
+                foreach (var cl in clanci)
+                {
+                    c.Add(new ClanakBasic
+                    {
+                        Id = cl.Id,
+                        Naslov = cl.Naslov,
+                        GodinaIzdanja = cl.GodinaIzdanja,
+                        NazivCasopisa = cl.NazivCasopisa,
+                        BrojCasopisa = cl.BrojCasopisa,
+                        ISSN = cl.ISSN
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja clanaka iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return c;
+    }
+
+    public static async Task<bool> PostojiClanakAsync(string issn)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Clanak? clanak = await session.Query<Clanak>().FirstOrDefaultAsync(c => c.ISSN == issn);
+                session.Close();
+                if (clanak != null)
+                    return true;
+
+                return false;
+            }
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja clanaka iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> IzmeniClanakAsync(ClanakBasic clanak)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Clanak c = await session.LoadAsync<Clanak>(clanak.Id);
+                c.Naslov = clanak.Naslov;
+                c.GodinaIzdanja = clanak.GodinaIzdanja;
+                c.NazivCasopisa = clanak.NazivCasopisa;
+                c.BrojCasopisa = clanak.BrojCasopisa;
+                c.ISSN = clanak.ISSN;
+
+                await session.SaveOrUpdateAsync(c);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja clanka iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajClanakAsync(ClanakBasic clanak)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Clanak c = new Clanak
+                {
+                    Naslov = clanak.Naslov,
+                    GodinaIzdanja = clanak.GodinaIzdanja,
+                    NazivCasopisa = clanak.NazivCasopisa,
+                    BrojCasopisa = clanak.BrojCasopisa,
+                    ISSN = clanak.ISSN,
+                };
+
+                await session.SaveAsync(c);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom dodavanja clanka u bazu.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiClanakAsync(int id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Clanak clanak = await session.LoadAsync<Clanak>(id);
+
+                await session.DeleteAsync(clanak);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja clanka iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);

@@ -228,14 +228,26 @@
         #endregion
 
         private GroupBox groupBoxProjekatPodaci;
+#pragma warning disable CS0169 // The field 'DodajTeorijskiProjekatForm.textBox2' is never used
         private TextBox textBox2;
+#pragma warning restore CS0169 // The field 'DodajTeorijskiProjekatForm.textBox2' is never used
+#pragma warning disable CS0169 // The field 'DodajTeorijskiProjekatForm.numericUpDownBrojIzvestaja' is never used
         private NumericUpDown numericUpDownBrojIzvestaja;
+#pragma warning restore CS0169 // The field 'DodajTeorijskiProjekatForm.numericUpDownBrojIzvestaja' is never used
+#pragma warning disable CS0169 // The field 'DodajTeorijskiProjekatForm.labelBrojIzvestaja' is never used
         private Label labelBrojIzvestaja;
+#pragma warning restore CS0169 // The field 'DodajTeorijskiProjekatForm.labelBrojIzvestaja' is never used
         private Label labelMaksBrStrana;
+#pragma warning disable CS0169 // The field 'DodajTeorijskiProjekatForm.textBox1' is never used
         private TextBox textBox1;
+#pragma warning restore CS0169 // The field 'DodajTeorijskiProjekatForm.textBox1' is never used
+#pragma warning disable CS0169 // The field 'DodajTeorijskiProjekatForm.labelPreporuceniProgJezik' is never used
         private Label labelPreporuceniProgJezik;
+#pragma warning restore CS0169 // The field 'DodajTeorijskiProjekatForm.labelPreporuceniProgJezik' is never used
         private ComboBox comboBox3;
+#pragma warning disable CS0169 // The field 'DodajTeorijskiProjekatForm.comboBox2' is never used
         private ComboBox comboBox2;
+#pragma warning restore CS0169 // The field 'DodajTeorijskiProjekatForm.comboBox2' is never used
         private Label labelPredmet;
         private DateTimePicker dateTimePickerRokZaZavrsetak;
         private DateTimePicker dateTimePickerDatumPocetka;

@@ -1,10 +1,10 @@
 ﻿namespace SBP_faza2.Forme;
 
-public partial class KnjigeForma : Form
+public partial class ClanciForma : Form
 {
     private int Id = 0;
     private bool dodajButtonClicked = false;
-    public KnjigeForma()
+    public ClanciForma()
     {
         InitializeComponent();
     }
@@ -23,13 +23,15 @@ public partial class KnjigeForma : Form
 
         naslovTextBox.Enabled = true;
         godinaIzdanjaTextBox.Enabled = true;
-        isbnMaskedTextBox.Enabled = true;
-        izdavacTextBox.Enabled = true;
+        nazivCasopisaTextBox.Enabled = true;
+        brojCasopisaTextBox.Enabled = true;
+        issnMaskedTextBox.Enabled = true;
 
         naslovErrorLabel.Text = string.Empty;
         godinaIzdanjaErrorLabel.Text = string.Empty;
-        isbnErrorLabel.Text = string.Empty;
-        izdavacErrorLabel.Text = string.Empty;
+        nazivCasopisaErrorLabel.Text = string.Empty;
+        brojCasopisaErrorLabel.Text = string.Empty;
+        issnErrorLabel.Text = string.Empty;
     }
 
     private void odustaniToolStripButton_Click(object sender, EventArgs e)
@@ -46,28 +48,30 @@ public partial class KnjigeForma : Form
 
         naslovTextBox.Enabled = false;
         godinaIzdanjaTextBox.Enabled = false;
-        isbnMaskedTextBox.Enabled = false;
-        izdavacTextBox.Enabled = false;
+        nazivCasopisaTextBox.Enabled = false;
+        brojCasopisaTextBox.Enabled = false;
+        issnMaskedTextBox.Enabled = false;
 
         naslovTextBox.Text = string.Empty;
         godinaIzdanjaTextBox.Text = string.Empty;
-        isbnMaskedTextBox.Text = string.Empty;
-        izdavacTextBox.Text = string.Empty;
+        nazivCasopisaTextBox.Text = string.Empty;
+        godinaIzdanjaTextBox.Text = string.Empty;
+        issnMaskedTextBox.Text = string.Empty;
 
         naslovErrorLabel.Text = string.Empty;
         godinaIzdanjaErrorLabel.Text = string.Empty;
-        isbnErrorLabel.Text = string.Empty;
-        izdavacErrorLabel.Text = string.Empty;
-
+        nazivCasopisaErrorLabel.Text = string.Empty;
+        brojCasopisaErrorLabel.Text = string.Empty;
+        issnErrorLabel.Text = string.Empty;
     }
 
-    private void knjigaDataGridView_SelectionChanged(object sender, EventArgs e)
+    private void clanakDataGridView_SelectionChanged(object sender, EventArgs e)
     {
-        if (knjigaDataGridView.SelectedRows.Count > 0)
+        if (clanakDataGridView.SelectedRows.Count > 0)
         {
             izmeniToolStripButton.Enabled = true;
             obrisiToolStripButton.Enabled = true;
-            Id = int.Parse(knjigaDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
+            Id = int.Parse(clanakDataGridView.SelectedRows[0].Cells["idColumn"].Value.ToString()!);
         }
         else
         {
@@ -77,51 +81,54 @@ public partial class KnjigeForma : Form
 
         naslovErrorLabel.Text = string.Empty;
         godinaIzdanjaErrorLabel.Text = string.Empty;
-        isbnErrorLabel.Text = string.Empty;
-        izdavacErrorLabel.Text = string.Empty;
+        nazivCasopisaErrorLabel.Text = string.Empty;
+        brojCasopisaErrorLabel.Text = string.Empty;
+        issnErrorLabel.Text = string.Empty;
     }
 
-    private void KnjigeForma_Activated(object sender, EventArgs e)
+    private void ClanciForma_Activated(object sender, EventArgs e)
     {
-        DodajKnjigeDataGridView();
+        DodajClankeDataGridView();
     }
 
-    private void DodajKnjigeDataGridView()
+    private void DodajClankeDataGridView()
     {
-        List<KnjigaBasic>? knjige = DTOManager.VratiKnjigeBasic();
-        if (knjige != null)
+        List<ClanakBasic>? clanci = DTOManager.VratiClankeBasic();
+        if (clanci != null)
         {
-            knjigaDataGridView.Rows.Clear();
+            clanakDataGridView.Rows.Clear();
 
-            foreach (var k in knjige)
+            foreach (var c in clanci)
             {
-                knjigaDataGridView.Rows.Add(new string[]
-                { k.Id.ToString(), k.Naslov, k.GodinaIzdanja.ToString(), k.ISBN, k.Izdavac });
+                clanakDataGridView.Rows.Add(new string[]
+                { c.Id.ToString(), c.Naslov, c.GodinaIzdanja.ToString(),
+                    c.NazivCasopisa, c.BrojCasopisa.ToString(), c.ISSN });
             }
 
-            knjigaDataGridView.Refresh();
-            knjigaDataGridView.ClearSelection();
+            clanakDataGridView.Refresh();
+            clanakDataGridView.ClearSelection();
 
-            brojKnjigaLabel.Text = knjigaDataGridView.RowCount.ToString();
+            brojClanakaLabel.Text = clanakDataGridView.RowCount.ToString();
         }
     }
 
-    private void knjigaDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+    private void clanakDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
     {
         if (e.RowIndex >= 0)
         {
             dodajButtonClicked = false;
             successStatusLabel.ForeColor = Color.Black;
-            successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjena postojeća knjiga";
+            successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći članak";
 
-            DataGridViewRow row = knjigaDataGridView.Rows[e.RowIndex];
+            DataGridViewRow row = clanakDataGridView.Rows[e.RowIndex];
 
             Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
 
             naslovTextBox.Text = row.Cells["naslovColumn"].Value.ToString();
             godinaIzdanjaTextBox.Text = row.Cells["godinaIzdanjaColumn"].Value.ToString();
-            isbnMaskedTextBox.Text = row.Cells["isbnColumn"].Value.ToString();
-            izdavacTextBox.Text = row.Cells["izdavacColumn"].Value.ToString();
+            nazivCasopisaTextBox.Text = row.Cells["nazivCasopisaColumn"].Value.ToString();
+            brojCasopisaTextBox.Text = row.Cells["brojCasopisaColumn"].Value.ToString();
+            issnMaskedTextBox.Text = row.Cells["issnColumn"].Value.ToString();
 
             dodajToolStripButton.Enabled = false;
             izmeniToolStripButton.Enabled = false;
@@ -131,13 +138,15 @@ public partial class KnjigeForma : Form
 
             naslovTextBox.Enabled = true;
             godinaIzdanjaTextBox.Enabled = true;
-            isbnMaskedTextBox.Enabled = true;
-            izdavacTextBox.Enabled = true;
+            nazivCasopisaTextBox.Enabled = true;
+            brojCasopisaTextBox.Enabled = true;
+            issnMaskedTextBox.Enabled = true;
 
             naslovErrorLabel.Text = string.Empty;
             godinaIzdanjaErrorLabel.Text = string.Empty;
-            isbnErrorLabel.Text = string.Empty;
-            izdavacErrorLabel.Text = string.Empty;
+            nazivCasopisaErrorLabel.Text = string.Empty;
+            brojCasopisaErrorLabel.Text = string.Empty;
+            issnErrorLabel.Text = string.Empty;
         }
     }
 
@@ -148,7 +157,7 @@ public partial class KnjigeForma : Form
         if (naslovTextBox.Text.Trim().Length < 1)
         {
             result = false;
-            naslovErrorLabel.Text = "Naslov knjige mora biti naveden";
+            naslovErrorLabel.Text = "Naslov članka mora biti naveden";
         }
         else naslovErrorLabel.Text = string.Empty;
 
@@ -159,21 +168,28 @@ public partial class KnjigeForma : Form
         }
         else godinaIzdanjaErrorLabel.Text = string.Empty;
 
-        isbnMaskedTextBox.TextMaskFormat  = MaskFormat.ExcludePromptAndLiterals;
-        if (isbnMaskedTextBox.Text.Length < 13)
+        if (nazivCasopisaTextBox.Text.Trim().Length < 1)
         {
             result = false;
-            isbnErrorLabel.Text = "ISBN mora da ima 13 cifara";
+            nazivCasopisaErrorLabel.Text = "Naziv časopisa mora biti naveden";
         }
-        else isbnErrorLabel.Text = string.Empty;
-        isbnMaskedTextBox.TextMaskFormat = MaskFormat.IncludePromptAndLiterals;
+        else nazivCasopisaErrorLabel.Text = string.Empty;
 
-        if (izdavacTextBox.Text.Trim().Length < 1)
+        if (brojCasopisaTextBox.Text.Length < 1 || brojCasopisaTextBox.Text == "0" || !int.TryParse(brojCasopisaTextBox.Text, out int rez))
         {
             result = false;
-            izdavacErrorLabel.Text = "Izdavač mora biti naveden";
+            brojCasopisaErrorLabel.Text = "Nevalidan broj časopisa";
         }
-        else izdavacErrorLabel.Text = string.Empty;
+        else brojCasopisaErrorLabel.Text = string.Empty;
+
+        issnMaskedTextBox.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
+        if (issnMaskedTextBox.Text.Length < 8)
+        {
+            result = false;
+            issnErrorLabel.Text = "ISSN mora da ima 8 cifara";
+        }
+        else issnErrorLabel.Text = string.Empty;
+        issnMaskedTextBox.TextMaskFormat = MaskFormat.IncludePromptAndLiterals;
 
         return result;
     }
@@ -182,16 +198,17 @@ public partial class KnjigeForma : Form
     {
         dodajButtonClicked = false;
         successStatusLabel.ForeColor = Color.Black;
-        successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjena postojeća knjiga";
+        successStatusLabel.Text = "Klikom na dugme sačuvaj biće izmenjen postojeći članak";
 
-        DataGridViewRow row = knjigaDataGridView.SelectedRows[0];
+        DataGridViewRow row = clanakDataGridView.SelectedRows[0];
 
         Id = int.Parse(row.Cells["idColumn"].Value.ToString()!);
 
         naslovTextBox.Text = row.Cells["naslovColumn"].Value.ToString();
         godinaIzdanjaTextBox.Text = row.Cells["godinaIzdanjaColumn"].Value.ToString();
-        isbnMaskedTextBox.Text = row.Cells["isbnColumn"].Value.ToString();
-        izdavacTextBox.Text = row.Cells["izdavacColumn"].Value.ToString();
+        nazivCasopisaTextBox.Text = row.Cells["nazivCasopisaColumn"].Value.ToString();
+        brojCasopisaTextBox.Text = row.Cells["brojCasopisaColumn"].Value.ToString();
+        issnMaskedTextBox.Text = row.Cells["issnColumn"].Value.ToString();
 
         dodajToolStripButton.Enabled = false;
         izmeniToolStripButton.Enabled = false;
@@ -201,13 +218,15 @@ public partial class KnjigeForma : Form
 
         naslovTextBox.Enabled = true;
         godinaIzdanjaTextBox.Enabled = true;
-        isbnMaskedTextBox.Enabled = true;
-        izdavacTextBox.Enabled = true;
+        nazivCasopisaTextBox.Enabled = true;
+        brojCasopisaTextBox.Enabled = true;
+        issnMaskedTextBox.Enabled = true;
 
         naslovErrorLabel.Text = string.Empty;
         godinaIzdanjaErrorLabel.Text = string.Empty;
-        isbnErrorLabel.Text = string.Empty;
-        izdavacErrorLabel.Text = string.Empty;
+        nazivCasopisaErrorLabel.Text = string.Empty;
+        brojCasopisaErrorLabel.Text = string.Empty;
+        issnErrorLabel.Text = string.Empty;
     }
 
     private async void sacuvajToolStripButton_Click(object sender, EventArgs e)
@@ -216,27 +235,28 @@ public partial class KnjigeForma : Form
 
         if (result == true)
         {
-            bool postojiKnjiga;
-            KnjigaBasic knjiga = new KnjigaBasic
+            bool postojiClanak;
+            ClanakBasic clanak = new ClanakBasic
             {
                 Id = Id,
                 Naslov = naslovTextBox.Text.Trim(),
                 GodinaIzdanja = int.Parse(godinaIzdanjaTextBox.Text),
-                ISBN = isbnMaskedTextBox.Text,
-                Izdavac = izdavacTextBox.Text.Trim()
+                NazivCasopisa = nazivCasopisaTextBox.Text.Trim(),
+                BrojCasopisa = int.Parse(brojCasopisaTextBox.Text),
+                ISSN = issnMaskedTextBox.Text
             };
 
             bool rez;
             if (dodajButtonClicked == false)
             {
-                KnjigaBasic? knjigaZaProveru = await DTOManager.VratiKnjigaBasicAsync(Id);
-                if (knjigaZaProveru!.Naslov != knjiga.Naslov && knjigaZaProveru.GodinaIzdanja != knjiga.GodinaIzdanja)
+                ClanakBasic? clanakZaProveru = await DTOManager.VratiClanakBasicAsync(Id);
+                if (clanakZaProveru!.Naslov != clanak.Naslov && clanakZaProveru.GodinaIzdanja != clanak.GodinaIzdanja)
                 {
-                    rez = await DTOManager.PostojiKnjigaAsync(knjiga.ISBN);
+                    rez = await DTOManager.PostojiClanakAsync(clanak.ISSN);
                     if (rez == true)
                     {
                         successStatusLabel.ForeColor = Color.Red;
-                        successStatusLabel.Text = "Knjiga sa ovim ISBN već postoji";
+                        successStatusLabel.Text = "Članak sa ovim ISSN već postoji";
 
                         timer1.Enabled = true;
                         timer1.Start();
@@ -244,45 +264,45 @@ public partial class KnjigeForma : Form
                     }
                 }
 
-                rez = await DTOManager.IzmeniKnjiguAsync(knjiga);
+                rez = await DTOManager.IzmeniClanakAsync(clanak);
                 if (rez == true)
                 {
                     successStatusLabel.ForeColor = Color.Lime;
-                    successStatusLabel.Text = "Knjiga uspešno ažurirana";
+                    successStatusLabel.Text = "Članak uspešno ažurirana";
                 }
                 else
                 {
                     successStatusLabel.ForeColor = Color.Red;
-                    successStatusLabel.Text = "Greška prilikom ažuriranja knjige";
+                    successStatusLabel.Text = "Greška prilikom ažuriranja članka";
                 }
             }
             else
             {
-                postojiKnjiga = await DTOManager.PostojiKnjigaAsync(knjiga.ISBN);
-                if (postojiKnjiga == true)
+                postojiClanak = await DTOManager.PostojiClanakAsync(clanak.ISSN);
+                if (postojiClanak == true)
                 {
                     successStatusLabel.ForeColor = Color.Red;
-                    successStatusLabel.Text = "Knjiga sa ovim ISBN već postoji";
+                    successStatusLabel.Text = "Članak sa ovim ISSN već postoji";
 
                     timer1.Enabled = true;
                     timer1.Start();
                     return;
                 }
 
-                rez = await DTOManager.DodajKnjiguAsync(knjiga);
+                rez = await DTOManager.DodajClanakAsync(clanak);
                 if (rez == true)
                 {
                     successStatusLabel.ForeColor = Color.Lime;
-                    successStatusLabel.Text = "Knjiga uspešno dodata";
+                    successStatusLabel.Text = "Članak uspešno dodat";
                 }
                 else
                 {
                     successStatusLabel.ForeColor = Color.Red;
-                    successStatusLabel.Text = "Greška prilikom dodavanja knjige";
+                    successStatusLabel.Text = "Greška prilikom dodavanja članka";
                 }
             }
 
-            DodajKnjigeDataGridView();
+            DodajClankeDataGridView();
 
             timer1.Enabled = true;
             timer1.Start();
@@ -300,17 +320,17 @@ public partial class KnjigeForma : Form
 
     private async void obrisiToolStripButton_Click(object sender, EventArgs e)
     {
-        bool rez = await DTOManager.ObrisiKnjiguAsync(Id);
+        bool rez = await DTOManager.ObrisiClanakAsync(Id);
         if (rez == true)
         {
             successStatusLabel.ForeColor = Color.Lime;
-            successStatusLabel.Text = "Knjiga uspešno obrisana";
-            DodajKnjigeDataGridView();
+            successStatusLabel.Text = "Članak uspešno obrisana";
+            DodajClankeDataGridView();
         }
         else
         {
             successStatusLabel.ForeColor = Color.Red;
-            successStatusLabel.Text = "Greška prilikom brisanja knjige";
+            successStatusLabel.Text = "Greška prilikom brisanja članka";
         }
 
         timer1.Enabled = true;
@@ -318,13 +338,15 @@ public partial class KnjigeForma : Form
 
         naslovTextBox.Text = string.Empty;
         godinaIzdanjaTextBox.Text = string.Empty;
-        isbnMaskedTextBox.Text = string.Empty;
-        izdavacTextBox.Text = string.Empty;
+        nazivCasopisaTextBox.Text = string.Empty;
+        brojCasopisaTextBox.Text = string.Empty;
+        issnMaskedTextBox.Text = string.Empty;
 
         naslovTextBox.Enabled = false;
         godinaIzdanjaTextBox.Enabled = false;
-        isbnMaskedTextBox.Enabled = false;
-        izdavacTextBox.Enabled = false;
+        nazivCasopisaTextBox.Enabled = false;
+        brojCasopisaTextBox.Enabled = false;
+        issnMaskedTextBox.Enabled = false;
 
         dodajToolStripButton.Enabled = true;
         izmeniToolStripButton.Enabled = false;
@@ -334,7 +356,8 @@ public partial class KnjigeForma : Form
 
         naslovErrorLabel.Text = string.Empty;
         godinaIzdanjaErrorLabel.Text = string.Empty;
-        isbnErrorLabel.Text = string.Empty;
-        izdavacErrorLabel.Text = string.Empty;
+        nazivCasopisaErrorLabel.Text = string.Empty;
+        brojCasopisaErrorLabel.Text = string.Empty;
+        issnErrorLabel.Text = string.Empty;
     }
 }

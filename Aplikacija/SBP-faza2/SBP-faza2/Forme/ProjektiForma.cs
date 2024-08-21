@@ -568,6 +568,7 @@ public partial class ProjektiForma : Form
                     {
                         foreach (var p in projekti)
                         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                             projekatDataGridView.Rows.Add(new string[]
                             {
                                 p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
@@ -575,6 +576,7 @@ public partial class ProjektiForma : Form
                                 p?.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
                                 p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
                             });
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                         }
 
                         projekatDataGridView.Refresh();
@@ -667,6 +669,7 @@ public partial class ProjektiForma : Form
 
                 foreach (var p in projekti)
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     projekatDataGridView.Rows.Add(new string[]
                     {
                         p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
@@ -674,6 +677,7 @@ public partial class ProjektiForma : Form
                         p.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
                         p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
                     });
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
 
                 projekatDataGridView.Refresh();
@@ -898,21 +902,25 @@ public partial class ProjektiForma : Form
                 {
                     if (p.GetType() == typeof(TeorijskiProjekat))
                     {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                         projekatDataGridView.Rows.Add(new string[]
                         {
                             p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p ?.MaksimalanBrojStrana.ToString() ?? string.Empty,
                             p?.PreporuceniProgramskiJezik ?? string.Empty, p?.BrojIzvestaja.ToString() ?? string.Empty, p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Teorijski", p.DatumPocetka.ToString(),
                             p?.DatumZavrsetka.ToString() ?? string.Empty, p?.KratakOpis ?? string.Empty
                         });
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     }
                     else
                     {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                         projekatDataGridView.Rows.Add(new string[]
                         {
                             p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(), p ?.MaksimalanBrojStrana.ToString() ?? string.Empty,
                             p?.PreporuceniProgramskiJezik ?? string.Empty, p?.BrojIzvestaja.ToString() ?? string.Empty, p.Predmet.Naziv + " " + "(" + p.Predmet.Sifra + ")", "Praktični", p.DatumPocetka.ToString(),
                             p?.DatumZavrsetka.ToString() ?? string.Empty, p?.KratakOpis ?? string.Empty
                         });
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     }
                 }
 
@@ -1083,6 +1091,7 @@ public partial class ProjektiForma : Form
 
             foreach (var p in projekti)
             {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 projekatDataGridView.Rows.Add(new string[]
                 {
                     p.Id.ToString(), p.Naziv, p.SkolskaGodina, p.Grupni, p.RokZaZavrsetak.ToString(),
@@ -1090,6 +1099,7 @@ public partial class ProjektiForma : Form
                     p?.BrojIzvestaja?.ToString() ?? string.Empty, p.Predmet, p.Tip, p.DatumPocetka.ToString(),
                     p.DatumZavrsetka.ToString() ?? string.Empty, p.KratakOpis ?? string.Empty
                 });
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
 
             projekatDataGridView.Refresh();

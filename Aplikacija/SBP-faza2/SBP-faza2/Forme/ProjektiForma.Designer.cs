@@ -1212,7 +1212,9 @@
         private NumericUpDown maksStrPretraziNumericUpDown;
         private DateTimePicker zavrsetakPreraziDateTimePicker;
         private ComboBox grupniPretaziComboBox;
+#pragma warning disable CS0169 // The field 'ProjektiForma.textBox2' is never used
         private TextBox textBox2;
+#pragma warning restore CS0169 // The field 'ProjektiForma.textBox2' is never used
         private TextBox nazivPretraziTextBox;
         private Label datumPocetkaPretragaLabel;
         private Label tipPretragaLabel;

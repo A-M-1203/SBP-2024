@@ -304,3 +304,17 @@ public class KnjigaBasic
 }
 
 #endregion
+
+#region Clanak
+
+public class ClanakBasic
+{
+    public int Id { get; set; }
+    public required string Naslov { get; set; }
+    public required int GodinaIzdanja { get; set; }
+    public required string NazivCasopisa { get; set; }
+    public required int BrojCasopisa { get; set; }
+    public required string ISSN { get; set; }
+}
+
+#endregion
