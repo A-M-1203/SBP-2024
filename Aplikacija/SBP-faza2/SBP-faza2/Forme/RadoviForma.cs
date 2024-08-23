@@ -1,6 +1,4 @@
-﻿using SBP_faza2.Entiteti;
-
-namespace SBP_faza2.Forme;
+﻿namespace SBP_faza2.Forme;
 
 public partial class RadoviForma : Form
 {

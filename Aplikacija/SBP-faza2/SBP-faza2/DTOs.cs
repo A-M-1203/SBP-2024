@@ -309,7 +309,7 @@ public class KnjigaBasic
 
 public class ClanakBasic
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
     public required string Naslov { get; set; }
     public required int GodinaIzdanja { get; set; }
     public required string NazivCasopisa { get; set; }
@@ -323,11 +323,62 @@ public class ClanakBasic
 
 public class RadBasic
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
     public required string Naslov { get; set; }
     public required int GodinaIzdanja { get; set; }
     public string? NazivKonferencije { get; set; }
     public string? URL { get; set; }
 }
+
+#endregion
+
+#region Autor
+
+public class AutorBasic
+{
+    public int Id { get; init; }
+    public required string ImeAutora { get; set; }
+    public KnjigaBasic? Knjiga { get; set; }
+    public ClanakBasic? Clanak { get; set; }
+    public RadBasic? Rad { get; set; }
+
+    public AutorBasic(int id, string imeAutora, KnjigaBasic? knjiga, ClanakBasic? clanak, RadBasic? rad)
+    {
+        Id = id;
+        ImeAutora = imeAutora;
+        Knjiga = knjiga;
+        Clanak = clanak;
+        Rad = rad;
+    }
+
+    public AutorBasic()
+    {
+        
+    }
+}
+
+public class AutorPregled
+{
+    public int Id { get; init; }
+    public required string ImeAutora { get; set; }
+    public string? Knjiga { get; set; }
+    public string? Clanak { get; set; }
+    public string? Rad { get; set; }
+
+    public AutorPregled(int id, string imeAutora, string? knjiga, string? clanak, string? rad)
+    {
+        Id = id;
+        ImeAutora = imeAutora;
+        Knjiga = knjiga;
+        Clanak = clanak;
+        Rad = rad;
+    }
+
+    public AutorPregled()
+    {
+        
+    }
+}
+
 
 #endregion

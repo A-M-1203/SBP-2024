@@ -2,7 +2,6 @@
 using NHibernate.Linq;
 using SBP_faza2.Data;
 using SBP_faza2.Entiteti;
-using System.Windows.Forms;
 
 namespace SBP_faza2;
 
@@ -42,13 +41,13 @@ public class DTOManager
             if (session != null)
             {
                 Student? student = await session.Query<Student>().FirstOrDefaultAsync(s => s.BrojIndeksa.Trim() == indeks);
-                if (student != null) 
+                if (student != null)
                     return true;
-                else 
+                else
                     return false;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom pribavlajnja studenta iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
@@ -182,7 +181,7 @@ public class DTOManager
                 return true;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom ažuriranja studenta.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
@@ -216,7 +215,7 @@ public class DTOManager
                 return true;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom čuvanja studenta.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
@@ -243,7 +242,7 @@ public class DTOManager
                 return true;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom brisanja studenta.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
@@ -923,7 +922,7 @@ public class DTOManager
                 teorijskiProjekti = await session.Query<TeorijskiProjekat>().ToListAsync();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom pribavlajnja projekata iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
               "Greška",
@@ -965,7 +964,7 @@ public class DTOManager
             {
                 Projekat? projekat = await session.Query<Projekat>()
                     .FirstOrDefaultAsync(p => p.Naziv.Trim() == naziv.Trim() && p.SkolskaGodina == skolskaGodina);
-         
+
                 if (projekat != null && projekat.GetType() == tip)
                     return true;
                 else
@@ -1000,7 +999,7 @@ public class DTOManager
                     p.RokZaZavrsetak = projekat.RokZaZavrsetak;
                     p.MaksimalanBrojStrana = projekat.MaksimalanBrojStrana;
                     p.Predmet = (((p.Predmet.Naziv != projekat.Predmet.Naziv)
-                        || (p.Predmet.Sifra != projekat.Predmet.Sifra)) 
+                        || (p.Predmet.Sifra != projekat.Predmet.Sifra))
                         ? await VratiPredmetAsync(projekat.Predmet.Id) : p.Predmet)!;
                     p.DatumPocetka = projekat.DatumPocetka;
                     p.DatumZavrsetka = projekat.DatumZavrsetka;
@@ -1029,7 +1028,7 @@ public class DTOManager
                 return true;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom ažuriranja projekta u bazi.\nDetalji:\n" + ex.FormatExceptionMessage(),
                "Greška",
@@ -1048,7 +1047,7 @@ public class DTOManager
             if (session != null)
             {
                 Predmet? predmet = await session.LoadAsync<Predmet>(projekat.Predmet.Id);
-                if (predmet != null) 
+                if (predmet != null)
                 {
                     Projekat p;
                     if (projekat.GetType() == typeof(TeorijskiProjekatBasic))
@@ -1092,7 +1091,7 @@ public class DTOManager
                 return false;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom dodavanja projekta u bazu.\nDetalji:\n" + ex.FormatExceptionMessage(),
                "Greška",
@@ -1280,7 +1279,7 @@ public class DTOManager
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom pribavlajnja grupa iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
@@ -1665,7 +1664,7 @@ public class DTOManager
                 session.Close();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom pribavljanja knjige iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
@@ -1831,6 +1830,50 @@ public class DTOManager
         return false;
     }
 
+    public static List<string>? VratiNasloveKnjigaISBN()
+    {
+        List<string>? nasloviISBN = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                List<KnjigaBasic>? knjige = DTOManager.VratiKnjigeBasic();
+                nasloviISBN = new List<string>();
+                if (knjige != null)
+                {
+                    foreach (var k in knjige)
+                    {
+                        nasloviISBN.Add(k.Naslov + " " + "(" + k.ISBN + ")");
+                    }
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja knjiga iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return nasloviISBN;
+    }
+
+    public static KnjigaBasic? VratiKnjigaBasicPoISBN(string isbn)
+    {
+        KnjigaBasic? knjigaBasic = null;
+        List<KnjigaBasic>? knjige = DTOManager.VratiKnjigeBasic();
+        if (knjige != null)
+        {
+            knjigaBasic = knjige.FirstOrDefault(k => k.ISBN == isbn);
+        }
+
+        return knjigaBasic;
+    }
+
     #endregion
 
     #region Clanak
@@ -1920,7 +1963,7 @@ public class DTOManager
                 return false;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show("Greška prilikom pribavljanja clanaka iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
                 "Greška",
@@ -2022,6 +2065,50 @@ public class DTOManager
         }
 
         return false;
+    }
+
+    public static List<string>? VratiNasloveClanakaISSN()
+    {
+        List<string>? nasloviISSN = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                List<ClanakBasic>? clanci = DTOManager.VratiClankeBasic();
+                nasloviISSN = new List<string>();
+                if (clanci != null)
+                {
+                    foreach (var c in clanci)
+                    {
+                        nasloviISSN.Add(c.Naslov + " " + "(" + c.ISSN + ")");
+                    }
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja clanaka iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return nasloviISSN;
+    }
+
+    public static ClanakBasic? VratiClanakBasicPoISSN(string issn)
+    {
+        ClanakBasic? clanakBasic = null;
+        List<ClanakBasic>? clanci = DTOManager.VratiClankeBasic();
+        if (clanci != null)
+        {
+            clanakBasic = clanci.FirstOrDefault(c => c.ISSN == issn);
+        }
+
+        return clanakBasic;
     }
 
     #endregion
@@ -2216,6 +2303,335 @@ public class DTOManager
         return false;
     }
 
+    public static List<string>? VratiNasloveRadova()
+    {
+        List<string>? naziviRadova = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                List<RadBasic>? radovi = DTOManager.VratiRadoveBasic();
+                naziviRadova = new List<string>();
+
+                if (radovi != null)
+                {
+                    foreach (var r in radovi)
+                    {
+                        naziviRadova.Add(r.Naslov);
+                    }
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja radova iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return naziviRadova;
+    }
+
+    public static RadBasic? VratiRadBasicPoNaslovu(string naslov)
+    {
+        RadBasic? rad = null;
+        List<RadBasic>? radovi = DTOManager.VratiRadoveBasic();
+        if (radovi != null)
+        {
+            rad = radovi.FirstOrDefault(r => r.Naslov == naslov);
+        }
+
+        return rad;
+    }
+
     #endregion
 
+    #region Autor
+
+    public static async Task<AutorBasic?> VratiAutorBasicAsync(int id)
+    {
+        AutorBasic? a = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Autor autor = await session.LoadAsync<Autor>(id);
+
+                KnjigaBasic? knjiga = null;
+                ClanakBasic? clanak = null;
+                RadBasic? rad = null;
+
+                if (autor.Knjiga != null)
+                    knjiga = await DTOManager.VratiKnjigaBasicAsync(autor.Knjiga.Id);
+                if (autor.Clanak != null)
+                    clanak = await DTOManager.VratiClanakBasicAsync(autor.Clanak.Id);
+                if (autor.Rad != null)
+                    rad = await DTOManager.VratiRadBasicAsync(autor.Rad.Id);
+
+                a = new AutorBasic
+                {
+                    Id = autor.Id,
+                    ImeAutora = autor.ImeAutora,
+                    Knjiga = knjiga,
+                    Clanak = clanak,
+                    Rad = rad
+                };
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja autora iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return a;
+    }
+
+    public static async Task<List<AutorBasic>?> VratiAutoreBasicAsync()
+    {
+        List<AutorBasic>? a = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Autor> autori = session.Query<Autor>();
+                a = new List<AutorBasic>();
+                foreach (var au in autori)
+                {
+                    KnjigaBasic? knjiga = null;
+                    ClanakBasic? clanak = null;
+                    RadBasic? rad = null;
+                    if (au.Knjiga != null)
+                        knjiga = await DTOManager.VratiKnjigaBasicAsync(au.Knjiga.Id);
+                    if (au.Clanak != null)
+                        clanak = await DTOManager.VratiClanakBasicAsync(au.Clanak.Id);
+                    if (au.Rad != null)
+                        rad = await DTOManager.VratiRadBasicAsync(au.Rad.Id);
+
+                    a.Add(new AutorBasic
+                    {
+                        Id = au.Id,
+                        ImeAutora = au.ImeAutora,
+                        Knjiga = knjiga,
+                        Clanak = clanak,
+                        Rad = rad
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja autora iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return a;
+    }
+
+    public static List<AutorPregled>? VratiAutorePregled()
+    {
+        List<AutorPregled>? a = null;
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                IEnumerable<Autor> autori = session.Query<Autor>();
+                a = new List<AutorPregled>();
+                foreach (var au in autori)
+                {
+                    string? knjiga = null;
+                    string? clanak = null;
+                    string? rad = null;
+                    if (au.Knjiga != null)
+                        knjiga = au.Knjiga.Naslov + " " + "(" + au.Knjiga.ISBN + ")";
+                    if (au.Clanak != null)
+                        clanak = au.Clanak.Naslov + " " + "(" + au.Clanak.ISSN + ")";
+                    if (au.Rad != null)
+                        rad = au.Rad.Naslov;
+
+                    a.Add(new AutorPregled
+                    {
+                        Id = au.Id,
+                        ImeAutora = au.ImeAutora,
+                        Knjiga = knjiga,
+                        Clanak = clanak,
+                        Rad = rad
+                    });
+                }
+
+                session.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja autora iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return a;
+    }
+
+    public static async Task<bool> IzmeniAutoraAsync(AutorBasic autor)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Autor a = await session.LoadAsync<Autor>(autor.Id);
+                a.ImeAutora = autor.ImeAutora;
+
+                if (a.Knjiga != null && autor.Knjiga != null && a.Knjiga.Id != autor.Knjiga.Id)
+                    a.Knjiga = await session.LoadAsync<Knjiga>(autor.Knjiga.Id);
+                else if (autor.Knjiga == null)
+                    a.Knjiga = null;
+                else
+                    a.Knjiga = await session.LoadAsync<Knjiga>(autor.Knjiga.Id);
+
+                if (a.Clanak != null && autor.Clanak != null && a.Clanak.Id != autor.Clanak.Id)
+                    a.Clanak = await session.LoadAsync<Clanak>(autor.Clanak.Id);
+                else if (autor.Clanak == null)
+                    a.Clanak = null;
+                else
+                    a.Clanak = await session.LoadAsync<Clanak>(autor.Clanak.Id);
+
+                if (a.Rad != null && autor.Rad != null && a.Rad.Id != autor.Rad.Id)
+                    a.Rad = await session.LoadAsync<Rad>(autor.Rad.Id);
+                else if (autor.Rad == null)
+                    a.Rad = null;
+                else
+                    a.Rad = await session.LoadAsync<Rad>(autor.Rad.Id);
+
+                await session.SaveOrUpdateAsync(a);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom ažuriranja autora u bazi.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> DodajAutoraAsync(AutorBasic autor)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Knjiga? knjiga = null;
+                Clanak? clanak = null;
+                Rad? rad = null;
+
+                if (autor.Knjiga != null)
+                    knjiga = await session.LoadAsync<Knjiga>(autor.Knjiga.Id);
+                if (autor.Clanak != null)
+                    clanak = await session.LoadAsync<Clanak>(autor.Clanak.Id);
+                if (autor.Rad != null)
+                    rad = await session.LoadAsync<Rad>(autor.Rad.Id);
+
+                Autor a = new Autor
+                {
+                    ImeAutora = autor.ImeAutora,
+                    Knjiga = knjiga,
+                    Clanak = clanak,
+                    Rad = rad
+                };
+
+                await session.SaveAsync(a);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom dodavanja autora u bazu.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> ObrisiAutoraAsync(int id)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Autor autor = await session.LoadAsync<Autor>(id);
+
+                await session.DeleteAsync(autor);
+                await session.FlushAsync();
+
+                session.Close();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom brisanja autora iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    public static async Task<bool> PostojiAutorAsync(string imeAutora)
+    {
+        try
+        {
+            ISession? session = DataLayer.GetSession();
+            if (session != null)
+            {
+                Autor? autor = await session.Query<Autor>().FirstOrDefaultAsync(a => a.ImeAutora == imeAutora);
+                session.Close();
+
+                if (autor != null)
+                    return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Greška prilikom pribavljanja autora iz baze.\nDetalji:\n" + ex.FormatExceptionMessage(),
+                "Greška",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        return false;
+    }
+
+    #endregion
 }

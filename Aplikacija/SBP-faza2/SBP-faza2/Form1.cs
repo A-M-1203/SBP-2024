@@ -139,4 +139,10 @@ public partial class Form1 : Form
         RadoviForma radoviForma = new RadoviForma();
         radoviForma.Show(this);
     }
+
+    private void autoriButton_Click(object sender, EventArgs e)
+    {
+        AutoriForma autoriForma = new AutoriForma();
+        autoriForma.Show(this);
+    }
 }
